@@ -1,33 +1,14 @@
 create extension postgis;
 
+-- types
+
+CREATE TYPE cohabitation_type AS ENUM ('negative', 'neutral', 'positive');
+
 -- basics
 
 CREATE TABLE plant_types (
     id Serial PRIMARY KEY NOT NULL,
     name varchar UNIQUE NOT NULL
-);
-
--- CREATE TABLE height_categories (
---     id Serial PRIMARY KEY NOT NULL,
---     name varchar UNIQUE NOT NULL,
---     explanation varchar,      -- ?
---     height_min numeric(4, 2), -- not int
---     height_max numeric(4, 2),
---     height_avg numeric(4, 2)
--- );
-
--- CREATE TABLE decoratives (
---     id Serial PRIMARY KEY NOT NULL,
---     level integer NOT NULL,
---     season varchar NOT NULL
--- );
-
-CREATE TABLE bloss_periods (
-    id Serial PRIMARY KEY NOT NULL,
-    bloss_begin_month integer NOT NULL, -- ok?
-    bloss_begin_day integer,
-    bloss_end_month integer NOT NULL,
-    bloss_end_day integer
 );
 
 CREATE TABLE humidity_types (
@@ -46,6 +27,12 @@ CREATE TABLE light_types (
     name varchar UNIQUE NOT NULL
 );
 
+CREATE TABLE light_type_parts (
+    id Serial PRIMARY KEY NOT NULL,
+    light_type_id integer REFERENCES light_types(id) NOT NULL,
+    geometry geometry
+);
+
 CREATE TABLE soil_acidity_types (
     id Serial PRIMARY KEY NOT NULL,
     name varchar UNIQUE NOT NULL
@@ -58,8 +45,6 @@ CREATE TABLE soil_fertility_types (
 
 CREATE TABLE soil_types (
     id Serial PRIMARY KEY NOT NULL,
-    -- acidity_type integer REFERENCES soil_acidity_types(id),
-    -- fertility_type integer REFERENCES soil_fertility_types(id),
     name varchar UNIQUE NOT NULL
 );
 
@@ -96,18 +81,39 @@ CREATE TABLE climate_zones (
     geometry geometry
 );
 
+CREATE TABLE genera (
+    id Serial PRIMARY KEY NOT NULL,
+    name_ru varchar(100) UNIQUE NOT NULL
+);
+
+
 -- references
+
+CREATE TABLE cohabitation_comments (
+    id Serial PRIMARY KEY NOT NULL,
+    text varchar(250) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS cohabitation (
+    genus_id_1 integer REFERENCES genera(id) NOT NULL,
+    genus_id_2 integer REFERENCES genera(id) NOT NULL,
+    cohabitation_type cohabitation_type NOT NULL,
+    comment_id integer REFERENCES cohabitation_comments(id),
+    PRIMARY KEY(genus_id_1, genus_id_2)
+);
 
 CREATE TABLE plants (
     id Serial PRIMARY KEY NOT NULL,
     name_ru varchar UNIQUE NOT NULL,
     name_latin varchar UNIQUE NOT NULL,
-    type integer REFERENCES plant_types(id),
+    type_id integer REFERENCES plant_types(id),
     height_avg numeric(3, 1),
     crown_diameter numeric(3, 1),
     spread_aggressiveness_level integer,
     survivability_level integer,
-    is_invasive boolean
+    is_invasive boolean,
+    genus_id integer REFERENCES genera(id),
+    photo_name varchar(256)
 );
 
 CREATE TABLE plants_light_types (
