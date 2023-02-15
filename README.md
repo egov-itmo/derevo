@@ -14,6 +14,6 @@
 
 ## General scheme of work
 
-![General scheme of work](https://news.egov.itmo.ru/images/2022-09-14_224357.jpg](https://news.egov.itmo.ru/photo/algoritm_nahozhdeniya_kompozicij_rastenij-1.png) 
+![General scheme of work](https://news.egov.itmo.ru/photo/algoritm_nahozhdeniya_kompozicij_rastenij-1.png) 
 
  
