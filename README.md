@@ -10,7 +10,8 @@
 
 ## Description
 
-В этом проекте предложен алгоритм создания рекомендованных и дополненных композиций растений на основе внутренних и внешних факторов: сочетаемости видов, наличия внешних ограничений (например, загрязненности почвы или воздуха), условий освещения и других. Алгоритм реализован с помощью методов сетевого и пространственного анализа на основе базы данных, содержащей характеристики растений и их ассортименты.
+In this project we propose the plants composition algorithm which can generate new sets of recommended plant species for green areas or update sets for existing ones. This algorithm accounts for a number of external and internal natural and anthropogenic factors, for example, light conditions, interspecies compatability or soil salinization. Algorithm's pipeline consists of two main steps: spatial analysis block where suitable species are selected, and ecological network analysis block where community partition method is used on species interaction graph to generate several compositions of plants.
+We also provide methods of knowledge database creation and spatial environmental data collection.
 
 ## General scheme of work
 
@@ -18,7 +19,18 @@
 
 ## Example
 
-Определение состава растений, способных произрастать в заданных услов
+Scripts for step 0 are in the "database" folder, steps 1-8 can be done with update_current_composition, get_recommended_composition or get_composition_unknown functions from method/get_composition.py
+
+0. Create knowledge database
+1. Generate compatability graph based on knowledge database
+2. Select an area for composition generation
+3. Download light conditions
+4. Download external limitation factors
+5. Select a list of species which have suitable light conditions in this area and resistant for limitation factors
+6. Generate a subgraph of compatability graph with selected species as nodes
+7. Use community partition method to create compositions
+8. Done!
+
 
 ![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
 
