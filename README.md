@@ -22,29 +22,33 @@ We also provide methods of knowledge database creation and spatial environmental
 Scripts for step 0 are in the "database" folder, steps 1-8 can be done with update_current_composition, get_recommended_composition or get_composition_unknown functions from method/get_composition.py
 
 0. Create knowledge database
+
 1. Generate compatability graph based on knowledge database
-![compatability](https://github.com/egov-itmo/landscaping/blob/main/docs/compatability_graph.png) 
+<img src="https://github.com/egov-itmo/landscaping/blob/main/docs/compatability_graph.png" alt="compatability graph" width="50%" height="50%"/>
 
 2. Select an area for composition generation
-![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
+<img src="https://github.com/egov-itmo/landscaping/blob/main/docs/green_area.png" alt="area" width="50%" height="50%"/>
 
 3. Download light conditions
-4. Download external limitation factors
-![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
+
+4. Download external limitation factor
+<img src="https://github.com/egov-itmo/landscaping/blob/main/docs/limitation_factors.png" alt="limitation factors" width="50%" height="50%"/>
 
 5. Select a list of species which have suitable light conditions in this area and resistant for limitation factors
+
 6. Generate a subgraph of compatability graph with selected species as nodes
-![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
+<img src="https://github.com/egov-itmo/landscaping/blob/main/docs/original_graph.png" alt="original subgraph" width="50%" height="50%"/>
+
 
 7. Use community partition method to create compositions
 
 Var 1:
 
-![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
+<img src="https://github.com/egov-itmo/landscaping/blob/main/docs/updated_graph_1.png" alt="updated graph 1" width="50%" height="50%"/>
 
 Var 2:
 
-![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
+<img src="https://github.com/egov-itmo/landscaping/blob/main/docs/updated_graph_2.png" alt="updated graph 2" width="50%" height="50%"/>
 
 8. Done!
 
