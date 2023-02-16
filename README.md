@@ -23,15 +23,25 @@ Scripts for step 0 are in the "database" folder, steps 1-8 can be done with upda
 
 0. Create knowledge database
 1. Generate compatability graph based on knowledge database
+![compatability](landscaping/docs/compatability_graph.png) 
+
 2. Select an area for composition generation
+![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
+
 3. Download light conditions
 4. Download external limitation factors
+![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
+
 5. Select a list of species which have suitable light conditions in this area and resistant for limitation factors
 6. Generate a subgraph of compatability graph with selected species as nodes
-7. Use community partition method to create compositions
-8. Done!
-
-
 ![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
+
+7. Use community partition method to create compositions
+Var 1:
+![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
+Var 2:
+![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
+
+8. Done!
 
  
