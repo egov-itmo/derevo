@@ -23,7 +23,7 @@ Scripts for step 0 are in the "database" folder, steps 1-8 can be done with upda
 
 0. Create knowledge database
 1. Generate compatability graph based on knowledge database
-![compatability](landscaping/docs/compatability_graph.png) 
+![compatability](https://github.com/egov-itmo/landscaping/blob/main/docs/compatability_graph.png) 
 
 2. Select an area for composition generation
 ![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
@@ -37,9 +37,13 @@ Scripts for step 0 are in the "database" folder, steps 1-8 can be done with upda
 ![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
 
 7. Use community partition method to create compositions
+
 Var 1:
+
 ![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
+
 Var 2:
+
 ![Example](https://news.egov.itmo.ru/photo/2023-02-15_131219.jpg) 
 
 8. Done!
