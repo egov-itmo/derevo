@@ -1,3 +1,5 @@
+SET client_encoding TO 'UTF-8';
+
 INSERT INTO climate_zones (usda_number, temperature_min, temperature_max) VALUES
     (1, -90, -45),
     (2, -44, -40),

@@ -171,3 +171,26 @@ CREATE TABLE plants_climate_zones (
     is_stable boolean NOT NULL,
     PRIMARY KEY(plant_id, climate_zone_id)
 );
+
+-- parks data
+
+CREATE TABLE districts (
+    id Serial PRIMARY KEY NOT NULL,
+    name varchar(80) UNIQUE NOT NULL,
+    sheet_name varchar(80) UNIQUE NOT NULL,
+    geometry geometry
+);
+
+CREATE TABLE parks (
+    id Serial PRIMARY KEY NOT NULL,
+    district_id integer NOT NULL REFERENCES districts(id),
+    name varchar(80) NOT NULL,
+    geometry geometry,
+    UNIQUE (district_id, name)
+);
+
+CREATE TABLE plants_parks (
+    plant_id integer NOT NULL REFERENCES plants(id),
+    park_id integer NOT NULL REFERENCES parks(id),
+    PRIMARY KEY (plant_id, park_id)
+);

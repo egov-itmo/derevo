@@ -16,6 +16,7 @@ from plants_api.db.entities.factor_types import (
 from plants_api.db.entities.factor_types_parts import humidity_type_parts, light_type_parts, limitation_factor_parts
 from plants_api.db.entities.features import features
 from plants_api.db.entities.genera import genera
+from plants_api.db.entities.parks_data import districts, parks, plants_parks
 from plants_api.db.entities.plant_types import plant_types
 from plants_api.db.entities.plants import plants
 from plants_api.db.entities.plants_factors import (
@@ -45,6 +46,9 @@ __all__ = [
     "limitation_factor_parts",
     "features",
     "genera",
+    "districts",
+    "parks",
+    "plants_parks",
     "plant_types",
     "plants_climate_zones",
     "plants_features",

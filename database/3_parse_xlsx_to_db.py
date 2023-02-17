@@ -1,3 +1,4 @@
+from collections import defaultdict
 import os
 import sys
 from datetime import date
@@ -23,6 +24,9 @@ db_port = os.environ.get("DB_PORT", 5432)
 db_name = os.environ.get("DB_NAME", "greendb")
 db_user = os.environ.get("DB_USER", "postgres")
 db_pass = os.environ.get("DB_PASS", "postgres")
+districts_parks_sheets = os.environ.get(
+    "PARKS_SHEETS", "Колпинский р./Калининский р./Выборгский р."
+).split("/")
 
 # Известные переименования и функция нормализации названий для сравнения
 
@@ -185,6 +189,23 @@ type_table_name = {
     "light_types": ("plants_light_types", "light_type_id", "light_types"),
     "humidity_types": ("plants_humidity_types", "humidity_type_id", "humidity_types"),
 }
+
+# считывание парков
+
+# district:
+#   - park:
+#       - plant
+#       - plant
+plants_locations: dict[str, dict[str, list[str]]] = defaultdict(lambda: {})
+for district_sheet_name in districts_parks_sheets:
+    if (parks_plants := sheets.get(district_sheet_name)) is None:
+        print(f"Лист с парками '{district_sheet_name}' не найден в документе, попускается!")
+        continue
+    for park_name in parks_plants.columns:
+        park_plants = list(parks_plants[park_name].dropna().apply(normalize).unique())
+        plants_locations[district_sheet_name][park_name] = park_plants
+
+# загрузка в БД
 try:
     with get_conn() as conn, conn.cursor() as cur:
 
@@ -324,7 +345,7 @@ try:
                             (plant_id, name, value),
                         )
                         inserted_factors += 1
-                    elif res[0] != value:
+                    elif res[0] != bool(int(value)):
                         cur.execute(
                             f"UPDATE {table_values[0]} SET is_stable = %s"
                             f" WHERE plant_id = %s AND {table_values[1]} = (SELECT id FROM {table_values[2]} WHERE name = %s)",
@@ -429,6 +450,34 @@ try:
         print(
             f"Добавлено {inserted_straight} прямых значений совместимости + {inserted_back} обратных значений. Обновлены {updated} связей."
         )
+        print()
+
+        print("Добавление растений в парки")
+        missing_plants = set()
+        for district_name, parks in plants_locations.items():
+            cur.execute("SELECT id FROM districts WHERE sheet_name = %s", (district_name,))
+            if (res := cur.fetchone()) is None:
+                cur.execute("INSERT INTO districts (name, sheet_name) VALUES (%(name)s, %(name)s) RETURNING id", {"name": district_name})
+                res = cur.fetchone()
+            district_id = res[0]
+
+            for park_name, plants in parks.items():
+                cur.execute("SELECT id FROM parks WHERE district_id = %s AND name = %s", (district_id, park_name))
+                if (res := cur.fetchone()) is None:
+                    cur.execute("INSERT INTO parks (district_id, name) VALUES (%s, %s) RETURNING id", (district_id, park_name))
+                    res = cur.fetchone()
+                park_id = res[0]
+                for plant_name in plants:
+                    if plant_name not in plants_ids:
+                        print(f"Растение '{plant_name}' из парка '{park_name}' в районе '{district_name}' не найдено в базе данных, пропускается!")
+                        missing_plants.add(plant_name)
+                        continue
+                    cur.execute("INSERT INTO plants_parks (plant_id, park_id) VALUES (%s, %s) ON CONFLICT DO NOTHING", (plants_ids[plant_name], park_id))
+        if len(missing_plants) > 0:
+            print(f"{len(missing_plants)} отсутствующих в БД растений, указанных в парках, сохранены в файл missing_plants_in_parks.txt")
+            with open("missing_plants_in_parks.txt", "wt", encoding="UTF-8") as file:
+                print("\n".join(sorted(missing_plants)), file=file)
+
 finally:
     try:
         conn.close()
