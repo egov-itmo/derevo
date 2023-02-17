@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+  photos_server:
+    container_name: greenery_photos
+    image: nginx:latest
+    volumes:
+      - ./photos/nginx.conf:/etc/nginx/nginx.conf
+      - ./photos/plants_photos:/plants_photos
+    ports:
+      - 6065:80
+    environment:
+      - PHOTOS_PREFIX=$PHOTOS_PREFIX
+
+  backend:
+    container_name: greenery_backend
+    build:
+      context: ./backend
+    ports:
+      - 6066:80
+    environment:
+      - DB_ADDR=$DB_ADDR
+      - DB_PORT=$DB_PORT
+      - DB_NAME=$DB_NAME
+      - DB_USER=$DB_USER
+      - DB_PASS=$DB_PASS
+      - PORT=80
+    depends_on:
+      - photos_server

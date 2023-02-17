@@ -235,7 +235,7 @@ def logger_from_str(logger_text: str) -> list[tuple[LogLevel, str]]:
     "--photos_prefix",
     "-p",
     envvar="PHOTOS_PREFIX",
-    default="localhost:6061/photo/",
+    default="localhost:6065/photo/",
     show_default=True,
     show_envvar=True,
     help="Prefix to plants photos names from the database",

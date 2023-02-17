@@ -2,3 +2,4 @@
 *.xlsx
 *.zip
 .vscode
+.env
