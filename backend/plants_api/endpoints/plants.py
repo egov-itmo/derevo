@@ -17,6 +17,9 @@ api_router = APIRouter(tags=["plants"])
     response_model=PlantsResponse,
     status_code=status.HTTP_200_OK,
 )
-async def get_humidity_types(connection: AsyncConnection = Depends(get_connection)) -> PlantsResponse:
+async def get_plants(connection: AsyncConnection = Depends(get_connection)) -> PlantsResponse:
+    """
+    Get all plants information from the database.
+    """
     plants = await get_plants_from_db(connection)
     return PlantsResponse.from_dtos(plants)

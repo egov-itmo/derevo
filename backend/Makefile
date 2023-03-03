@@ -3,7 +3,7 @@ VERSION = 0.1.1
 DOCKER_USER_WITH_SLASH = 
 
 lint:
-	pylint plants_api --max-line-length 120
+	pylint plants_api --max-line-length 120 -d duplicate-code
 
 run:
 	python -m plants_api

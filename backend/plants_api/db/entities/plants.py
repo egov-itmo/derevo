@@ -1,14 +1,16 @@
 """
 Plants table is defined here.
 """
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, Numeric, String, Table, text
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, Numeric, Sequence, String, Table
 
 from plants_api.db import metadata
+
+plants_id_seq = Sequence("plants_id_seq")
 
 plants = Table(
     "plants",
     metadata,
-    Column("id", Integer, primary_key=True, server_default=text("nextval('plants_id_seq'::regclass)")),
+    Column("id", Integer, primary_key=True, server_default=plants_id_seq.next_value()),
     Column("name_ru", String, nullable=False, unique=True),
     Column("name_latin", String, nullable=False, unique=True),
     Column("type_id", ForeignKey("plant_types.id")),

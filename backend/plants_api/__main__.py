@@ -20,8 +20,9 @@ from plants_api.config import AppSettings
 from plants_api.config.app_settings_global import app_settings
 from plants_api.db.connection.session import SessionManager
 from plants_api.endpoints import list_of_routes
+from plants_api.utils.dotenv import try_load_envfile
 
-LAST_UPDATE = "2023-02-16"
+LAST_UPDATE = "2023-03-03"
 
 
 def bind_routes(application: FastAPI, prefix: str) -> None:
@@ -34,9 +35,9 @@ def bind_routes(application: FastAPI, prefix: str) -> None:
 
 def get_app(prefix: str = "/api") -> FastAPI:
     """
-    Creates application and all dependable objects.
+    Create application and all dependable objects.
     """
-    description = "API for getting plants information and method results"
+    description = "API for getting and updating plants information and running landscaping helper method"
 
     application = FastAPI(
         title="Landscaping helper service",
@@ -66,7 +67,7 @@ app = get_app()
 @app.exception_handler(Exception)
 async def internal_exception_handler(request: Request, exc: Exception) -> JSONResponse:
     """
-    Function that handles exceptions to become http response code 500 - Internal Server Error
+    Function that handles exceptions to become http response code 500 - Internal Server Error.
 
     If debug is activated in app configuration, then stack trace is returned, otherwise only a generic error message.
     Message is sent to logger error stream anyway.
@@ -122,8 +123,8 @@ def logger_from_str(logger_text: str) -> list[tuple[LogLevel, str]]:
     Helper function to deconstruct string input argument(s) to logger configuration.
 
     Examples:
-        logger_from_str("ERROR,errors.log") -> [("ERROR", "errors.log)]
-        logger_from_str("ERROR,errors.log;INFO,info.log") -> [("ERROR", "errors.log), ("INFO", "info.log")]
+    - logger_from_str("ERROR,errors.log") -> [("ERROR", "errors.log)]
+    - logger_from_str("ERROR,errors.log;INFO,info.log") -> [("ERROR", "errors.log), ("INFO", "info.log")]
     """
     res = []
     for item in logger_text.split(";"):
@@ -262,7 +263,7 @@ def main(
 ):
     """
     Plants evaluation backend service main function, performs configuration
-        via command line parameters and environment variables.
+    via command line parameters and environment variables.
     """
     additional_loggers = list(itertools.chain.from_iterable(additional_loggers))
     settings = AppSettings(
@@ -278,35 +279,26 @@ def main(
         debug=debug,
     )
     app_settings.update(settings)
-    if logger_verbosity != "DEBUG":
-        logger.remove()
-        logger.add(sys.stderr, level=logger_verbosity)
-    for log_level, filename in additional_loggers:
-        logger.add(filename, level=log_level)
-    if debug:
-        uvicorn.run(
-            "plants_api.__main__:app",
-            host=host,
-            port=port,
-            reload=True,
-            reload_dirs=["plants_api"],
-            log_level=logger_verbosity.lower(),
-        )
+    if __name__ == "__main__":
+        if debug:
+            uvicorn.run(
+                "plants_api.__main__:app",
+                host=host,
+                port=port,
+                reload=True,
+                reload_dirs=["plants_api"],
+                log_level=logger_verbosity.lower(),
+            )
+        else:
+            uvicorn.run("plants_api.__main__:app", host=host, port=port, log_level=logger_verbosity.lower())
     else:
-        uvicorn.run("plants_api.__main__:app", host=host, port=port, log_level=logger_verbosity.lower())
+        if logger_verbosity != "DEBUG":
+            logger.remove()
+            logger.add(sys.stderr, level=logger_verbosity)
+        for log_level, filename in additional_loggers:
+            logger.add(filename, level=log_level)
 
 
 if __name__ == "__main__":
-    envfile = os.environ.get("ENVFILE", ".env")
-    if os.path.isfile(envfile):
-        with open(envfile, "rt", encoding="utf-8") as f:
-            for name, value in (
-                tuple((line[len("export ") :] if line.startswith("export ") else line).strip().split("=", 1))
-                for line in f.readlines()
-                if not line.startswith("#") and "=" in line
-            ):
-                if name not in os.environ:
-                    if " #" in value:
-                        value = value[: value.index(" #")]
-                    os.environ[name] = value.strip()
+    try_load_envfile(os.environ.get("ENVFILE", ".env"))
     main()

@@ -1,5 +1,5 @@
 """
-health_check endpoint is defined here.
+listing endpoints are defined here.
 """
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncConnection
@@ -16,7 +16,7 @@ from plants_api.logic.listings import (
 )
 from plants_api.schemas import ListingResponse
 
-api_router = APIRouter(tags=["Listing"])
+api_router = APIRouter(tags=["listing"])
 
 
 @api_router.get(
@@ -26,7 +26,7 @@ api_router = APIRouter(tags=["Listing"])
 )
 async def get_humidity_types(connection: AsyncConnection = Depends(get_connection)) -> ListingResponse:
     """
-    Return list of humidity types consisting of identificators and names.
+    Get list of humidity types consisting of identificators and names.
     """
     acidity_types = await get_humidity_types_from_db(connection)
     return ListingResponse.from_dtos(acidity_types)
@@ -39,7 +39,7 @@ async def get_humidity_types(connection: AsyncConnection = Depends(get_connectio
 )
 async def get_light_types(connection: AsyncConnection = Depends(get_connection)) -> ListingResponse:
     """
-    Return list of light types consisting of identificators and names.
+    Get list of light types consisting of identificators and names.
     """
     acidity_types = await get_light_types_from_db(connection)
     return ListingResponse.from_dtos(acidity_types)
@@ -52,7 +52,7 @@ async def get_light_types(connection: AsyncConnection = Depends(get_connection))
 )
 async def get_limitation_factors(connection: AsyncConnection = Depends(get_connection)) -> ListingResponse:
     """
-    Return list of limitation factors consisting of identificators and names.
+    Get list of limitation factors consisting of identificators and names.
     """
     acidity_types = await get_limitation_factors_from_db(connection)
     return ListingResponse.from_dtos(acidity_types)
@@ -65,7 +65,7 @@ async def get_limitation_factors(connection: AsyncConnection = Depends(get_conne
 )
 async def get_soil_acidity_types(connection: AsyncConnection = Depends(get_connection)) -> ListingResponse:
     """
-    Return list of soil acidity types consisting of identificators and names.
+    Get list of soil acidity types consisting of identificators and names.
     """
     acidity_types = await get_soil_acidity_types_from_db(connection)
     return ListingResponse.from_dtos(acidity_types)
@@ -78,7 +78,7 @@ async def get_soil_acidity_types(connection: AsyncConnection = Depends(get_conne
 )
 async def get_soil_fertility_types(connection: AsyncConnection = Depends(get_connection)) -> ListingResponse:
     """
-    Return list of soil fertility types consisting of identificators and names.
+    Get list of soil fertility types consisting of identificators and names.
     """
     acidity_types = await get_soil_fertility_types_from_db(connection)
     return ListingResponse.from_dtos(acidity_types)
@@ -91,7 +91,7 @@ async def get_soil_fertility_types(connection: AsyncConnection = Depends(get_con
 )
 async def get_soil_types(connection: AsyncConnection = Depends(get_connection)) -> ListingResponse:
     """
-    Return list of soil types consisting of identificators and names.
+    Get list of soil types consisting of identificators and names.
     """
     acidity_types = await get_soil_types_from_db(connection)
     return ListingResponse.from_dtos(acidity_types)

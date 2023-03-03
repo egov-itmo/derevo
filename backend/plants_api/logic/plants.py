@@ -11,6 +11,9 @@ from plants_api.utils import get_photo_url
 
 
 async def get_plants_from_db(connection: AsyncConnection) -> list[PlantDto]:
+    """
+    Get all plants from database.
+    """
     statement = (
         select(
             plants.c.id,
@@ -30,4 +33,7 @@ async def get_plants_from_db(connection: AsyncConnection) -> list[PlantDto]:
         .join(genera, plants.c.genus_id == genera.c.id)
         .order_by(plants.c.id)
     )
-    return [PlantDto(*data, (get_photo_url(photo_name) if photo_name is not None else None)) for *data, photo_name in await connection.execute(statement)]
+    return [
+        PlantDto(*data, (get_photo_url(photo_name) if photo_name is not None else None))
+        for *data, photo_name in await connection.execute(statement)
+    ]

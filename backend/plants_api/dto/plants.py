@@ -1,3 +1,4 @@
+# pylint: disable=too-many-instance-attributes
 """
 Plant DTO is defined here.
 """
@@ -11,7 +12,7 @@ class PlantDto:
     Plants Dto used to transfer Plant data
     """
 
-    id: int
+    id: int  # pylint: disable=invalid-name
     name_ru: str
     name_latin: str
     type: Optional[str]

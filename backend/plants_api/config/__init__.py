@@ -61,11 +61,11 @@ class AppSettings:
     def try_from_env(cls) -> "AppSettings":
         """
         Call default class constructor, and then tries to find attributes
-            values in environment variables by APP_{name}.
+        values in environment variables by upper({name}).
         """
         res = cls()
         for param, value in res.__dict__.items():
-            if (env := f"APP_{param}") in os.environ or (env := param.upper()) in os.environ:
+            if (env := param.upper()) in os.environ:
                 logger.trace("Getting {} from envvar: {}", param, os.environ[env])
                 setattr(res, param, type(value)(os.environ[env]))
         return res
@@ -73,11 +73,9 @@ class AppSettings:
     def update(self, other: "AppSettings") -> None:
         """
         Update current class attributes to the values of a given instance.
-            Also set all values to environment with names APP_{name}.
         """
         for param, value in other.__dict__.items():
             if param in self.__dict__:
-                os.environ[f"APP_{param}"] = str(value)
                 setattr(self, param, value)
 
 

@@ -1,18 +1,25 @@
+import os
 import pathlib
 import sys
 
-sys.path.append(str(pathlib.Path(__file__).resolve().parent.parent.parent.parent))
+project_dir = pathlib.Path(__file__).resolve().parent.parent.parent.parent
+sys.path.append(str(project_dir))
+from plants_api.utils.dotenv import try_load_envfile
+
+try_load_envfile(os.environ.get("ENVFILE", str(project_dir / ".env")))
 from logging.config import fileConfig
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from plants_api.config.app_settings_global import app_settings
+from plants_api.config.app_settings_global import app_settings, AppSettings
 from plants_api.db import DeclarativeBase
 from plants_api.db.entities import *  # noqa
 
 config = context.config
 section = config.config_ini_section
+
+app_settings.update(AppSettings.try_from_env())
 
 config.set_section_option(section, "POSTGRES_DB", app_settings.db_name)
 config.set_section_option(section, "POSTGRES_HOST", app_settings.db_addr)

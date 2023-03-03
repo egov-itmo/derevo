@@ -11,7 +11,7 @@ from plants_api.dto import PlantDto
 
 class Plant(BaseModel):
     """
-    Plant
+    Plant with all its attributes.
     """
 
     id: int
@@ -28,6 +28,9 @@ class Plant(BaseModel):
 
     @classmethod
     def from_dto(cls, dto: PlantDto) -> "Plant":
+        """
+        Construct from DTO.
+        """
         return cls(
             id=dto.id,
             name_ru=dto.name_ru,
@@ -44,8 +47,14 @@ class Plant(BaseModel):
 
 
 class PlantsResponse(BaseModel):
+    """
+    List of plants.
+    """
     plants: list[Plant]
 
     @classmethod
     def from_dtos(cls, dtos: list[PlantDto]) -> "PlantsResponse":
+        """
+        Construct from DTOs list.
+        """
         return cls(plants=[Plant.from_dto(dto) for dto in dtos])

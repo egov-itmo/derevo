@@ -4,13 +4,9 @@ click
 fastapi
 geoalchemy2
 loguru
-more-itertools
 pandas
-pillow
 psycopg2
 pydantic
-pyjwt
 python-multipart
-requests
 sqlalchemy
 uvicorn

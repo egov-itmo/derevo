@@ -18,6 +18,9 @@ class Listing(BaseModel):
 
     @classmethod
     def from_dto(cls, dto: ListingDto) -> "Listing":
+        """
+        Construct from DTO.
+        """
         return cls(id=dto.id, name=dto.name)
 
 
@@ -30,4 +33,7 @@ class ListingResponse(BaseModel):
 
     @classmethod
     def from_dtos(cls, dtos: list[ListingDto]) -> "ListingResponse":
+        """
+        Construct from DTOs list.
+        """
         return cls(values=[Listing.from_dto(dto) for dto in dtos])
