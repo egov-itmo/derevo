@@ -4,15 +4,17 @@ import matplotlib as plt
 import numpy as np
 import networkx as nx
 from networkx.algorithms.community import greedy_modularity_communities
-from data_collection import collect_plants_characteristics
-from get_compatability import get_compatability_graph
+import compositioner as cm
+from compositioner.get_compatability import get_compatability_graph
 
-def get_best_resolution(database_link):
+def get_best_resolution():
     '''
     returns dataframe with calculated best resolution for current collection of species and limitation factors / light variants
     '''
-    plants, plants_with_lim_resist, plants_with_lig_resist, cohabitation = collect_plants_characteristics(database_link)
-    compatability_graph = get_compatability_graph(database_link)
+    plants = cm.plants.copy()
+    plants_with_lim_resist = cm.plants_with_limitations_resistance.copy()
+    plants_with_lig_resist = cm.plants_suitable_for_light.copy()
+    compatability_graph = get_compatability_graph()
     lig_list = [1, 2, 3]
     lim_list = [1, 2, 3, 4, 5, 6]
 

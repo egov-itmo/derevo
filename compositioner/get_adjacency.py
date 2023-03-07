@@ -1,29 +1,14 @@
 import pandas as pd
 import networkx as nx
+import compositioner as cm
 
-def get_existing_species(locations, target_parks=None):
-    '''
-    returns dataframe with species, parks and districts, green_base.xlsx will be added to the database
-    '''
-    species_in_locations = []
-    for loc in locations:
-        df_green = pd.read_excel('landscaping/database/green_base.xlsx', sheet_name=loc)
-        df_green = pd.melt(df_green)
-        df_green['district'] = loc
-        species_in_locations.append(df_green)
-    species_in_locations = pd.concat(species_in_locations).dropna()
-    species_in_locations.rename(columns={'variable':'park_name', 'value':'species'}, inplace=True)
-    species_in_locations = species_in_locations[species_in_locations.park_name != ' ']
-    species_in_locations['park_name'] = species_in_locations.park_name.str.replace('\\n', '')
-    if target_parks != None:
-        species_in_locations = species_in_locations[species_in_locations.park_name.isin(target_parks)]
-    return species_in_locations
-
-def get_adjacency_graph(locations, target_parks=None, return_gexf=False):
+def get_adjacency_graph(edge_key_value = 1, target_parks = None, return_gexf = False, output_path = 'adjacency_graph'):
     '''
     returns adjacency graph where weight of edges equals to number of co-occurence cases
     '''
-    species_in_locations = get_existing_species(locations, target_parks)
+    species_in_locations = cm.species_in_parks.copy()
+    if target_parks is not None:
+        species_in_locations = species_in_locations[species_in_locations['park_name'].isin(target_parks)]
     loc_list = list(pd.unique(species_in_locations.park_name))
     species_total = []
     for loc in loc_list:
@@ -39,11 +24,10 @@ def get_adjacency_graph(locations, target_parks=None, return_gexf=False):
         .reset_index(drop=True))
     df_comp.rename(columns={'park_name':'weight'}, inplace=True)
     df_comp = df_comp[['name_ru', 'name_ru_x', 'weight']]
-    #df_comp['is_compatability'] = 0
-    df_comp['is_compatability'] = 1
+    df_comp['is_compatability'] = edge_key_value
     current_graph = nx.from_pandas_edgelist(df_comp, 'name_ru', 'name_ru_x', 'weight',
     create_using=nx.MultiGraph(), edge_key = 'is_compatability')
-    if return_gexf == True:
-        return nx.write_gexf(current_graph, "adjacency_graph.gexf")
+    if return_gexf:
+        return nx.write_gexf(current_graph, f"{output_path}.gexf")
     else:
         return current_graph
