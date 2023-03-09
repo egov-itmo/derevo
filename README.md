@@ -1,16 +1,28 @@
 # Landscaping project
 
-Репозиторий проекта НИР: № 622263 «Планирование видового состава городских зеленых насаждений при помощи сетевого моделирования».
+|           |                                                                                                                                                |
+|----------:|:----------------------------------------------------------------------------------------------------------------------------------------------:|
+| License   | ![Licence](https://img.shields.io/badge/License-MIT-yellow.svg)                                                                                |
+| Languages | [![english](https://img.shields.io/badge/lang-en-red.svg)](README.md) [![russian](https://img.shields.io/badge/lang-ru-yellow.svg)](README.md) |
 
-## Structure
+Repository of science research at ITMO University #622263 "Planning city greenery species composition with using network modeling methods".
 
-- **database** - database descrpition, data insertion scripts and other
-- **photos** - plants photos hosting docker service and photos preparation/insertion scripts
-- **method** - method explanation, graphs, compositions and utility scripts
+## Porject structure
+
+- [**backend**](backend/README.md) - backend service, which provides the access to database plants data (including insertion and updating)
+    and keeps database schema syncronized.
+- [**photos**](photos/README.md) - plants photos hosting Docker service and photos preparation/insertion scripts.
+- **method** - method explanation, graphs, compositions and utility scripts.
 
 ## Description
 
-In this project we propose the plants composition algorithm which can generate new sets of recommended plant species for green areas or update sets for existing ones. This algorithm accounts for a number of external and internal natural and anthropogenic factors, for example, light conditions, interspecies compatability or soil salinization. Algorithm's pipeline consists of two main steps: spatial analysis block where suitable species are selected, and ecological network analysis block where community partition method is used on species interaction graph to generate several compositions of plants.
+In this project we propose the plants composition algorithm which can generate new sets of recommended plant
+    species for green areas or update sets for existing ones. This algorithm accounts for a number of external
+    and internal natural and anthropogenic factors, for example, light conditions, interspecies compatability
+    or soil salinization. Algorithm's pipeline consists of two main steps: spatial analysis block where suitable
+    species are selected, and ecological network analysis block where community partition method is used
+    on species interaction graph to generate several compositions of plants.
+
 We also provide methods of knowledge database creation and spatial environmental data collection.
 
 ## General scheme of work
@@ -19,37 +31,37 @@ We also provide methods of knowledge database creation and spatial environmental
 
 ## Example
 
-Scripts for step 0 are in the "database" folder, steps 1-8 can be done with update_current_composition, get_recommended_composition or get_composition_unknown functions from method/get_composition.py
+Scripts for step 0 are in the "database" folder, steps 1-8 can be done with `update_current_composition`,
+    `get_recommended_composition` or `get_composition_unknown` functions from [get_composition module](method/get_composition.py).
 
 0. Create knowledge database
 
 1. Generate compatability graph based on knowledge database
-<img src="https://github.com/egov-itmo/landscaping/blob/main/docs/compatability_graph.png" alt="compatability graph" width="50%" height="50%"/>
+
+    <img src="docs/compatability_graph.png" alt="compatability graph" width="50%" height="50%"/>
 
 2. Select an area for composition generation
-<img src="https://github.com/egov-itmo/landscaping/blob/main/docs/green_area.png" alt="area" width="50%" height="50%"/>
+
+    <img src="docs/green_area.png" alt="area" width="50%" height="50%"/>
 
 3. Download light conditions
 
 4. Download external limitation factor
-<img src="https://github.com/egov-itmo/landscaping/blob/main/docs/limitation_factors.png" alt="limitation factors" width="50%" height="50%"/>
+
+    <img src="docs/limitation_factors.png" alt="limitation factors" width="50%" height="50%"/>
 
 5. Select a list of species which have suitable light conditions in this area and resistant for limitation factors
 
 6. Generate a subgraph of compatability graph with selected species as nodes
-<img src="https://github.com/egov-itmo/landscaping/blob/main/docs/original_graph.png" alt="original subgraph" width="50%" height="50%"/>
+    <img src="docs/original_graph.png" alt="original subgraph" width="50%" height="50%"/>
 
 
 7. Use community partition method to create compositions
 
-Var 1:
+    - Variant 1:
 
-<img src="https://github.com/egov-itmo/landscaping/blob/main/docs/updated_graph_1.png" alt="updated graph 1" width="50%" height="50%"/>
+    <img src="docs/updated_graph_1.png" alt="Variant 1" width="50%" height="50%"/>
 
-Var 2:
+    - Variant 2:
 
-<img src="https://github.com/egov-itmo/landscaping/blob/main/docs/updated_graph_2.png" alt="updated graph 2" width="50%" height="50%"/>
-
-8. Done!
-
- 
+    <img src="docs/updated_graph_2.png" alt="Variant 2" width="50%" height="50%"/>

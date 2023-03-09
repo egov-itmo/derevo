@@ -1,0 +1,12 @@
+alembic
+asyncpg
+click
+fastapi
+geoalchemy2
+loguru
+pandas
+psycopg2
+pydantic
+python-multipart
+sqlalchemy
+uvicorn
