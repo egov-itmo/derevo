@@ -1,5 +1,4 @@
 import pandas as pd
-import geopandas as gpd
 import networkx as nx
 from networkx.algorithms.community import greedy_modularity_communities
 import compositioner as cm
@@ -65,7 +64,7 @@ def get_species_composition_old(greenery_polygon):
     composition = ', '.join([', '.join(com) for com in communities_list if len(com) == size_of_biggest_community])
     return composition
 
-def update_current_composition(greenery_polygon, locations, target_parks, return_gexf=False, output_path = 'updated_graph'):
+def update_current_composition(greenery_polygon, return_gexf=False, output_path = 'updated_graph'):
     '''
     returns list of graphs with variants of updated plants composition
     '''
@@ -77,13 +76,13 @@ def update_current_composition(greenery_polygon, locations, target_parks, return
     light = cm.light.copy()
     #finding species which can grow in existing light conditions
     light_types = list(pd.unique(light.light_type_id))
-    lig_list = [lig_id for lig_id in light_types if _intersection_check(greenery_polygon, light.query(f'light_type_id == {lig_id}'))]
+    lig_list = [lig_id for lig_id in light_types if _intersection_check(greenery_polygon.geometry, light.query(f'light_type_id == {lig_id}'))]
     filtered_plants = plants_with_lig_resist[plants_with_lig_resist.light_type_id.isin(lig_list)]
     light_comp = list(pd.unique(filtered_plants.name_ru))
     print('number of light conditions:', len(lig_list))
     #finding species which can grow with existing limitations
     limitation_factors = list(pd.unique(limitations.limitation_factor_id))
-    lim_list = [lim_id for lim_id in limitation_factors if _intersection_check(greenery_polygon, limitations.query(f'limitation_factor_id == {lim_id}'))]
+    lim_list = [lim_id for lim_id in limitation_factors if _intersection_check(greenery_polygon.geometry, limitations.query(f'limitation_factor_id == {lim_id}'))]
     filtered_plants = plants_with_lim_resist[plants_with_lim_resist.limitation_factor_id.isin(lim_list)]
     limitations_comp = filtered_plants.groupby('name_ru').count().reset_index()
     limitations_comp = limitations_comp[limitations_comp.limitation_factor_id == limitations_comp.limitation_factor_id.max()]
@@ -107,7 +106,7 @@ def update_current_composition(greenery_polygon, locations, target_parks, return
     print(len(communities_list), 'communities here')
         
     compositions = [list(com) for com in communities_list]
-    current_graph = get_adjacency_graph(locations, target_parks)
+    current_graph = get_adjacency_graph(target_parks = [greenery_polygon['name']])
     current_composition = list(nx.to_pandas_edgelist(current_graph).source.unique())
     
     graph_variants = []
@@ -128,7 +127,7 @@ def update_current_composition(greenery_polygon, locations, target_parks, return
     else:
         return graph_variants
 
-def get_recommended_composition(greenery_polygon, database_link, return_gexf=False, output_path = 'recommended_graph'):
+def get_recommended_composition(greenery_polygon, return_gexf=False, output_path = 'recommended_graph'):
     '''
     returns list of graphs with variants of recommended composition with account for outer factors
     '''
@@ -139,13 +138,13 @@ def get_recommended_composition(greenery_polygon, database_link, return_gexf=Fal
     light = cm.light.copy()
     #finding species which can grow in existing light conditions
     light_types = list(pd.unique(light.light_type_id))
-    lig_list = [lig_id for lig_id in light_types if _intersection_check(greenery_polygon, light.query(f'light_type_id == {lig_id}'))]
+    lig_list = [lig_id for lig_id in light_types if _intersection_check(greenery_polygon.geometry, light.query(f'light_type_id == {lig_id}'))]
     filtered_plants = plants_with_lig_resist[plants_with_lig_resist.light_type_id.isin(lig_list)]
     light_comp = list(pd.unique(filtered_plants.name_ru))
     print('number of light conditions:', len(lig_list))
     #finding species which can grow with existing limitations
     limitation_factors = list(pd.unique(limitations.limitation_factor_id))
-    lim_list = [lim_id for lim_id in limitation_factors if _intersection_check(greenery_polygon, limitations.query(f'limitation_factor_id == {lim_id}'))]
+    lim_list = [lim_id for lim_id in limitation_factors if _intersection_check(greenery_polygon.geometry, limitations.query(f'limitation_factor_id == {lim_id}'))]
     filtered_plants = plants_with_lim_resist[plants_with_lim_resist.limitation_factor_id.isin(lim_list)]
     limitations_comp = filtered_plants.groupby('name_ru').count().reset_index()
     limitations_comp = limitations_comp[limitations_comp.limitation_factor_id == limitations_comp.limitation_factor_id.max()]
@@ -162,7 +161,7 @@ def get_recommended_composition(greenery_polygon, database_link, return_gexf=Fal
     else:
         df_comp = df_comp
     
-    compatability_graph = get_compatability_graph(database_link)
+    compatability_graph = get_compatability_graph()
     comp_graph = compatability_graph.copy()
     comp_graph = comp_graph.subgraph(df_comp.name_ru)
     communities_list = greedy_modularity_communities(comp_graph, weight='weight')

@@ -13,9 +13,9 @@ def get_adjacency_graph(edge_key_value = 1, target_parks = None, return_gexf = F
     species_total = []
     for loc in loc_list:
         local_species = species_in_locations[species_in_locations.park_name == loc]
-        local_species = local_species.join(local_species.species, how='cross', rsuffix='_x')
-        local_species = local_species[local_species.species != local_species.species_x]
-        local_species['edge'] = local_species.species + ':' + local_species.species_x
+        local_species = local_species.join(local_species.name_ru, how='cross', rsuffix='_x')
+        local_species = local_species[local_species.name_ru != local_species.name_ru_x]
+        local_species['edge'] = local_species.name_ru + ':' + local_species.name_ru_x
         species_total.append(local_species)
     species_total = pd.concat(species_total)
     df_comp = species_total.groupby('edge').count()['park_name'].reset_index()
@@ -26,7 +26,7 @@ def get_adjacency_graph(edge_key_value = 1, target_parks = None, return_gexf = F
     df_comp = df_comp[['name_ru', 'name_ru_x', 'weight']]
     df_comp['is_compatability'] = edge_key_value
     current_graph = nx.from_pandas_edgelist(df_comp, 'name_ru', 'name_ru_x', 'weight',
-    create_using=nx.MultiGraph(), edge_key = 'is_compatability')
+        create_using=nx.MultiGraph(), edge_key = 'is_compatability')
     if return_gexf:
         return nx.write_gexf(current_graph, f"{output_path}.gexf")
     else:
