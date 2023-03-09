@@ -1,14 +1,15 @@
 import pandas as pd
 import networkx as nx
 import numpy as np
-from data_collection import collect_plants_characteristics
+import compositioner as cm
 
-def get_compatability_graph(database_link, return_gexf=False):
+def get_compatability_graph(return_gexf=False, output_path = 'compatability_graph'):
     '''
     returns compatability graph where weights of edges equals to outcome of species interaction 
     (1 for negative, 2 for neutral, 3 for positive)
     '''
-    plants, x, y, cohabitation = collect_plants_characteristics(database_link) #drop x and y from func
+    plants = cm.plants.copy()
+    cohabitation = cm.cohabitation_attributes.copy()
     df_comp = plants.copy()
     df_comp = df_comp.join(df_comp, how='cross', rsuffix='_x')
     df_comp = df_comp[df_comp.name_ru != df_comp.name_ru_x]
@@ -28,18 +29,18 @@ def get_compatability_graph(database_link, return_gexf=False):
     plant_dict = plant_dict.transpose()
     plant_dict = plant_dict[plant_dict.index != 'name_ru'].to_dict()
     nx.set_node_attributes(compatability_graph, plant_dict)
-    if return_gexf == True:
-        return nx.write_gexf(compatability_graph, "compatability_graph.gexf")
+    if return_gexf:
+        return nx.write_gexf(compatability_graph, f"{output_path}.gexf")
     else:
         return compatability_graph
 
-def get_compatability_for_species(species_list, compatability_graph, return_gexf=False):
+def get_compatability_for_species(species_list, compatability_graph, return_gexf=False, output_path = 'current_graph'):
     '''
     returns compatability graph for a set of selected species
     '''
     current_graph = compatability_graph.subgraph(species_list)
-    if return_gexf == True:
-        nx.write_gexf(current_graph, "current_graph.gexf")
+    if return_gexf:
+        nx.write_gexf(current_graph, f"{output_path}.gexf")
         print('Done')
         return
     else:

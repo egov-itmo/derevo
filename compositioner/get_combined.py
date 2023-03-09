@@ -1,13 +1,12 @@
-import pandas as pd
 import networkx as nx
-from data_collection import collect_plants_characteristics
-from get_adjacency import get_adjacency_graph
+import compositioner as cm
 
-def get_combined_graph(database_link, locations, target_parks=None, return_gexf=False):
+def get_combined_graph(locations, target_parks=None, return_gexf=False, output_path = 'combined_graph'):
     '''
     returns combined graph with weights equal to number of co-occurence cases and compatability outcome in attributes
     '''
-    plants, x, y, cohabitation = collect_plants_characteristics(database_link) #drop x and y from func
+    plants = cm.plants.copy()
+    cohabitation = cm.cohabitation_attributes.copy()
     df_comp = plants.copy()
     df_comp = df_comp.join(df_comp, how='cross', rsuffix='_x')
     df_comp = df_comp[df_comp.name_ru != df_comp.name_ru_x]
@@ -19,7 +18,7 @@ def get_combined_graph(database_link, locations, target_parks=None, return_gexf=
     df_comp['cohabitation_type'].fillna('neutral', inplace=True)
     df_comp = df_comp[['name_ru', 'name_ru_x', 'cohabitation_type']]
     df_comp['is_compatability'] = 1
-    df_adjacency = nx.to_pandas_edgeslist(get_adjacency_graph(locations, target_parks))
+    df_adjacency = nx.to_pandas_edgeslist(cm.get_adjacency_graph(locations, target_parks))
     df_comp = df_comp.rename(columns={'name_ru':'source', 'name_ru_x':'target'}).merge(df_adjacency[['source', 'target', 'weight']], on=['source', 'target'], how='left')
     df_comp = df_comp.fillna(0.1)
     df_comp.loc[df_comp.weight != 0.1, 'cohabitation_type'] = 'has_cases'
@@ -30,8 +29,8 @@ def get_combined_graph(database_link, locations, target_parks=None, return_gexf=
     plant_dict = plant_dict.transpose()
     plant_dict = plant_dict[plant_dict.index != 'name_ru'].to_dict()
     nx.set_node_attributes(combined_graph, plant_dict)
-    if return_gexf == True:
-        nx.write_gexf(combined_graph, "combined_graph.gexf")
+    if return_gexf:
+        nx.write_gexf(combined_graph, f"{output_path}.gexf")
         print('Done')
         return
     else:
