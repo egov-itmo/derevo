@@ -1,0 +1,32 @@
+name: landscaping_frontend
+description: Frontend application to allow users to launch plants composition method
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0-245.0.dev <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_map: ^3.1.0
+  latlong2: ^0.8.1
+  json_annotation: ^4.8.0
+  http: ^0.13.5
+  flutter_map_geojson: ^1.0.1
+  positioned_tap_detector_2: ^1.0.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  json_serializable: ^6.6.1
+  build_runner: ^2.4.1
+
+flutter:
+
+  uses-material-design: true
