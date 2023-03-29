@@ -8,8 +8,8 @@ from starlette import status
 
 from plants_api.db.connection import get_connection
 from plants_api.logic.exceptions.geometry import TooLargeGeometryError
-from plants_api.logic.geometry_requests import get_limitation_factors as get_limitation_factors_from_db
-from plants_api.logic.geometry_requests import get_light as get_light_from_db
+from plants_api.logic.limitations import get_limitation_factors as get_limitation_factors_from_db
+from plants_api.logic.limitations import get_light as get_light_from_db
 from plants_api.schemas import GeoJSONResponse
 from plants_api.schemas.geometry_request import GeometryPostRequest
 
