@@ -10,6 +10,6 @@ class CohabitationType(Enum):
     Cohavbitation type enumeration.
     """
 
-    negative = "negative"
-    neutral = "neutral"
-    positive = "positive"
+    negative = "negative"  # pylint: disable=invalid-name
+    neutral = "neutral"  # pylint: disable=invalid-name
+    positive = "positive"  # pylint: disable=invalid-name

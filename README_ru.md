@@ -1,9 +1,9 @@
 # Проект планирования видового состава
 
-|           |                                                                                                                                                |
-|----------:|:----------------------------------------------------------------------------------------------------------------------------------------------:|
-| Лицензия  | ![Licence](https://img.shields.io/badge/License-MIT-yellow.svg)                                                                                |
-| Переводы  | [![english](https://img.shields.io/badge/lang-en-red.svg)](README.md) [![russian](https://img.shields.io/badge/lang-ru-yellow.svg)](README.md) |
+|           |                                                                                                                                                   |
+|----------:|:-------------------------------------------------------------------------------------------------------------------------------------------------:|
+| Лицензия  | ![Licence](https://img.shields.io/badge/License-MIT-yellow.svg)                                                                                   |
+| Переводы  | [![english](https://img.shields.io/badge/lang-en-red.svg)](README.md) [![russian](https://img.shields.io/badge/lang-ru-yellow.svg)](README_ru.md) |
 
 Репозиторий проекта НИР: № 622263 «Планирование видового состава городских зеленых насаждений при помощи сетевого моделирования».
 

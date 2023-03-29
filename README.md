@@ -1,9 +1,9 @@
 # Landscaping project
 
-|           |                                                                                                                                                |
-|----------:|:----------------------------------------------------------------------------------------------------------------------------------------------:|
-| License   | ![Licence](https://img.shields.io/badge/License-MIT-yellow.svg)                                                                                |
-| Languages | [![english](https://img.shields.io/badge/lang-en-red.svg)](README.md) [![russian](https://img.shields.io/badge/lang-ru-yellow.svg)](README.md) |
+|           |                                                                                                                                                   |
+|----------:|:-------------------------------------------------------------------------------------------------------------------------------------------------:|
+| License   | ![Licence](https://img.shields.io/badge/License-MIT-yellow.svg)                                                                                   |
+| Languages | [![english](https://img.shields.io/badge/lang-en-red.svg)](README.md) [![russian](https://img.shields.io/badge/lang-ru-yellow.svg)](README_ru.md) |
 
 Repository of science research at ITMO University #622263 "Planning city greenery species composition with using network modeling methods".
 

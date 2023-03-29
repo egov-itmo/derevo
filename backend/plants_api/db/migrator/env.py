@@ -1,3 +1,7 @@
+# pylint: disable=wrong-import-position,ungrouped-imports,wrong-import-order,no-member
+"""
+Environment preparation for Alembic.
+"""
 import os
 import pathlib
 import sys
@@ -14,7 +18,7 @@ from sqlalchemy import engine_from_config, pool
 
 from plants_api.config.app_settings_global import app_settings, AppSettings
 from plants_api.db import DeclarativeBase
-from plants_api.db.entities import *  # noqa
+from plants_api.db.entities import *  # pylint: disable=wildcard-import,unused-wildcard-import
 
 config = context.config
 section = config.config_ini_section

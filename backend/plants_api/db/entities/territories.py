@@ -19,3 +19,13 @@ territories = Table(
     Column("fertility_type_id", ForeignKey("soil_fertility_types.id"), nullable=False),
     Column("geometry", Geometry(spatial_index=False, from_text="ST_GeomFromEWKT", name="geometry")),
 )
+"""
+Territories where soil share the same type, acidity type and fertility type.
+
+Columns:
+- `id` - territory identifier
+- `type_id` - soil type identifier (soil_types.id), int
+- `acidity_type_id` - soil acidity type identifier (soil_acidity_types.id), int
+- `frtility_type_id` - soil frtility type identifier (soil_frtility_types.id), int
+- `geometry` - territory polygon, geometry
+"""

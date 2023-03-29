@@ -13,3 +13,10 @@ features = Table(
     Column("id", Integer, primary_key=True, server_default=features_id_seq.next_value()),
     Column("name", String, nullable=False, unique=True),
 )
+"""
+Plants features.
+
+Columns:
+- `id` - feature identifier, int serial
+- `name` - name of the feature, varchar
+"""

@@ -149,8 +149,8 @@ async def update_plants_from_xlsx(conn: AsyncConnection, input_xlsx: BytesIO) ->
     # Загрузка комментрариев сочетаемости с листа
     insert_statement = insert(cohabitation_comments).returning(cohabitation_comments.c.id)
     for comment in [
-        c for c in cohabitation_df["Краткий комментарий"].unique() if c == c
-    ]:  # pylint: disable=comparison-with-itself
+        c for c in cohabitation_df["Краткий комментарий"].unique() if c == c  # pylint: disable=comparison-with-itself
+    ]:
         statement = select(cohabitation_comments).where(cohabitation_comments.c.text == comment)
         if (res := (await conn.execute(statement)).fetchone()) is None:
             res = (await conn.execute(insert_statement, {"text": comment})).fetchone()
@@ -164,7 +164,8 @@ async def update_plants_from_xlsx(conn: AsyncConnection, input_xlsx: BytesIO) ->
         if (res := (await conn.execute(statement)).fetchone()) is not None:
             if res[0] != name_ru:
                 log(f"Обновление названия по-русски: {res[0]} -> {name_ru} (название на латыни: {name_lat})")
-                statement = update(plants).where(plants.name_latin == name_lat).values(name_ru=name_ru)
+                statement = update(plants).where(plants.c.name_latin == name_lat).values(name_ru=name_ru)
+                await conn.execute(statement)
                 was_updated += 1
     if was_updated == 0:
         log("Названия на русском языке соответствуют тем, что указаны в документе.")
@@ -242,6 +243,7 @@ async def update_plants_from_xlsx(conn: AsyncConnection, input_xlsx: BytesIO) ->
                 statement = select(plants.c.type_id).where(plants.c.id == plant_id)
                 if (await conn.execute(statement)).scalar() != value:
                     statement = update(plants).where(plants.c.id == plant_id).values(type_id=plant_types_ids[value])
+                    await conn.execute(statement)
                 continue
             try:
                 plants_to_table, table_column, table_types = type_table_name[s_conf.plants_columns_mapping[name]]
@@ -287,8 +289,8 @@ async def update_plants_from_xlsx(conn: AsyncConnection, input_xlsx: BytesIO) ->
     statement = select(plants.c.name_ru, plants.c.id)
     plants_ids = {normalize(name): idx for name, idx in await conn.execute(statement)}
     statement = select(plants.c.id, plants.c.genus_id).where(
-        plants.c.genus_id != None
-    )  # pylint: disable=singleton-comparison
+        plants.c.genus_id != None  # pylint: disable=singleton-comparison
+    )
     plants_genera = dict((await conn.execute(statement)).fetchall())
     updated_genera = 0
     for name in set(genera_df["Вид"]):

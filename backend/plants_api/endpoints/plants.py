@@ -1,7 +1,7 @@
 """
 get_plants endpoint is defined here.
 """
-from fastapi import APIRouter, Depends
+from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncConnection
 from starlette import status
 
@@ -9,11 +9,11 @@ from plants_api.db.connection import get_connection
 from plants_api.logic.plants import get_plants_from_db
 from plants_api.schemas.plants import PlantsResponse
 
-api_router = APIRouter(tags=["plants"])
+from .routers import plants_router
 
 
-@api_router.get(
-    "/plants/all",
+@plants_router.get(
+    "/all",
     response_model=PlantsResponse,
     status_code=status.HTTP_200_OK,
 )

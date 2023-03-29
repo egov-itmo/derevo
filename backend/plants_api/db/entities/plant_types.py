@@ -13,3 +13,10 @@ plant_types = Table(
     Column("id", Integer, primary_key=True, server_default=plant_types_id_seq.next_value()),
     Column("name", String, nullable=False, unique=True),
 )
+"""
+Plant types (life-forms).
+
+Columns:
+- `id` - plant type identifier, int serial
+- `name` - name of the plant type, varchar
+"""
