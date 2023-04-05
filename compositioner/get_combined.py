@@ -1,7 +1,8 @@
 import networkx as nx
 import compositioner as cm
+from compositioner.get_adjacency import get_adjacency_graph
 
-def get_combined_graph(locations, target_parks=None, return_gexf=False, output_path = 'combined_graph'):
+def get_combined_graph(target_parks=None, return_gexf=False, output_path = 'combined_graph'):
     '''
     returns combined graph with weights equal to number of co-occurence cases and compatability outcome in attributes
     '''
@@ -18,8 +19,10 @@ def get_combined_graph(locations, target_parks=None, return_gexf=False, output_p
     df_comp['cohabitation_type'].fillna('neutral', inplace=True)
     df_comp = df_comp[['name_ru', 'name_ru_x', 'cohabitation_type']]
     df_comp['is_compatability'] = 1
-    df_adjacency = nx.to_pandas_edgeslist(cm.get_adjacency_graph(locations, target_parks))
+    df_adjacency = nx.to_pandas_edgelist(get_adjacency_graph(target_parks = target_parks))
     df_comp = df_comp.rename(columns={'name_ru':'source', 'name_ru_x':'target'}).merge(df_adjacency[['source', 'target', 'weight']], on=['source', 'target'], how='left')
+    if target_parks is not None:
+        df_comp = df_comp[df_comp['source'].isin(df_adjacency['source'].unique())]
     df_comp = df_comp.fillna(0.1)
     df_comp.loc[df_comp.weight != 0.1, 'cohabitation_type'] = 'has_cases'
     combined_graph = nx.from_pandas_edgelist(df_comp, 'source', 'target', ['weight', 'cohabitation_type'], create_using=nx.MultiGraph(), edge_key = 'is_compatability')
