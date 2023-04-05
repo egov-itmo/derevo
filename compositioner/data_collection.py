@@ -1,5 +1,7 @@
 import pandas as pd
 import geopandas as gpd
+import requests
+import osm2geojson
 import compositioner as cm
 
 def collect_plants_characteristics(force_update = False):
@@ -64,3 +66,31 @@ def get_species_in_parks(force_update = False):
         return
     else:
         return species_in_parks
+    
+def get_smoke_area(city, city_crs):
+    UPPER_LIMIT = 40
+    LOWER_LIMIT = 10
+
+    overpass_url = "http://overpass-api.de/api/interpreter"
+    overpass_query = f"""
+    [out:json];
+            area['name'='{city}']->.searchArea;
+            (
+              node["man_made"="chimney"](area.searchArea);
+              way["man_made"="chimney"](area.searchArea);
+              relation["man_made"="chimney"](area.searchArea);
+            );
+    out geom;
+    """
+    result = requests.get(overpass_url, params={'data': overpass_query}).json()
+    gdf = osm2geojson.json2geojson(result)
+    gdf = gpd.GeoDataFrame.from_features(gdf["features"]).set_crs(4326).to_crs(city_crs)
+    gdf = gdf[["geometry", "id", "tags"]]
+    gdf.loc[gdf['geometry'].geom_type != 'Point', 'geometry'] = gdf['geometry'].centroid
+    gdf = gdf.join(pd.json_normalize(gdf.tags)['height']).drop(columns=['tags'])
+    gdf['height'] = gdf.height.fillna('10').map(lambda x: [char for char in x.split(' ') if char.isdigit()][0]).astype(int)
+    
+    max_area = gdf.buffer(gdf.height * UPPER_LIMIT)
+    min_area = gdf.buffer(gdf.height * LOWER_LIMIT)
+    gdf['geometry'] = max_area.difference(min_area).to_crs(4326)
+    return gdf
