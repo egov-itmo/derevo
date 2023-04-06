@@ -1,3 +1,6 @@
+"""
+Alembic launch.
+"""
 from alembic.config import main  # noqa
 
 

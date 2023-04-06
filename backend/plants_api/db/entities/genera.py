@@ -13,3 +13,10 @@ genera = Table(
     Column("id", Integer, primary_key=True, server_default=genera_id_seq.next_value()),
     Column("name_ru", String(100), nullable=False, unique=True),
 )
+"""
+Genera (plural form of genus).
+
+Columns:
+- `id` - soil acidity type identifier, int serial
+- `name_ru` - russian name of the soil acidity type, varchar
+"""

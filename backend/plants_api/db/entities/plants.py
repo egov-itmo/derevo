@@ -22,3 +22,19 @@ plants = Table(
     Column("genus_id", ForeignKey("genera.id")),
     Column("photo_name", String(256)),
 )
+"""
+Plants.
+
+Columns:
+- `id` - plant identifier, int serial, varchar
+- `name_ru` - russian name of the plant, varchar
+- `name_latin` - latin name of the plant, varchar
+- `type_id` - plant type identifier (plant_types.id), int
+- `height_avg` - average height in meters if available, numeric(3, 1)
+- `crown_diameter` - average crown diameter in meters if available, numeric(3, 1)
+- `spread_aggressiveness_level` - level of spread agressiveness, int
+- `survivability_level` - level of survivability, int
+- `is_invasive` - indicates whether plant is invasive, boolean
+- `genus_id` - genus identifier (genera.id), int
+- `photo_name` - name of the photo available at web-server, varchar(256)
+"""

@@ -50,6 +50,7 @@ class PlantsResponse(BaseModel):
     """
     List of plants.
     """
+
     plants: list[Plant]
 
     @classmethod

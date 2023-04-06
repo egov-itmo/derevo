@@ -17,3 +17,13 @@ climate_zones = Table(
     Column("temperature_max", Integer, nullable=False),
     Column("geometry", Geometry(spatial_index=False, from_text="ST_GeomFromEWKT", name="geometry")),
 )
+"""
+Climate zones.
+
+Columns:
+- `id` - climate zone identifier, int serial
+- `usda_number` - USDA number of a climate zone, int
+- `temperature_min` - minimal temperature of the climate zone, int
+- `temperature_max` - maximal temperature of the climate zone, int
+- `geometry` - geometry of the climate zone, geometry, nullable
+"""

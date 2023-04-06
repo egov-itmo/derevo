@@ -1,3 +1,4 @@
+# pylint: disable=no-member,invalid-name,missing-function-docstring,too-many-statements
 """init
 
 Revision ID: 8e4f5637d763
@@ -420,9 +421,7 @@ def upgrade():
         )
     )
 
-    op.execute(
-        sa.text("INSERT INTO light_types (name) VALUES ('Полное освещение'), ('Полутень'), ('Тень')")
-    )
+    op.execute(sa.text("INSERT INTO light_types (name) VALUES ('Полное освещение'), ('Полутень'), ('Тень')"))
 
     op.execute(
         sa.text(

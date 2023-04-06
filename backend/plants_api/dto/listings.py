@@ -11,5 +11,5 @@ class ListingDto:
     This DTO is used by listing endpoints logic.
     """
 
-    id: int # pylint: disable=invalid-name
+    id: int  # pylint: disable=invalid-name
     name: str

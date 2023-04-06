@@ -54,7 +54,7 @@ def get_plants_from_xlsx_sheets(plants_sheet: pd.DataFrame, plant_types_sheet: p
     life_forms["Сокращение"] = life_forms["Сокращение"].apply(str.lower)
     life_forms = life_forms.rename({"Расшифровка": "Тип растения"}, axis=1)
     plant_types = pd.Series(life_forms.set_index("Сокращение")["Тип растения"])
-    plants = plants.merge(plant_types, left_on="Жизненная форма", right_index=True)
+    plants = plants.merge(plant_types, left_on="Жизненная форма", right_index=True, how="left")
     return plants
 
 

@@ -1,7 +1,7 @@
 """
 listing endpoints are defined here.
 """
-from fastapi import APIRouter, Depends
+from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncConnection
 from starlette import status
 
@@ -16,11 +16,11 @@ from plants_api.logic.listings import (
 )
 from plants_api.schemas import ListingResponse
 
-api_router = APIRouter(tags=["listing"])
+from .routers import listing_router
 
 
-@api_router.get(
-    "/listing/humidity_types",
+@listing_router.get(
+    "/humidity_types",
     response_model=ListingResponse,
     status_code=status.HTTP_200_OK,
 )
@@ -32,8 +32,8 @@ async def get_humidity_types(connection: AsyncConnection = Depends(get_connectio
     return ListingResponse.from_dtos(acidity_types)
 
 
-@api_router.get(
-    "/listing/light_types",
+@listing_router.get(
+    "/light_types",
     response_model=ListingResponse,
     status_code=status.HTTP_200_OK,
 )
@@ -45,8 +45,8 @@ async def get_light_types(connection: AsyncConnection = Depends(get_connection))
     return ListingResponse.from_dtos(acidity_types)
 
 
-@api_router.get(
-    "/listing/limitation_factors",
+@listing_router.get(
+    "/limitation_factors",
     response_model=ListingResponse,
     status_code=status.HTTP_200_OK,
 )
@@ -58,8 +58,8 @@ async def get_limitation_factors(connection: AsyncConnection = Depends(get_conne
     return ListingResponse.from_dtos(acidity_types)
 
 
-@api_router.get(
-    "/listing/soil_acidity_types",
+@listing_router.get(
+    "/soil_acidity_types",
     response_model=ListingResponse,
     status_code=status.HTTP_200_OK,
 )
@@ -71,8 +71,8 @@ async def get_soil_acidity_types(connection: AsyncConnection = Depends(get_conne
     return ListingResponse.from_dtos(acidity_types)
 
 
-@api_router.get(
-    "/listing/soil_fertility_types",
+@listing_router.get(
+    "/soil_fertility_types",
     response_model=ListingResponse,
     status_code=status.HTTP_200_OK,
 )
@@ -84,8 +84,8 @@ async def get_soil_fertility_types(connection: AsyncConnection = Depends(get_con
     return ListingResponse.from_dtos(acidity_types)
 
 
-@api_router.get(
-    "/listing/soil_types",
+@listing_router.get(
+    "/soil_types",
     response_model=ListingResponse,
     status_code=status.HTTP_200_OK,
 )
