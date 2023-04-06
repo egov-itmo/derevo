@@ -15,7 +15,7 @@ class PlantsApiError(HTTPException):
     def __init__(self):
         super().__init__(self.get_status_code(), str(self))
 
-    def get_status_code(self) -> int:  # pylint: disable=no-self-use
+    def get_status_code(self) -> int:
         """
         Return FastApi response status for an HTTPException. Descestors should override this method,
             but it defaults to 500 - Internal Server Error.
@@ -32,7 +32,6 @@ class JWTDecodeError(PlantsApiError):
         super().__init__()
         self.token = token
 
-    def get_status_code(self) -> int:  # pylint: disable=no-self-use
         """
         Return '401 Unauthorized' status code.
         """

@@ -1,9 +1,17 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:geojson/geojson.dart';
 import 'package:http/http.dart' as http;
-import 'package:landscaping_frontend/entities/limitation_factors.dart';
 import 'package:landscaping_frontend/config/config.dart';
+import 'package:landscaping_frontend/entities/limitation_factors.dart';
+import 'package:landscaping_frontend/models/limitations_response.dart';
+import 'package:landscaping_frontend/models/method_request.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
+
+import 'limitation_factors_select_state.dart';
 
 class ChooseOptions extends StatefulWidget {
   const ChooseOptions({
@@ -52,6 +60,9 @@ class _ChooseOptionsState extends State<ChooseOptions> {
   @override
   Widget build(BuildContext context) {
     List<Widget> selects = [];
+    var limitations = context.watch<LimitationsResponseModel>();
+    var request = context.watch<MethodRequestModel>();
+
     for (NameAndSelect nameAndSelect in limitationFactors) {
       selects.add(Text("Выберите ${nameAndSelect.limitationFactorName}"));
       selects.add(nameAndSelect.select);
@@ -69,15 +80,24 @@ class _ChooseOptionsState extends State<ChooseOptions> {
               children: [
                 ...selects,
                 ElevatedButton(
-                  onPressed: _callBackend,
-                  child: const Text("Использовать заданный полигон"),
+                    onPressed: () {
+                      request.polygon.clear();
+                      limitations.limitationFactors = null;
+                    },
+                    child: const Text("Очистить")),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () async =>
+                      await _callGetLimitations(limitations, request.polygon),
+                  child: const Text("Просмотр факторов"),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => _callMethodCalculation(request),
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: widget.theme.colorScheme.primary,
-                      foregroundColor: widget.theme.colorScheme.onPrimary),
+                    backgroundColor: widget.theme.colorScheme.primary,
+                    foregroundColor: widget.theme.colorScheme.onPrimary,
+                  ),
                   child: const Text("Подобрать породный состав"),
                 ),
               ],
@@ -88,92 +108,57 @@ class _ChooseOptionsState extends State<ChooseOptions> {
     );
   }
 
-  void _callBackend() {}
-}
-
-class LimitationFactorSelect extends StatefulWidget {
-  final LimitationFactorType limitationFactorType;
-
-  const LimitationFactorSelect(
-    this.limitationFactorType, {
-    super.key,
-  });
-
-  @override
-  State<LimitationFactorSelect> createState() => _LimitationFactorSelectState();
-}
-
-class _LimitationFactorSelectState extends State<LimitationFactorSelect> {
-  late Future<LimitationFactors> futureLimitationFactors;
-  static const String _uncheckedText = 'Не выбрано';
-  String _current = _uncheckedText;
-
-  _LimitationFactorSelectState();
-
-  @override
-  void initState() {
-    super.initState();
-    futureLimitationFactors = _fetch();
-  }
-
-  Future<int?> checkedId() async {
-    if (_current == _uncheckedText) {
-      return null;
+  Future<void> _callGetLimitations(
+      LimitationsResponseModel limitations, List<LatLng> polygon) async {
+    if (polygon.length < 3) {
+      return;
     }
-    for (LimitationFactor limitationFactor
-        in (await futureLimitationFactors).values) {
-      if (_current == limitationFactor.name) {
-        return limitationFactor.id;
-      }
-    }
-    return null;
-  }
+    List<Polygon> polygons = [];
+    final geo = GeoJson();
+    final Map<String, Color> limitationFactorColors = {
+      "Устойчивость к засолению": Colors.yellow.shade300.withAlpha(130),
+      "Устойчивость к пересыханию": Colors.yellowAccent.withAlpha(130),
+      "Устойчивость к подтоплению": Colors.blue.shade800.withAlpha(130),
+      "Газостойкость": Colors.blue.shade200.withAlpha(130),
+      "Ветроустойчивость": Colors.teal.shade200.withAlpha(130),
+    };
+    geo.processedPolygons.listen((GeoJsonPolygon poly) {
+      polygons.addAll(
+        [
+          for (var list in poly.geoSeries.map((g) => g.toLatLng()).toList())
+            Polygon(
+                points: list,
+                color: limitationFactorColors[poly.name ?? "default"] ??
+                    Colors.blueGrey.withAlpha(130),
+                isFilled: true),
+        ],
+      );
+    });
+    geo.endSignal.listen((_) => geo.dispose());
 
-  @override
-  Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    return FutureBuilder<LimitationFactors>(
-      future: futureLimitationFactors,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return DropdownButton<String>(
-            value: _current,
-            items: [
-              _uncheckedText,
-              for (LimitationFactor limitationFactor in snapshot.data!.values)
-                limitationFactor.name
-            ].map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(() {
-                _current = newValue ?? _uncheckedText;
-              });
-            },
-          );
-        } else if (snapshot.hasError) {
-          return Text(
-            '${snapshot.error}',
-            style: TextStyle(color: theme.colorScheme.error),
-          );
-        }
-        return const CircularProgressIndicator();
+    String polygonAsBody = jsonEncode({
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            for (var latlng in polygon) [latlng.longitude, latlng.latitude]
+          ],
+        ],
       },
+    });
+    var response = await http.post(
+      Uri.parse("${appConfig.apiHost}/api/limitations/limitation_factors"),
+      headers: {"Content-Type": "application/json"},
+      body: polygonAsBody,
     );
+    if (response.statusCode == 200) {
+      var geoJsonText = utf8.decode(response.bodyBytes);
+      await geo.parse(geoJsonText);
+    }
+    limitations.limitationFactors = polygons;
   }
 
-  Future<LimitationFactors> _fetch() async {
-    final response = await http.get(Uri.parse(
-        '${appConfig.apiHost}${limitationFactorEndpoints[widget.limitationFactorType]}'));
-
-    if (response.statusCode == 200) {
-      return LimitationFactors.fromJson(
-          jsonDecode(utf8.decode(response.bodyBytes)));
-    } else {
-      throw Exception('Ошибка загрузки');
-    }
+  void _callMethodCalculation(MethodRequestModel request) {
+    debugPrint('Requesting backend with $request');
   }
 }

@@ -15,7 +15,7 @@ humidity_type_parts = Table(
     metadata,
     Column("id", Integer, primary_key=True, server_default=humidity_type_parts_id_seq.next_value()),
     Column("humidity_type_id", ForeignKey("humidity_types.id"), nullable=False),
-    Column("geometry", Geometry(spatial_index=False, from_text="ST_GeomFromEWKT", name="geometry")),
+    Column("geometry", Geometry("GEOMETRY", 4236, spatial_index=False, from_text="ST_GeomFromEWKT", name="geometry")),
 )
 """
 Geometry parts of a different humidity options.

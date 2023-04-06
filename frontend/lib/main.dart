@@ -1,15 +1,29 @@
 import 'dart:io';
-
+import 'package:flutter/services.dart';
+import 'package:landscaping_frontend/config/config.dart';
+import 'package:landscaping_frontend/models/limitations_response.dart';
+import 'package:provider/provider.dart';
+import 'package:yaml/yaml.dart';
 import 'package:flutter/material.dart';
 import 'package:landscaping_frontend/widgets/choose_options.dart';
 import 'package:landscaping_frontend/widgets/landscape_map.dart';
-
-const String apiHost = "http://localhost:8080";
+import 'package:landscaping_frontend/models/method_request.dart';
 
 final HttpClient httpClient = HttpClient();
 
-void main() {
-  runApp(const LandscapingFrontendApp());
+Future<void> main() async {
+  final yamlString = await rootBundle.loadString('assets/my_config.yaml');
+  final dynamic yamlMap = loadYaml(yamlString);
+
+  appConfig.apiHost = yamlMap['api_host'] ?? appConfig.apiHost;
+
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => MethodRequestModel()),
+      ChangeNotifierProvider(create: (context) => LimitationsResponseModel())
+    ],
+    child: const LandscapingFrontendApp(),
+  ));
 }
 
 class LandscapingFrontendApp extends StatelessWidget {

@@ -5,9 +5,9 @@ It is needed to import files which use this routers to initialize endpoints.
 """
 from fastapi import APIRouter
 
-limitations_router = APIRouter(tags=["Limitations"], prefix="/get_limitations")
+limitations_router = APIRouter(tags=["limitations"], prefix="/limitations")
 
-health_check_router = APIRouter(tags=["Health check"])
+system_router = APIRouter(tags=["system"])
 
 listing_router = APIRouter(tags=["listing"], prefix="/listing")
 
@@ -15,11 +15,12 @@ plants_router = APIRouter(tags=["plants"], prefix="/plants")
 
 update_router = APIRouter(tags=["update"], prefix="/update")
 
+
 routers_list = [
-    limitations_router,
-    health_check_router,
+    system_router,
     listing_router,
     plants_router,
+    limitations_router,
     update_router,
 ]
 

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:landscaping_frontend/models/limitations_response.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:positioned_tap_detector_2/positioned_tap_detector_2.dart';
+
+import 'package:landscaping_frontend/models/method_request.dart';
+import 'package:provider/provider.dart';
 
 class LandscapeMap extends StatefulWidget {
   const LandscapeMap({
@@ -20,11 +24,13 @@ enum CurrentAction {
 
 class _LandscapeMapState extends State<LandscapeMap> {
   CurrentAction currentAction = CurrentAction.addPoint;
-  List<LatLng> tappedPoints = [];
 
   @override
   Widget build(BuildContext context) {
-    final markers = tappedPoints.map((LatLng latlng) {
+    var request = context.watch<MethodRequestModel>();
+    var limitations = context.watch<LimitationsResponseModel>();
+
+    final markers = request.polygon.map((LatLng latlng) {
       return Marker(
         width: 50,
         height: 50,
@@ -47,12 +53,12 @@ class _LandscapeMapState extends State<LandscapeMap> {
       );
     }).toList();
 
-    Polygon? poly;
-    if (tappedPoints.length > 2) {
-      poly = Polygon(
-        points: tappedPoints,
+    Polygon? selectionPolygon;
+    if (markers.length > 2) {
+      selectionPolygon = Polygon(
+        points: request.polygon,
         isFilled: true,
-        color: Colors.grey.withAlpha(180),
+        color: Colors.green.withAlpha(180),
         borderColor: Colors.green,
       );
     }
@@ -61,10 +67,13 @@ class _LandscapeMapState extends State<LandscapeMap> {
       options: MapOptions(
         center: LatLng(59.95, 30.3),
         zoom: 10,
-        onTap: _handleTap,
+        onTap: (tapPosition, point) =>
+            _handleTap(tapPosition, point, request.polygon),
         onLongPress: (tapPosition, point) {
           setState(() {
-            tappedPoints = [];
+            if (request.polygon.isNotEmpty) {
+              request.polygon.removeLast();
+            }
           });
         },
       ),
@@ -74,17 +83,20 @@ class _LandscapeMapState extends State<LandscapeMap> {
           userAgentPackageName: 'org.kanootoko.landscaping_frontend',
         ),
         MarkerLayer(markers: markers),
-        if (poly != null)
+        if (selectionPolygon != null)
           PolygonLayer(
-            polygons: [poly],
-          )
+            polygons: [selectionPolygon],
+          ),
+        if (limitations.limitationFactors != null)
+          PolygonLayer(polygons: limitations.limitationFactors!),
       ],
     );
   }
 
-  void _handleTap(TapPosition tapPosition, LatLng latlng) {
+  void _handleTap(
+      TapPosition tapPosition, LatLng latlng, List<LatLng> polygon) {
     setState(() {
-      tappedPoints.add(latlng);
+      polygon.add(latlng);
     });
   }
 }

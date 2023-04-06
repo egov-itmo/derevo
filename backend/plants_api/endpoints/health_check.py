@@ -5,10 +5,10 @@ from starlette import status
 
 from plants_api.schemas import PingResponse
 
-from .routers import health_check_router
+from .routers import system_router
 
 
-@health_check_router.get(
+@system_router.get(
     "/health_check/ping",
     response_model=PingResponse,
     status_code=status.HTTP_200_OK,

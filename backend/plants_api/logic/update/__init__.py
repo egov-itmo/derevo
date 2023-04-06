@@ -48,6 +48,8 @@ def normalize(string: str) -> str:
     Normalize plant name to lower-case replacing strange symbols with convenient ones.
     """
     res = string.replace("ё", "е").replace("\xa0", " ").replace("\u0438\u0306", "й").lower().strip()
+    while "  " in res:
+        res = res.replace("  ", " ")
     return s_conf.plants_naming_exceptions.get(res, res)
 
 
@@ -134,7 +136,7 @@ async def update_plants_from_xlsx(conn: AsyncConnection, input_xlsx: BytesIO) ->
 
     insert_statement = insert(plant_types).returning(plant_types.c.id)
     for name in plants_df["Тип растения"].unique():
-        if name in plant_types_ids:
+        if name is None or name != name or name in plant_types_ids:  # pylint: disable=comparison-with-itself
             continue
         plant_types_ids[name] = (await conn.execute(insert_statement, {"name": name})).scalar()
 
