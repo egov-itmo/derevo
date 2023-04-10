@@ -13,3 +13,10 @@ cohabitation_comments = Table(
     Column("id", Integer, primary_key=True, server_default=cohabitation_comments_id_seq.next_value()),
     Column("text", String(250), nullable=False, unique=True),
 )
+"""
+Cohabitation comments.
+
+Columns:
+- `id` - cohabitation comment identifier, int serial
+- `text` - text of the comment, varchar(250)
+"""

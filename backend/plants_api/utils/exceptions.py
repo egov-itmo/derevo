@@ -1,9 +1,9 @@
-# pylint: disable=method-hidden, no-self-use
+# pylint: disable=method-hidden
 """
 Top exceptions for a plants backend service are defined here.
 """
 
-from fastapi import status, HTTPException
+from fastapi import HTTPException, status
 
 
 class PlantsApiError(HTTPException):
@@ -13,9 +13,9 @@ class PlantsApiError(HTTPException):
     """
 
     def __init__(self):
-        super().__init__(self.status_code(), str(self))
+        super().__init__(self.get_status_code(), str(self))
 
-    def status_code(self) -> int:
+    def get_status_code(self) -> int:
         """
         Return FastApi response status for an HTTPException. Descestors should override this method,
             but it defaults to 500 - Internal Server Error.
@@ -32,7 +32,9 @@ class JWTDecodeError(PlantsApiError):
         super().__init__()
         self.token = token
 
-    def status_code(self) -> int:
+        """
+        Return '401 Unauthorized' status code.
+        """
         return status.HTTP_401_UNAUTHORIZED
 
     def __str__(self) -> str:

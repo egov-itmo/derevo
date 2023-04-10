@@ -1,18 +1,18 @@
 """
 All FastApi endpoints are exported from this module.
 """
-from plants_api.endpoints.health_check import api_router as health_check
-from plants_api.endpoints.listings import api_router as listings
-from plants_api.endpoints.plants import api_router as plants
-from plants_api.endpoints.redirect_to_swagger import api_router as redirect_to_swagger
-from plants_api.endpoints.update import api_router as update
+import importlib
+from pathlib import Path
+
+from .routers import routers_list
+
+for file in sorted(Path(__file__).resolve().parent.iterdir()):
+    if file.name.endswith(".py") and file.name not in ("__init__.py", "router.py"):
+        importlib.import_module(f".{file.name[:-3]}", __package__)
+
 
 list_of_routes = [
-    health_check,
-    listings,
-    plants,
-    redirect_to_swagger,
-    update,
+    *routers_list,
 ]
 
 

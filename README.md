@@ -1,9 +1,9 @@
 # Landscaping project
 
-|           |                                                                                                                                                |
-|----------:|:----------------------------------------------------------------------------------------------------------------------------------------------:|
-| License   | ![Licence](https://img.shields.io/badge/License-MIT-yellow.svg)                                                                                |
-| Languages | [![english](https://img.shields.io/badge/lang-en-red.svg)](README.md) [![russian](https://img.shields.io/badge/lang-ru-yellow.svg)](README.md) |
+|           |                                                                                                                                                   |
+|----------:|:-------------------------------------------------------------------------------------------------------------------------------------------------:|
+| License   | ![Licence](https://img.shields.io/badge/License-MIT-yellow.svg)                                                                                   |
+| Languages | [![english](https://img.shields.io/badge/lang-en-red.svg)](README.md) [![russian](https://img.shields.io/badge/lang-ru-yellow.svg)](README_ru.md) |
 
 Repository of science research at ITMO University #622263 "Planning city greenery species composition with using network modeling methods".
 
@@ -12,7 +12,8 @@ Repository of science research at ITMO University #622263 "Planning city greener
 - [**backend**](backend/README.md) - backend service, which provides the access to database plants data (including insertion and updating)
     and keeps database schema syncronized.
 - [**photos**](photos/README.md) - plants photos hosting Docker service and photos preparation/insertion scripts.
-- **method** - method explanation, graphs, compositions and utility scripts.
+- [**frontend**](frontend/README.md) - frontend written on Flutter, which can be compiled to web-interface used with Nginx.
+- **compositioner** - method explanation, graphs, compositions and utility scripts.
 
 ## Description
 

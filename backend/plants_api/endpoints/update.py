@@ -3,7 +3,7 @@ update endpoint is defined here.
 """
 from io import BytesIO
 
-from fastapi import APIRouter, Depends, File, UploadFile
+from fastapi import Depends, File, UploadFile
 from fastapi.responses import PlainTextResponse
 from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncConnection
@@ -13,11 +13,11 @@ from plants_api.db.connection import get_connection
 from plants_api.logic.update import update_plants_from_xlsx
 from plants_api.schemas.plants import PlantsResponse
 
-api_router = APIRouter(tags=["update"])
+from .routers import update_router
 
 
-@api_router.post(
-    "/update/xlsx",
+@update_router.post(
+    "/xlsx",
     response_class=PlainTextResponse,
     status_code=status.HTTP_200_OK,
 )
