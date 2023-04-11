@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "compositioner"
+version = "0.1.0"
+authors = [
+    { name = "Aleksander Antonov", email = "asantonov@itmo.ru" },
+]
+description = "Collection of methods to generate stable plants collections based on their cohabitation and outer limitations"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+
+dependencies = [
+    "geopandas>=0.12.0",
+    "loguru>=0.6.0",
+    "matplotlib>=3.5",
+    "networkx>=3.1",
+    "numpy>=1.24.0",
+    "pandas>=1.5.0",
+    "sqlalchemy>=2.0.0"
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+dev = ["black>=22", "isort", "pylint"]
+
+[project.urls]
+"Homepage" = "https://github.com/egov-itmo/landscaping"
+"Bug Tracker" = "https://github.com/egov-itmo/landscaping/issues"
+
+[tool.black]
+line-length = 120
+target-version = ['py39']
+
+[tool.pylint.format]
+max-line-length = 120
+expected-line-ending-format = "LF"
+
+[tool.pylint."messages control"]
+disable = [
+    "duplicate-code"
+]

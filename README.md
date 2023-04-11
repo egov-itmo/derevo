@@ -13,7 +13,7 @@ Repository of science research at ITMO University #622263 "Planning city greener
     and keeps database schema syncronized.
 - [**photos**](photos/README.md) - plants photos hosting Docker service and photos preparation/insertion scripts.
 - [**frontend**](frontend/README.md) - frontend written on Flutter, which can be compiled to web-interface used with Nginx.
-- **compositioner** - method explanation, graphs, compositions and utility scripts.
+- [**method**](method/README.md) - compositioner module containing plants compositions generation and graph algorithms.
 
 ## Description
 
