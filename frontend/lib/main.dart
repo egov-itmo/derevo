@@ -1,21 +1,21 @@
 import 'dart:io';
-import 'package:flutter/services.dart';
+
+import 'package:flutter/material.dart';
+import 'package:global_configuration/global_configuration.dart';
 import 'package:landscaping_frontend/config/config.dart';
 import 'package:landscaping_frontend/models/limitations_response.dart';
-import 'package:provider/provider.dart';
-import 'package:yaml/yaml.dart';
-import 'package:flutter/material.dart';
+import 'package:landscaping_frontend/models/method_request.dart';
 import 'package:landscaping_frontend/widgets/choose_options.dart';
 import 'package:landscaping_frontend/widgets/landscape_map.dart';
-import 'package:landscaping_frontend/models/method_request.dart';
+import 'package:provider/provider.dart';
 
 final HttpClient httpClient = HttpClient();
 
 Future<void> main() async {
-  final yamlString = await rootBundle.loadString('assets/my_config.yaml');
-  final dynamic yamlMap = loadYaml(yamlString);
+  WidgetsFlutterBinding.ensureInitialized();
 
-  appConfig.apiHost = yamlMap['api_host'] ?? appConfig.apiHost;
+  await GlobalConfiguration().loadFromAsset("config.json");
+  appConfig.apiHost = GlobalConfiguration().getValue("api_host");
 
   runApp(MultiProvider(
     providers: [

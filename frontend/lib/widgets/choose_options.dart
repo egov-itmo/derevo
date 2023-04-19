@@ -113,8 +113,6 @@ class _ChooseOptionsState extends State<ChooseOptions> {
     if (polygon.length < 3) {
       return;
     }
-    List<Polygon> polygons = [];
-    final geo = GeoJson();
     final Map<String, Color> limitationFactorColors = {
       "Устойчивость к засолению": Colors.yellow.shade300.withAlpha(130),
       "Устойчивость к пересыханию": Colors.yellowAccent.withAlpha(130),
@@ -122,19 +120,6 @@ class _ChooseOptionsState extends State<ChooseOptions> {
       "Газостойкость": Colors.blue.shade200.withAlpha(130),
       "Ветроустойчивость": Colors.teal.shade200.withAlpha(130),
     };
-    geo.processedPolygons.listen((GeoJsonPolygon poly) {
-      polygons.addAll(
-        [
-          for (var list in poly.geoSeries.map((g) => g.toLatLng()).toList())
-            Polygon(
-                points: list,
-                color: limitationFactorColors[poly.name ?? "default"] ??
-                    Colors.blueGrey.withAlpha(130),
-                isFilled: true),
-        ],
-      );
-    });
-    geo.endSignal.listen((_) => geo.dispose());
 
     String polygonAsBody = jsonEncode({
       "geometry": {
@@ -153,9 +138,43 @@ class _ChooseOptionsState extends State<ChooseOptions> {
     );
     if (response.statusCode == 200) {
       var geoJsonText = utf8.decode(response.bodyBytes);
-      await geo.parse(geoJsonText);
+      final geo = GeoJson();
+      List<Polygon> polygons = [];
+      debugPrint("GeoJson text has length = ${geoJsonText.length}");
+      // geo.processedPolygons.listen((GeoJsonPolygon poly) {
+      //   debugPrint("Adding polygon");
+      //   polygons.addAll(
+      //     [
+      //       for (var list in poly.geoSeries.map((g) => g.toLatLng()).toList())
+      //         Polygon(
+      //             points: list,
+      //             color: limitationFactorColors[poly.name ?? "default"] ??
+      //                 Colors.blueGrey.withAlpha(130),
+      //             isFilled: true),
+      //     ],
+      //   );
+      // });
+      // geo.endSignal.listen((_) => geo.dispose());
+      await geo.parseInMainThread(geoJsonText, disableStream: true);
+      debugPrint(
+          "Got ${geo.polygons.length} polygons and ${geo.multiPolygons.length} multipolygons, ${geo.features.length} features totally");
+      for (GeoJsonPolygon poly in geo.polygons) {
+        polygons.addAll(
+          [
+            for (var list in poly.geoSeries.map((g) => g.toLatLng()).toList())
+              Polygon(
+                  points: list,
+                  color: limitationFactorColors[poly.name ?? "default"] ??
+                      Colors.blueGrey.withAlpha(130),
+                  isFilled: true),
+          ],
+        );
+      }
+      limitations.limitationFactors = polygons;
+      debugPrint("Got ${polygons.length} limitation factors");
+    } else {
+      debugPrint("Got error code: ${response.statusCode}");
     }
-    limitations.limitationFactors = polygons;
   }
 
   void _callMethodCalculation(MethodRequestModel request) {

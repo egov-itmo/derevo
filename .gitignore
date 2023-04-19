@@ -4,3 +4,5 @@
 .vscode
 .env
 /data
+/backend.env
+/frontend-config.json
