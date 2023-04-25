@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geojson/geojson.dart';
+import 'package:geojson_vi/geojson_vi.dart';
 import 'package:http/http.dart' as http;
 import 'package:landscaping_frontend/config/config.dart';
 import 'package:landscaping_frontend/entities/limitation_factors.dart';
@@ -138,37 +138,25 @@ class _ChooseOptionsState extends State<ChooseOptions> {
     );
     if (response.statusCode == 200) {
       var geoJsonText = utf8.decode(response.bodyBytes);
-      final geo = GeoJson();
+
+      var geo = GeoJSONFeatureCollection.fromJSON(geoJsonText);
+
       List<Polygon> polygons = [];
-      debugPrint("GeoJson text has length = ${geoJsonText.length}");
-      // geo.processedPolygons.listen((GeoJsonPolygon poly) {
-      //   debugPrint("Adding polygon");
-      //   polygons.addAll(
-      //     [
-      //       for (var list in poly.geoSeries.map((g) => g.toLatLng()).toList())
-      //         Polygon(
-      //             points: list,
-      //             color: limitationFactorColors[poly.name ?? "default"] ??
-      //                 Colors.blueGrey.withAlpha(130),
-      //             isFilled: true),
-      //     ],
-      //   );
-      // });
-      // geo.endSignal.listen((_) => geo.dispose());
-      await geo.parseInMainThread(geoJsonText, disableStream: true);
-      debugPrint(
-          "Got ${geo.polygons.length} polygons and ${geo.multiPolygons.length} multipolygons, ${geo.features.length} features totally");
-      for (GeoJsonPolygon poly in geo.polygons) {
-        polygons.addAll(
-          [
-            for (var list in poly.geoSeries.map((g) => g.toLatLng()).toList())
-              Polygon(
-                  points: list,
-                  color: limitationFactorColors[poly.name ?? "default"] ??
-                      Colors.blueGrey.withAlpha(130),
-                  isFilled: true),
-          ],
-        );
+      for (var feature in geo.features) {
+        if (feature!.geometry.type == GeoJSONType.polygon) {
+          var geom = feature.geometry.toMap()["coordinates"][0];
+          var points = <LatLng>[
+            for (var entry in geom) LatLng(entry[1], entry[0])
+          ];
+          polygons.add(
+            Polygon(
+                points: points,
+                color: limitationFactorColors[
+                        feature.properties?["name"] ?? "default"] ??
+                    Colors.blueGrey.withAlpha(130),
+                isFilled: true),
+          );
+        }
       }
       limitations.limitationFactors = polygons;
       debugPrint("Got ${polygons.length} limitation factors");
