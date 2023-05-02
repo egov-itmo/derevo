@@ -38,15 +38,6 @@ class _LandscapeMapState extends State<LandscapeMap> {
         builder: (ctx) => GestureDetector(
           onLongPress: () {
             debugPrint("test!");
-            // for (LatLng point in tappedPoints) {
-            //   if (point == latlng) {
-            //     setState(() {
-            //       tappedPoints.remove(point);
-            //     });
-            //     break;
-            //   }
-            // }
-            // debugPrint("I was here");
           },
           child: const Icon(Icons.circle, color: Colors.red),
         ),

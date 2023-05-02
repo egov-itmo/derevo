@@ -55,39 +55,3 @@ class MethodRequestModel extends ChangeNotifier {
         ' poligonPresent=${polygon.isNotEmpty}}';
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:latlong2/latlong.dart';
-
-// class MethodRequestModel extends InheritedWidget {
-//   final int? humidityTypeId;
-//   final int? lightTypeId;
-//   final int? soilAcidityTypeId;
-//   final int? soilFertilityTypeId;
-//   final int? soilTypeId;
-//   final List<LatLng> polygon;
-
-//   const MethodRequestModel({
-//     super.key,
-//     this.humidityTypeId,
-//     this.lightTypeId,
-//     this.soilAcidityTypeId,
-//     this.soilFertilityTypeId,
-//     this.soilTypeId,
-//     this.polygon = const [],
-//     required super.child,
-//   });
-
-//   static MethodRequestModel? maybeOf(BuildContext context) {
-//     return context.dependOnInheritedWidgetOfExactType<MethodRequestModel>();
-//   }
-
-//   static MethodRequestModel of(BuildContext context) {
-//     final MethodRequestModel? result = maybeOf(context);
-//     assert(result != null, 'No MethodRequestModel found in context');
-//     return result!;
-//   }
-
-//   @override
-//   bool updateShouldNotify(MethodRequestModel oldWidget) => true;
-// }

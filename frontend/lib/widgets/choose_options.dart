@@ -29,8 +29,10 @@ class NameAndSelect {
   final String limitationFactorName;
   final LimitationFactorSelect select;
 
-  const NameAndSelect(
-      {required this.limitationFactorName, required this.select});
+  const NameAndSelect({
+    required this.limitationFactorName,
+    required this.select,
+  });
 }
 
 class _ChooseOptionsState extends State<ChooseOptions> {
