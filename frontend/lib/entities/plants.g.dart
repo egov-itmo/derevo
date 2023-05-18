@@ -10,14 +10,15 @@ Plant _$PlantFromJson(Map<String, dynamic> json) => Plant(
       id: json['id'] as int,
       nameRu: json['name_ru'] as String,
       nameLatin: json['name_latin'] as String,
+      genus: json['genus'] as String?,
       type: json['type'] as String,
       heightAvg: (json['height_avg'] as num?)?.toDouble(),
       crownDiameter: (json['crown_diameter'] as num?)?.toDouble(),
       spreadAggressivenessLevel: json['spread_aggressiveness_level'] as int?,
       survivabilityLevel: json['survivability_level'] as int?,
       isInvasive: json['is_invasive'] as bool?,
-      genus: json['genus'] as String?,
       photoUrl: json['photo_url'] as String?,
+      thumbnailUrl: json['thumbnail_url'] as String?,
     );
 
 Map<String, dynamic> _$PlantToJson(Plant instance) => <String, dynamic>{
@@ -32,6 +33,7 @@ Map<String, dynamic> _$PlantToJson(Plant instance) => <String, dynamic>{
       'is_invasive': instance.isInvasive,
       'genus': instance.genus,
       'photo_url': instance.photoUrl,
+      'thumbnail_url': instance.thumbnailUrl,
     };
 
 Plants _$PlantsFromJson(Map<String, dynamic> json) => Plants(

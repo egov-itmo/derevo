@@ -66,16 +66,18 @@ class Headered extends StatelessWidget {
           alignment: Alignment.center,
           child: Row(children: [
             ElevatedButton(
-                onPressed: () {
-                  var current =
-                      ModalRoute.of(context)?.settings.name ?? "unknown";
-                  if (current == '/plants' && Navigator.canPop(context)) {
-                    Navigator.pop(context);
-                  } else if (current != '/') {
-                    Navigator.pushNamed(context, '/');
-                  }
-                },
-                child: const Text("Main page")),
+              onPressed: () {
+                var current =
+                    ModalRoute.of(context)?.settings.name ?? "unknown";
+                if (current == '/plants' && Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                } else if (current != '/') {
+                  Navigator.pushNamed(context, '/');
+                }
+              },
+              child: const Text("Main page"),
+            ),
+            const SizedBox(width: 10),
             ElevatedButton(
                 onPressed: () {
                   if (ModalRoute.of(context)?.settings.name != 'plants') {

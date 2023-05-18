@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncConnection
 from plants_api.db.entities import genera, plant_types, plants
 from plants_api.dto import PlantDto
 from plants_api.utils import get_photo_url
+from plants_api.utils.photos import get_thumbnail_url
 
 
 async def get_plants_from_db(connection: AsyncConnection) -> list[PlantDto]:
@@ -34,6 +35,10 @@ async def get_plants_from_db(connection: AsyncConnection) -> list[PlantDto]:
         .order_by(plants.c.id)
     )
     return [
-        PlantDto(*data, (get_photo_url(photo_name) if photo_name is not None else None))
+        PlantDto(
+            *data,
+            (get_photo_url(photo_name) if photo_name is not None else None),
+            (get_thumbnail_url(photo_name) if photo_name is not None else None),
+        )
         for *data, photo_name in await connection.execute(statement)
     ]

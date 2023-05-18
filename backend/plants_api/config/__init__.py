@@ -27,7 +27,8 @@ class AppSettings:
     debug: bool = False
     db_connect_retry: int = 20
     db_pool_size: int = 15
-    photos_prefix: str = "localhost:6065/photo/"
+    photos_dir: str = "photos"
+    photos_prefix: str = "localhost:6065/images/"
     application_name = f"plants_api ({api_version})"
 
     @property

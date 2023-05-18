@@ -3,6 +3,7 @@ version: '3.1'
 services:
   photos:
     container_name: landscaping-photos
+    image: landscaping-photos:latest
     build: photos
     volumes:
       - ./photos/plants_photos:/plants_photos
@@ -12,24 +13,28 @@ services:
 
   backend:
     container_name: landscaping-backend
+    image: 'landscaping-backend:0.3.0'
     build: backend
     # ports:
     #   - 6066:80
-    env_file: backend.env
+    env_file: ./backend.env
+    volumes:
+      - ./photos/plants_photos:/plants_photos
     restart: unless-stopped
 
   frontend:
     container_name: landscaping-frontend
+    image: 'landscaping-frontend:1.4.0'
     build: frontend
     volumes:
-      # - ./frontend-config.yml:/usr/share/nginx/html/assets/config.yml
-      - ./frontend-config.json:/usr/share/nginx/html/assets/assets/cfg/config.json
+      - ./frontend-config.json:/usr/share/nginx/html/assets/cfg/config.json
     depends_on:
       - backend
     restart: unless-stopped
 
   nginx:
     container_name: landscaping-nginx
+    image: 'landscaping-nginx:latest'
     build: .
     ports:
       - 80:80
@@ -37,3 +42,4 @@ services:
     depends_on:
       - photos
       - frontend
+      - backend

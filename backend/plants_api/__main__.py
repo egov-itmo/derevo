@@ -22,7 +22,7 @@ from plants_api.db.connection.session import SessionManager
 from plants_api.endpoints import list_of_routes
 from plants_api.utils.dotenv import try_load_envfile
 
-LAST_UPDATE = "2023-03-29"
+LAST_UPDATE = "2023-05-18"
 
 
 def bind_routes(application: FastAPI, prefix: str) -> None:
@@ -233,8 +233,18 @@ def logger_from_str(logger_text: str) -> list[tuple[LogLevel, str]]:
     help="Add logger in format LEVEL,path/to/logfile",
 )
 @click.option(
+    "--photos_dir",
+    "-pd",
+    envvar="PHOTOS_DIR",
+    default="photos",
+    type=click.Path(exists=True, file_okay=False),
+    show_default=True,
+    show_envvar=True,
+    help="Path to directory to store photos (small-sized copies will go to <photos_dir>/thumbnails)",
+)
+@click.option(
     "--photos_prefix",
-    "-p",
+    "-pp",
     envvar="PHOTOS_PREFIX",
     default="localhost:6065/photo/",
     show_default=True,
@@ -258,6 +268,7 @@ def main(
     host: str,
     logger_verbosity: LogLevel,
     additional_loggers: list[tuple[LogLevel, str]],
+    photos_dir: str,
     photos_prefix: str,
     debug: bool,
 ):
@@ -275,6 +286,7 @@ def main(
         db_user=db_user,
         db_pass=db_pass,
         db_pool_size=db_pool_size,
+        photos_dir=photos_dir,
         photos_prefix=photos_prefix,
         debug=debug,
     )

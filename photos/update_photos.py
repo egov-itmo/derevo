@@ -1,67 +1,63 @@
+"""
+Executable script to update plants photos in the database
+"""
 import os
-import pathlib
 import sys
+import time
+from pathlib import Path
 
 import pandas as pd
-import psycopg2
+import requests
+from rich.console import Console
 
-photos_path = "plants_photos"
+console = Console(emoji=False, highlight=False)
+
+photos_path = "input_photos"  # pylint: disable=invalid-name
 if len(sys.argv) > 1:
-    photos_path = sys.argv[1]
+    photos_path = sys.argv[1]  # pylint: disable=invalid-name
 if photos_path != "--help" and not os.path.isdir(photos_path):
-    print(f"Файл {photos_path} не найден")
-    photos_path = "--help"
+    console.print(f"[red]Файл [i]{photos_path}[/i] не найден[/red]. Отображается --help.")
+    photos_path = "--help"  # pylint: disable=invalid-name
+
 if photos_path == "--help":
-    print(
+    console.print(
         "Скрипт для загрузки информации о фотографиях в базу данных. Обрабатывает фотографии с названиями фйлов"
-        " как названия растений, переименовывает их в id растений и отмечает в базе, что данное растение имеет фотографию"
+        " из [green]заданной папки[/green] как названия растений, сравнивает с названиями, возвращенными back-end'ом"
+        " и загружает фотографии для совпавших."
     )
-    print(f"Использование: python {sys.argv[0]} <путь/до/папки_с_фотографиями>")
-    print("Используемые переменные окружения: DB_HOST,DB_PORT,DB_NAME,DB_USER,DB_PASS")
+    console.print(f"Использование: python {sys.argv[0]} [green]<путь/до/папки_с_фотографиями>[/green]")
+    console.print(
+        "Используемые переменные окружения: [b]DB_HOST[/b],[b]DB_PORT[/b],[b]DB_NAME[/b],[b]DB_USER[/b],[b]DB_PASS[/b]"
+    )
+    sys.exit(0)
 
-db_host = os.environ.get("DB_HOST", "localhost")
-db_port = os.environ.get("DB_PORT", 5432)
-db_name = os.environ.get("DB_NAME", "greendb")
-db_user = os.environ.get("DB_USER", "postgres")
-db_pass = os.environ.get("DB_PASS", "postgres")
+plants_endpoint = os.environ.get("PLANTS_ENDPOINT", "http://localhost:8080/api/plants/all")
+photo_endpoint = os.environ.get("PHOTO_ENDPOINT", "http://localhost:8080/api/update/plant/{plant_id}/photo")
 
-print(f"В качестве папки с фотографиями используется {photos_path}")
-print(f"Подключение к базе данных будет произведено как postgresql://{db_user}@{db_host}:{db_port}/{db_name}")
+console.print(f"В качестве папки с фотографиями используется [green]{photos_path}[/green]")
+console.print(f"Данные о растениях будут запрошены по адресу [magenta]{plants_endpoint}[/magenta]")
+console.print(f"Фотографии будут отправляться по шаблону [cyan]{photo_endpoint}[/cyan]")
 print()
-
-get_conn = lambda: psycopg2.connect(
-    host=db_host,
-    port=db_port,
-    dbname=db_name,
-    user=db_user,
-    password=db_pass,
-    application_name="update_plants_photos",
-    connect_timeout=10,
-)
 
 # Известные переименования и функция нормализации названий для сравнения
 
 exc = {"Клен сахаристый": "Клён сахарный"}
 
 
-def normalize(s: str) -> str:
-    res = s.replace("ё", "е").replace("\xa0", " ").replace("\u0438\u0306", "й").lower().strip()
-    return exc[res] if res in exc else res
+def normalize(name: str) -> str:
+    """
+    Normalize name for comparison with other normalized names.
+    """
+    normalized = name.replace("ё", "е").replace("\xa0", " ").replace("\u0438\u0306", "й").lower().strip()
+    return exc.get(normalized, normalized)
 
 
 exc = {normalize(key): normalize(val) for key, val in exc.items()}
 
-try:
-    with get_conn() as conn, conn.cursor() as cur:
-        cur.execute("SELECT name_ru as name, id FROM plants")
-        plants = (
-            pd.DataFrame(cur.fetchall(), columns=[d.name for d in cur.description]).set_index("id").sort_values("name")
-        )
-finally:
-    conn.close()
-plants["name"] = plants["name"].apply(normalize)
+plants = pd.DataFrame(requests.get(plants_endpoint, timeout=60).json()["plants"])
+plants["name"] = plants["name_ru"].apply(normalize)
 
-photos_dir = pathlib.Path(photos_path)
+photos_dir = Path(photos_path)
 plant_names = []
 filenames = {}
 for file in photos_dir.iterdir():
@@ -80,22 +76,36 @@ plant_names_found.index = [plants["name"][plants["name"] == val].index[0] for va
 
 missings = plant_names[~plant_names.isin(plant_names_found)]
 print(
-    f"Обнаружено {missings.shape[0]} фотографий для которых не нашлось растения в БД. {plant_names_found.shape[0]} будут обновлены"
+    f"Обнаружено {missings.shape[0]} фотографий для которых не нашлось растения в БД."
+    f" {plant_names_found.shape[0]} будут обновлены"
 )
 if missings.shape[0] > 0:
     print("Названия фотографий без растения в БД будут сохранены в файл missings.txt")
     with open("missings.txt", "w", encoding="utf-8") as file:
         print("\n".join(list(missings)), file=file)
 
-try:
-    with get_conn() as conn, conn.cursor() as cur:
-        for plant_id, plant_name in plant_names_found.items():
-            photo_name = filenames[plant_name]
-            new_photo_name = f"{plant_id}{photo_name[photo_name.rfind('.') :]}"
-            cur.execute("UPDATE plants SET photo_name = %s WHERE id = %s", (new_photo_name, plant_id))
-            (photos_dir / photo_name).rename(photos_dir / new_photo_name)
-finally:
+errors = 0  # pylint: disable=invalid-name
+for plant_id, plant_name in plant_names_found.items():
+    photo_name = filenames[plant_name]
+    console.print(f"Sending {filenames[plant_name]} image as a photo for plant {plant_name} (id={plant_id})")
+
     try:
-        conn.close()
-    except:
-        pass
+        with (photos_dir / filenames[plant_name]).open("rb") as file:
+            res = requests.post(
+                photo_endpoint.replace("{plant_id}", str(plant_id)),
+                files={"photo_data": file},
+                timeout=60,
+            )
+        if res.status_code != 200:
+            console.print(f"Error code {res.status_code}. Output: {res.text}")
+            errors += 1
+            time.sleep(1)
+    except Exception as exc:  # pylint: disable=broad-exception-caught
+        console.print(f"[red]Excption occured: {exc!r}[/red]")
+        errors += 1
+        time.sleep(1)
+
+console.print(
+    f"[green]Фотографии обновлены[/green]. Ошибок при загрузке: [red]{errors}[/red],"
+    f" всего фотографий отправлено: [cyan]{len(plant_names_found)}[/cyan]"
+)

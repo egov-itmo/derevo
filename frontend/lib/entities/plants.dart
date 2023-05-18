@@ -17,6 +17,7 @@ class Plant {
   final bool? isInvasive;
   final String? genus;
   final String? photoUrl;
+  final String? thumbnailUrl;
 
   const Plant({
     required this.id,
@@ -30,50 +31,73 @@ class Plant {
     this.survivabilityLevel,
     this.isInvasive,
     this.photoUrl,
+    this.thumbnailUrl,
   });
 
   factory Plant.fromJson(Map<String, dynamic> json) => _$PlantFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlantToJson(this);
 
-  TableRow toRow() {
-    [1] + [2];
-    return TableRow(
-        children: [
-              nameRu,
-              nameLatin,
-              genus?.toString() ?? '',
-              type,
-              heightAvg?.toString() ?? '',
-              crownDiameter?.toString() ?? '',
-              spreadAggressivenessLevel?.toString() ?? '',
-              survivabilityLevel?.toString() ?? '',
-              isInvasive == null
-                  ? ''
-                  : isInvasive!
-                      ? '+'
-                      : '-'
-            ]
-                // ignore: unnecessary_cast
-                .map((String text) => Padding(
-                      padding: const EdgeInsets.all(2),
-                      child: Text(text),
-                    ) as Widget)
-                .toList() +
-            [
-              if (photoUrl == null)
-                const Text('')
-              else
-                SizedBox(
-                  width: 100,
-                  child: InkWell(
-                      onTap: () => launchUrlString(photoUrl!),
-                      child: Image.network(
-                        photoUrl!,
-                        width: 100,
-                      )),
-                )
-            ]);
+  TableRow toRow({Widget? firstWidget}) {
+    return TableRow(children: [
+      if (firstWidget != null) firstWidget,
+      Padding(
+        padding: const EdgeInsets.all(2),
+        child: Text(nameRu),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(2),
+        child: Text(nameLatin),
+      ),
+      (genus?.toString() ?? '') != ''
+          ? Padding(
+              padding: const EdgeInsets.all(2),
+              child: Text(genus!.toString()),
+            )
+          : const SizedBox(),
+      Padding(
+        padding: const EdgeInsets.all(2),
+        child: Text(type),
+      ),
+      (heightAvg?.toString() ?? '') != ''
+          ? Padding(
+              padding: const EdgeInsets.all(2),
+              child: Text(heightAvg!.toString()),
+            )
+          : const SizedBox(),
+      (crownDiameter?.toString() ?? '') != ''
+          ? Padding(
+              padding: const EdgeInsets.all(2),
+              child: Text(crownDiameter!.toString()),
+            )
+          : const SizedBox(),
+      (spreadAggressivenessLevel?.toString() ?? '') != ''
+          ? Padding(
+              padding: const EdgeInsets.all(2),
+              child: Text(spreadAggressivenessLevel!.toString()),
+            )
+          : const SizedBox(),
+      (survivabilityLevel?.toString() ?? '') != ''
+          ? Padding(
+              padding: const EdgeInsets.all(2),
+              child: Text(survivabilityLevel!.toString()),
+            )
+          : const SizedBox(),
+      isInvasive == null
+          ? const SizedBox()
+          : isInvasive!
+              ? const Icon(Icons.add)
+              : const Icon(Icons.remove),
+      if (photoUrl == null)
+        const Text('')
+      else
+        SizedBox(
+          width: 100,
+          child: InkWell(
+              onTap: () => launchUrlString(photoUrl!),
+              child: Image.network(thumbnailUrl!)),
+        )
+    ]);
   }
 }
 

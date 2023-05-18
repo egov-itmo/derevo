@@ -5,6 +5,7 @@ fastapi
 geoalchemy2
 loguru
 pandas
+pillow
 psycopg2
 pydantic
 pyproj

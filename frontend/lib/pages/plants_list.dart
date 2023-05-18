@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:landscaping_frontend/config/config.dart';
 import 'package:landscaping_frontend/entities/plants.dart';
+import 'package:landscaping_frontend/widgets/plant_switch.dart';
 
 class PlantsListPage extends StatefulWidget {
   const PlantsListPage({super.key});
@@ -67,20 +68,22 @@ class PlantsTable extends StatelessWidget {
         child: Table(
           border: TableBorder.all(),
           columnWidths: const {
-            0: FixedColumnWidth(150),
+            0: FixedColumnWidth(70),
             1: FixedColumnWidth(150),
-            2: FixedColumnWidth(120),
-            3: FixedColumnWidth(80),
-            4: FixedColumnWidth(80),
+            2: FixedColumnWidth(150),
+            3: FixedColumnWidth(120),
+            4: FixedColumnWidth(120),
             5: FixedColumnWidth(80),
-            6: FixedColumnWidth(110),
-            7: FixedColumnWidth(115),
-            8: FixedColumnWidth(105),
-            9: FixedColumnWidth(100),
+            6: FixedColumnWidth(80),
+            7: FixedColumnWidth(110),
+            8: FixedColumnWidth(115),
+            9: FixedColumnWidth(105),
+            10: FixedColumnWidth(102),
           },
           children: [
             TableRow(
               children: [
+                "Наличие",
                 "Название",
                 "Латинское название",
                 "Род",
@@ -105,7 +108,8 @@ class PlantsTable extends StatelessWidget {
                   )
                   .toList(),
             ),
-            for (Plant plant in plants) plant.toRow()
+            for (Plant plant in plants)
+              plant.toRow(firstWidget: PlantSwitch(plant.id))
           ],
         ),
       ),
