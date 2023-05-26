@@ -28,6 +28,7 @@ class EntityNotFoundById(PlantsApiError):
         """
         return status.HTTP_404_NOT_FOUND
 
+
 class DependencyNotFoundById(PlantsApiError):
     """
     Exception to raise when operation dependent entity was not found in the database by the identifier.

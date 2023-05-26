@@ -12,11 +12,16 @@ run-example:
 install:
 	python -m pip install .
 
+install-dev:
+	python -m pip install -e . --config-settings editable_mode=strict
+
+build:
+	python -m build .
+
 clean:
 	rm -rf ./build ./dist ./pg_save.egg-info
 
-udpate-pypi: clean
-	python -m build . --no-isolation
+udpate-pypi: clean build
 	python -m twine upload  dist/*
 
 install-from-build:

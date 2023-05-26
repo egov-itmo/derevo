@@ -11,11 +11,31 @@ import pandas as pd
 from loguru import logger
 from networkx.algorithms.community import greedy_modularity_communities
 
-from compositioner.get_adjacency import get_adjacency_graph
-from compositioner.get_compatability import get_compatability_graph
+from compositioner.adjacency import get_adjacency_graph
+from compositioner.compatability import get_compatability_graph
+from compositioner.models import Plant, Territory
 
 
-def _intersection_check(greenery_polygon, factor: gpd.GeoDataFrame):
+def get_composition(
+    plants_available: list[Plant],
+    territory: Territory,
+    plants_present: list[Plant] | None = None,
+) -> list[Plant]:
+    """
+    !!! THIS IS A MOCK METHOD !!! TODO: add logic
+
+    Return plants composition for the given parameters.
+    """
+
+    if plants_present is None:
+        plants_present = []
+
+    ...
+
+    return []
+
+
+def _intersection_check(greenery_polygon: gpd.GeoDataFrame, factor: gpd.GeoDataFrame):
     """
     Determine if greenery polygon intersects with another polygon of light or limitation.
     """
@@ -23,84 +43,6 @@ def _intersection_check(greenery_polygon, factor: gpd.GeoDataFrame):
         if greenery_polygon.intersects(factor.loc[i].geometry) is True:
             return True
     return False
-
-
-def get_species_composition_old(
-    plants: pd.DataFrame,
-    plants_with_limitations_resistance: pd.DataFrame,
-    plants_suitable_for_light: pd.DataFrame,
-    cohabitation_attributes: pd.DataFrame,
-    limitations: gpd.GeoDataFrame,
-    light: gpd.GeoDataFrame,
-    greenery_polygon,
-) -> str | None:  # TODO: need refactor
-    """
-    Return Series of strings with composition of plants.
-    """
-    plants = plants.copy()
-    plants_with_lim_resist = plants_with_limitations_resistance.copy()
-    plants_with_lig_resist = plants_suitable_for_light.copy()
-    cohabitation = cohabitation_attributes.copy()
-    limitations = limitations.copy()
-    light = light.copy()
-
-    # finding species which can grow in existing light conditions
-    light_types = list(light["light_type_id"].unique())
-    lig_list = [
-        lig_id
-        for lig_id in light_types
-        if _intersection_check(greenery_polygon, light.query(f"light_type_id == {lig_id}"))
-    ]
-    filtered_plants = plants_with_lig_resist[plants_with_lig_resist["light_type_id"].isin(lig_list)]
-    light_comp = list(filtered_plants["name_ru"].unique())
-    logger.debug("number of light conditions: {}", len(lig_list))
-
-    # finding species which can grow with existing limitations
-    limitation_factors = list(limitations["limitation_factor_id"].unique())
-    lim_list = [
-        lim_id
-        for lim_id in limitation_factors
-        if _intersection_check(greenery_polygon, limitations.query(f"limitation_factor_id == {lim_id}"))
-    ]
-    filtered_plants = plants_with_lim_resist[plants_with_lim_resist["limitation_factor_id"].isin(lim_list)]
-    limitations_comp: pd.DataFrame = filtered_plants.groupby("name_ru").count().reset_index()
-    limitations_comp = limitations_comp[
-        limitations_comp["limitation_factor_id"] == limitations_comp["limitation_factor_id"].max()
-    ]
-    limitations_comp = list(limitations_comp["name_ru"].unique())
-    logger.debug("number of limitation factors: {}", len(lim_list))
-
-    # filtering species by environmental factors
-    if len(lig_list) > 0:
-        df_comp = plants[plants["name_ru"].isin(light_comp)]
-    else:
-        logger.warning("no light conditions provided")
-        return None
-    if len(lim_list) > 0:
-        df_comp = df_comp[df_comp["name_ru"].isin(limitations_comp)]
-
-    # connecting with cohabitation weights
-    edge_1 = df_comp.merge(cohabitation, left_on="genus_id", right_on="genus_id_1", how="left")
-    edge_1.dropna(subset="genus_id_1", inplace=True)
-    edge_2 = edge_1.merge(df_comp, left_on="genus_id_2", right_on="genus_id", how="left").rename(
-        columns={
-            "name_ru_x": "u",
-            "name_ru_y": "v",
-        }
-    )[["u", "v", "cohabitation_type"]]
-    edge_2.dropna(inplace=True)
-    edge_2 = edge_2.rename(columns={"cohabitation_type": "weight"})
-    edge_2["weight"].replace({"negative": 1, "neutral": 2, "positive": 3}, inplace=True)
-
-    # creating graph and finding biggest community
-    green_graph = nx.from_pandas_edgelist(edge_2, "u", "v", "weight")
-    communities_list = greedy_modularity_communities(green_graph, weight="weight")
-    size_of_biggest_community = max(len(com) for com in communities_list)
-
-    logger.debug("biggest community has {} members", size_of_biggest_community)
-    composition = ", ".join([", ".join(com) for com in communities_list if len(com) == size_of_biggest_community])
-
-    return composition
 
 
 def get_updated_composition(
@@ -111,7 +53,7 @@ def get_updated_composition(
     limitations: gpd.GeoDataFrame,
     light: gpd.GeoDataFrame,
     species_in_parks: pd.DataFrame,
-    greenery_polygon,
+    greenery_polygon: gpd.GeoDataFrame,
 ) -> list[nx.Graph] | None:
     """
     Return list of graphs with variants of updated plants composition.
@@ -193,7 +135,7 @@ def write_updated_composition_gexf(
     limitations: gpd.GeoDataFrame,
     light: gpd.GeoDataFrame,
     species_in_parks: pd.DataFrame,
-    greenery_polygon,
+    greenery_polygon: gpd.GeoDataFrame,
     output_path_prefix: str | Iterable[BytesIO] | Iterable[str],
 ):
     """
@@ -228,7 +170,7 @@ def get_recommended_composition(
     limitations: pd.DataFrame,
     light: pd.DataFrame,
     cohabitation_attributes: pd.DataFrame,
-    greenery_polygon,
+    greenery_polygon: gpd.GeoDataFrame,
 ) -> list[nx.Graph] | None:
     """
     Return list of graphs with variants of recommended composition with account for outer factors.
@@ -300,7 +242,7 @@ def write_recommended_composition_gexf(
     limitations: pd.DataFrame,
     light: pd.DataFrame,
     cohabitation_attributes: pd.DataFrame,
-    greenery_polygon,
+    greenery_polygon: gpd.GeoDataFrame,
     output_path_prefix: str | Iterable[BytesIO] | Iterable[str] = "recommended",
 ) -> None:
     """

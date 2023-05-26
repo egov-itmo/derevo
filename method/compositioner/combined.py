@@ -5,7 +5,7 @@ from io import BytesIO
 import networkx as nx
 import pandas as pd
 
-from compositioner.get_adjacency import get_adjacency_graph
+from compositioner.adjacency import get_adjacency_graph
 
 
 def get_combined_graph(

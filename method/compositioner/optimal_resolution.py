@@ -11,7 +11,7 @@ import pandas as pd
 from loguru import logger
 from networkx.algorithms.community import greedy_modularity_communities
 
-from compositioner.get_compatability import get_compatability_graph
+from compositioner.compatability import get_compatability_graph
 
 
 def get_best_resolution(

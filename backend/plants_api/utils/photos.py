@@ -13,6 +13,7 @@ def get_photo_url(photo_name: str) -> str:
     """
     return f"{app_settings.photos_prefix}{photo_name}"
 
+
 def get_thumbnail_url(photo_name: str) -> str:
     """
     Get photo thumbnail url with prefix from settings.
