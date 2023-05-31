@@ -24,7 +24,7 @@ class Territory:
 
     usda_zone: UsdaZone | None = None
     limitation_factors: list[LimitationFactor] | None = None
-    light_types: list[LightType] | None
+    light_types: list[LightType] | None = None
     humidity_types: list[HumidityType] | None = None
     soil_types: list[SoilType] | None = None
     soil_acidity_types: list[AcidityType] | None = None

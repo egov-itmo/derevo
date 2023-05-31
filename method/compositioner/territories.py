@@ -13,7 +13,7 @@ def get_territory(
 ) -> Territory:
     """
     !!! THIS IS A MOCK METHOD !!! TODO: add logic
-    
+
     Get territory information based on its geometry, used-defined known data and other factors polygons.
     """
     if territory_data is None:

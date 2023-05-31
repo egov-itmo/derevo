@@ -12,6 +12,8 @@ from sqlalchemy import create_engine, text
 
 try:
     import compositioner as cm
+    from compositioner import get_composition, Territory, Plant
+    from compositioner import enumerations as c_enums
 except ModuleNotFoundError:
     from pathlib import Path
 
@@ -33,6 +35,46 @@ if __name__ == "__main__":
     logger.remove()
     logger.add(sys.stderr, level="DEBUG")
 
+    # method usage example
+
+    plants: list[Plant] = [
+        Plant(
+            name_ru="Название растения",
+            name_latin="latin name",
+            genus="Род растения",
+            life_form="Жизненная форма",
+            limitation_factors_resistances={
+                c_enums.LimitationFactor.FLOODING: c_enums.ToleranceType.NEGATIVE,
+                c_enums.LimitationFactor.GAS_POLLUTION: c_enums.ToleranceType.NEUTRAL,
+            },
+            humidity_preferences={
+                c_enums.HumidityType.HIGH: c_enums.ToleranceType.NEGATIVE,
+                c_enums.HumidityType.NORMAL: c_enums.ToleranceType.POSITIVE,
+            },
+            light_preferences={
+                c_enums.LightType.LIGHT: c_enums.ToleranceType.POSITIVE,
+            },
+            usda_zone_preferences={
+                c_enums.UsdaZone.USDA2: c_enums.ToleranceType.NEGATIVE,
+                c_enums.UsdaZone.USDA3: c_enums.ToleranceType.NEUTRAL,
+                c_enums.UsdaZone.USDA4: c_enums.ToleranceType.POSITIVE,
+                c_enums.UsdaZone.USDA5: c_enums.ToleranceType.POSITIVE,
+                c_enums.UsdaZone.USDA6: c_enums.ToleranceType.NEUTRAL,
+                c_enums.UsdaZone.USDA7: c_enums.ToleranceType.NEGATIVE,
+            },
+            is_invasive=False,
+        ),
+    ]
+    plants_present: list[Plant] = []
+    territory_info = Territory(
+        usda_zone=c_enums.UsdaZone.USDA5,
+        limitation_factors=[c_enums.LimitationFactor.WINDINESS],
+        humidity_types=[c_enums.HumidityType.NORMAL, c_enums.HumidityType.LOW],
+        light_types=[c_enums.LightType.LIGHT, c_enums.LightType.DARKENED],
+        soil_fertility_types=[c_enums.FertilityType.FERTIL, c_enums.FertilityType.SLIGHTLY_FERTIL],
+    )
+    composition_plants = get_composition(plants_available=plants, territory=territory_info, plants_present=plants_present)
+
     try:
         db_addr = os.environ["DB_ADDR"]
         db_port = os.environ.get("DB_PORT", 5432)
@@ -49,6 +91,8 @@ if __name__ == "__main__":
         "using <cyan>{}@{}:{}/{}</cyan> database connection", db_user, db_addr, db_port, db_name
     )
 
+    # getting limitation factors from the database
+
     try:
         engine = create_engine(
             f"postgresql://{db_user}:{db_pass}@{db_addr}:{db_port}/{db_name}"
@@ -60,7 +104,6 @@ if __name__ == "__main__":
         raise
 
     with engine.connect() as conn:
-
         logger.debug("collecting plants data")
         plants = collect_plants(conn)
         plants_with_limitations_resistance = collect_plants_with_limitation_resistance(conn)
