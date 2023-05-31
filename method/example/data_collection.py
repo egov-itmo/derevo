@@ -177,7 +177,6 @@ def collect_plants(connection: Connection) -> list[Plant]:  # pylint: disable=to
             survivability,
             is_invasive,
         )
-        print(plant)
         plants.append(plant)
     return plants
 
