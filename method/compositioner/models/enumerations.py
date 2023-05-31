@@ -27,6 +27,12 @@ class ToleranceType(Enum):
             return ToleranceType.POSITIVE
         raise ValueError(f"'{value}' is not a valid ToleranceType integer value (-1, 0, 1)")
 
+    def __str__(self) -> str:
+        return self.value
+
+    def __repr__(self) -> str:
+        return self.name
+
 
 class LightType(Enum):
     """
@@ -36,6 +42,9 @@ class LightType(Enum):
     DARK = "DARK"
     DARKENED = "DARKENED"
     LIGHT = "LIGHT"
+
+    def __repr__(self) -> str:
+        return f"LightType.{self.name}"
 
 
 class AcidityType(Enum):
@@ -79,6 +88,9 @@ class AcidityType(Enum):
             return AcidityType.ALCALINE
         return AcidityType.STRONGLY_ALCALINE
 
+    def __repr__(self) -> str:
+        return f"AcidityType.{self.name}"
+
 
 class FertilityType(Enum):
     """
@@ -88,6 +100,9 @@ class FertilityType(Enum):
     BARREN = "BARREN"
     SLIGHTLY_FERTIL = "SLIGHTLY_FERTIL"
     FERTIL = "FERTIL"
+
+    def __repr__(self) -> str:
+        return f"FertilityType.{self.name}"
 
 
 class SoilType(Enum):
@@ -104,6 +119,9 @@ class SoilType(Enum):
     HEAVY = "HEAVY"
     DRAINED = "DRAINED"
 
+    def __repr__(self) -> str:
+        return f"SoilType.{self.name}"
+
 
 class HumidityType(Enum):
     """
@@ -113,6 +131,9 @@ class HumidityType(Enum):
     LOW = "LOW"
     NORMAL = "NORMAL"
     HIGH = "HIGH"
+
+    def __repr__(self) -> str:
+        return f"HumidityType.{self.name}"
 
 
 class LimitationFactor(Enum):
@@ -126,6 +147,9 @@ class LimitationFactor(Enum):
     FLOODING = "FLOODING"
     GAS_POLLUTION = "GAS_POLLUTION"
     WINDINESS = "WINDINESS"
+
+    def __repr__(self) -> str:
+        return f"LimitationFactor.{self.name}"
 
 
 class UsdaZone(Enum):
@@ -154,8 +178,14 @@ class UsdaZone(Enum):
             raise ValueError(f"'{value}' is not a valid UsdaZone integer value intrange[1, 11]")
         return cls(f"USDA{value}")
 
+    def __str__(self) -> str:
+        return self.value
 
-class AgressivenessLevel(Enum):
+    def __repr__(self) -> str:
+        return f"UsdaZone.{self.name}"
+
+
+class AggressivenessLevel(Enum):
     """
     Enumeration used to describe plant spread agressiveness.
     """
@@ -165,7 +195,7 @@ class AgressivenessLevel(Enum):
     SUPPRESSED = "SUPPRESSED"
 
     @classmethod
-    def from_value(cls, value: Literal[-1, 0, 1]) -> "AgressivenessLevel":
+    def from_value(cls, value: Literal[-1, 0, 1]) -> "AggressivenessLevel":
         """
         Construct AgressivenessLevel from integer value.
 
@@ -175,12 +205,15 @@ class AgressivenessLevel(Enum):
         - 1 - `AGGRESSIVE`
         """
         if value == -1:
-            return AgressivenessLevel.SUPPRESSED
+            return AggressivenessLevel.SUPPRESSED
         if value == 0:
-            return AgressivenessLevel.NEUTRAL
+            return AggressivenessLevel.NEUTRAL
         if value == 1:
-            return AgressivenessLevel.AGGRESSIVE
+            return AggressivenessLevel.AGGRESSIVE
         raise ValueError(f"'{value}' is not a valid AgressivenessLevel integer value (-1, 0, 1)")
+
+    def __repr__(self) -> str:
+        return f"AggressivenessLevel.{self.name}"
 
 
 class SurvivabilityLevel(Enum):
@@ -210,6 +243,9 @@ class SurvivabilityLevel(Enum):
             return SurvivabilityLevel.WEAK
         raise ValueError(f"'{value}' is not a valid SurvivabilityLevel integer value (-1, 0, 1)")
 
+    def __repr__(self) -> str:
+        return f"SurvivabilityLevel.{self.name}"
+
 
 class LifeForm(Enum):
     """
@@ -224,3 +260,6 @@ class LifeForm(Enum):
     BULBOUS = "BULBOUS"
     ANNUAL = "ANNUAL"
     SWAMP_PLANT = "SWAMP_PLANT"
+
+    def __repr__(self) -> str:
+        return f"LifeForm.{self.name}"

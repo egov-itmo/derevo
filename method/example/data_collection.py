@@ -11,8 +11,178 @@ from loguru import logger
 from sqlalchemy import text
 from sqlalchemy.engine import Connection
 
+from compositioner import Plant, enumerations as c_enum
+from .compositioner_enums import EnumAdapters as c_adapt
 
-def collect_plants(connection: Connection) -> pd.DataFrame:
+
+def collect_plants(connection: Connection) -> list[Plant]:  # pylint: disable=too-many-locals
+    """
+    Collect plants from the database of a schema listed in backend part.
+    """
+    plants = []
+    for (
+        plant_id,
+        name_ru,
+        name_latin,
+        genus_name,
+        life_form_name,
+        aggressiveness_level,
+        survivability_level,
+        is_invasive,
+    ) in list(
+        connection.execute(
+            text(
+                "SELECT"
+                "   p.id,"
+                "   p.name_ru,"
+                "   p.name_latin,"
+                "   g.name_ru,"
+                "   t.name,"
+                "   spread_aggressiveness_level,"
+                "   survivability_level,"
+                "   is_invasive"
+                " FROM plants p"
+                "   LEFT JOIN genera g ON p.genus_id = g.id"
+                "   LEFT JOIN plant_types t ON p.type_id = t.id"
+            )
+        )
+    ):
+        life_form = c_adapt.life_forms.get(life_form_name)
+        aggressiveness = c_adapt.aggressiveness_levels.get(aggressiveness_level)
+        survivability = c_adapt.survivability_levels.get(survivability_level)
+
+        res = connection.execute(
+            text(
+                "SELECT lf.name, is_stable"
+                " FROM plants_limitation_factors p"
+                "   JOIN limitation_factors lf ON p.limitation_factor_id = lf.id"
+                " WHERE plant_id = :plant_id"
+            ),
+            {"plant_id": plant_id},
+        )
+        limitation_factors_resistances = {
+            c_adapt.limitation_factors[lf_name]: (
+                c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL
+            )
+            for lf_name, is_stable in res
+        }
+
+        res = connection.execute(
+            text(
+                "SELECT usda.usda_number, is_stable"
+                " FROM plants_climate_zones p"
+                "   JOIN climate_zones usda ON p.climate_zone_id = usda.id"
+                " WHERE plant_id = :plant_id"
+            ),
+            {"plant_id": plant_id},
+        )
+        usda_zone_preferences = {
+            c_enum.UsdaZone.from_value(usda_number): (
+                c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL
+            )
+            for usda_number, is_stable in res
+        }
+
+        res = connection.execute(
+            text(
+                "SELECT lt.name, is_stable"
+                " FROM plants_light_types p"
+                "   JOIN light_types lt ON p.light_type_id = lt.id"
+                " WHERE plant_id = :plant_id"
+            ),
+            {"plant_id": plant_id},
+        )
+        light_preferences = {
+            c_adapt.light[light_type_name]: (
+                c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL
+            )
+            for light_type_name, is_stable in res
+        }
+
+        res = connection.execute(
+            text(
+                "SELECT ht.name, is_stable"
+                " FROM plants_humidity_types p"
+                "   JOIN humidity_types ht ON p.humidity_type_id = ht.id"
+                " WHERE plant_id = :plant_id"
+            ),
+            {"plant_id": plant_id},
+        )
+        humidity_preferences = {
+            c_adapt.humidity[humidity_type_name]: (
+                c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL
+            )
+            for humidity_type_name, is_stable in res
+        }
+
+        res = connection.execute(
+            text(
+                "SELECT at.name, is_stable"
+                " FROM plants_soil_acidity_types p"
+                "   JOIN soil_acidity_types at ON p.soil_acidity_type_id = at.id"
+                " WHERE plant_id = :plant_id"
+            ),
+            {"plant_id": plant_id},
+        )
+        soil_acidity_preferences = {
+            c_adapt.acidity[acidity_type_name]: (
+                c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL
+            )
+            for acidity_type_name, is_stable in res
+        }
+
+        res = connection.execute(
+            text(
+                "SELECT at.name, is_stable"
+                " FROM plants_soil_fertility_types p"
+                "   JOIN soil_fertility_types at ON p.soil_fertility_type_id = at.id"
+                " WHERE plant_id = :plant_id"
+            ),
+            {"plant_id": plant_id},
+        )
+        soil_fertility_preferences = {
+            c_adapt.fertility[fertility_type_name]: (
+                c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL
+            )
+            for fertility_type_name, is_stable in res
+        }
+
+        res = connection.execute(
+            text(
+                "SELECT at.name, is_stable"
+                " FROM plants_soil_types p"
+                "   JOIN soil_types at ON p.soil_type_id = at.id"
+                " WHERE plant_id = :plant_id"
+            ),
+            {"plant_id": plant_id},
+        )
+        soil_type_preferences = {
+            c_adapt.soil[type_name]: (c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL)
+            for type_name, is_stable in res
+        }
+
+        plant = Plant(
+            name_ru,
+            name_latin,
+            genus_name,
+            life_form,
+            limitation_factors_resistances,
+            usda_zone_preferences,
+            light_preferences,
+            humidity_preferences,
+            soil_acidity_preferences,
+            soil_fertility_preferences,
+            soil_type_preferences,
+            aggressiveness,
+            survivability,
+            is_invasive,
+        )
+        print(plant)
+        plants.append(plant)
+    return plants
+
+
+def collect_plants_dataframe(connection: Connection) -> pd.DataFrame:
     """Get plants dataframe from database."""
 
     plants = pd.read_sql(
