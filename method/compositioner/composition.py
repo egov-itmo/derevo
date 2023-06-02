@@ -14,25 +14,38 @@ from networkx.algorithms.community import greedy_modularity_communities
 from compositioner.adjacency import get_adjacency_graph
 from compositioner.compatability import get_compatability_graph
 from compositioner.models import Plant, Territory
+from compositioner.models.enumerations import ToleranceType
 
-
-def get_composition(
+def get_compositions(
     plants_available: list[Plant],
     territory: Territory,
+    cohabitation_attributes: pd.DataFrame,
     plants_present: list[Plant] | None = None,
-) -> list[Plant]:
+) -> list[list[Plant]]:
     """
-    !!! THIS IS A MOCK METHOD !!! TODO: add logic
-
     Return plants composition for the given parameters.
     """
-
+    logger.debug(f"number of light conditions: {len(territory.light_types)}")
+    logger.debug(f"number of limitation factors: {len(territory.limitation_factors)}")
     if plants_present is None:
+        logger.debug("None plants present")
         plants_present = []
 
-    ...
-
-    return []
+    local_plants = pd.DataFrame(plants_available)
+    local_plants = local_plants[local_plants.light_preferences.map(lambda x: 
+                                        any(light in territory.light_types for light in x.keys()) &
+                                       (ToleranceType.NEGATIVE not in x.values()))]
+    local_plants = local_plants[local_plants.limitation_factors_resistances.map(lambda x: 
+                                        all(factor in x.keys() for factor in territory.limitation_factors) &
+                                        (ToleranceType.NEGATIVE not in [x.get(key) for key in territory.limitation_factors]))]
+    compatability_graph: nx.Graph = get_compatability_graph(pd.DataFrame(plants_available), cohabitation_attributes)
+    comp_graph = compatability_graph.copy()
+    comp_graph = comp_graph.subgraph(local_plants["name_ru"])
+    communities_list = greedy_modularity_communities(comp_graph, weight="weight")
+    logger.debug("number of communities: {}", len(communities_list))
+    compositions = [list(com) for com in communities_list]
+    compositions = [plants_present + [plant for plant in plants_available if plant.name_ru in composition] for composition in compositions]
+    return compositions
 
 
 def _intersection_check(greenery_polygon: gpd.GeoDataFrame, factor: gpd.GeoDataFrame):

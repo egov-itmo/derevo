@@ -81,3 +81,18 @@ class Plant:  # pylint: disable=too-many-instance-attributes
             self.survivability,
             *(str(d_f[1]) for d_f in dict_fields if d_f[1]),
         )
+    
+@dataclass
+class Compatability:
+    """
+    Compatibility class for cohabitation attributes
+
+    Fields:
+    - `genus_name_1` (str): genera name of the plant, required for method
+    - `genus_name_2` (str): genera name of the corresponding plant, required for method
+    - `cohabitation_type` (ToleranceType): type of cohabitation
+    """
+
+    genus_name_1: str
+    genus_name_2: str
+    cohabitation_type: ToleranceType

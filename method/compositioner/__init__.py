@@ -9,6 +9,7 @@ __all__ = [
     "GlobalTerritory",
     "Plant",
     "Territory",
+    "Compatability",
     "enumerations",
     "get_territory",
 ]
@@ -18,6 +19,6 @@ import os
 if "USE_PYGEOS" not in os.environ:
     os.environ["USE_PYGEOS"] = "0"  # remove this if some Shapely 2.0 incompatibility is found
 
-from compositioner.composition import get_composition
-from compositioner.models import GlobalTerritory, Plant, Territory, enumerations
+from compositioner.composition import get_compositions
+from compositioner.models import GlobalTerritory, Plant, Territory, Compatability, enumerations
 from compositioner.territories import get_territory

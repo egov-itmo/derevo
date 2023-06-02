@@ -248,7 +248,11 @@ def collect_plants_suitable_for_light(connection: Connection) -> pd.DataFrame:
 def collect_cohabitations(connection: Connection) -> pd.DataFrame:
     """Get genera cohabitation dataframe from database."""
 
-    cohabitation_attributes = pd.read_sql(text("SELECT * FROM cohabitation"), con=connection)
+    cohabitation_attributes = pd.read_sql(text("""SELECT g1.name_ru as genus_name_1, g2.name_ru as genus_name_2, 
+                                                    cohabitation_type 
+                                                  FROM cohabitation c 
+                                                JOIN genera g1 on c.genus_id_1 = g1.id
+                                                JOIN genera g2 on c.genus_id_2 = g2.id"""), con=connection)
 
     return cohabitation_attributes
 

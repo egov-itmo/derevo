@@ -22,14 +22,15 @@ def get_compatability_graph(
     df_comp = df_comp.join(df_comp, how="cross", rsuffix="_x")
     df_comp = df_comp[df_comp["name_ru"] != df_comp["name_ru_x"]]
     df_comp["genus_con"] = (
-        df_comp["genus_id"].astype(int).astype(str) + ":" + df_comp["genus_id_x"].astype(int).astype(str)
+        df_comp["genus"] + ":" + df_comp["genus_x"]
     )
-    cohabitation["genus_con"] = cohabitation["genus_id_1"].astype(str) + ":" + cohabitation["genus_id_2"].astype(str)
+    cohabitation["genus_con"] = cohabitation["genus_name_1"] + ":" + cohabitation["genus_name_2"]
     df_comp = df_comp.merge(cohabitation[["cohabitation_type", "genus_con"]], on="genus_con", how="left")
     df_comp = df_comp[~df_comp.filter(like="name_ru").apply(frozenset, axis=1).duplicated()].reset_index(drop=True)
     df_comp = df_comp.rename(columns={"cohabitation_type": "weight"})
     df_comp["weight"].fillna(2, inplace=True)
-    df_comp["weight"].replace({"negative": 1, "neutral": 2, "positive": 3}, inplace=True)
+    #df_comp["weight"].replace({"negative": 1, "neutral": 2, "positive": 3}, inplace=True)
+    df_comp["weight"].replace({"negative": -1, "neutral": 0, "positive": 1}, inplace=True)
     df_comp = df_comp[["name_ru", "name_ru_x", "weight"]]
     df_comp["is_compatability"] = 1
     compatability_graph = nx.from_pandas_edgelist(
@@ -40,7 +41,7 @@ def get_compatability_graph(
         create_using=nx.MultiGraph(),
         edge_key="is_compatability",
     )
-    plant_dict = plants[["name_ru", "name_latin", "id", "is_invasive", "plant_type"]].copy()
+    plant_dict = plants[["name_ru", "name_latin", "is_invasive", "life_form"]].copy()
     plant_dict["weights"] = [
         ", ".join(
             [
