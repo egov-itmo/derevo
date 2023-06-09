@@ -1,7 +1,7 @@
 """
 Territory model class is defined here.
 """
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 
 from compositioner.models.enumerations import (
     AcidityType,
@@ -29,3 +29,22 @@ class Territory:
     soil_types: list[SoilType] | None = None
     soil_acidity_types: list[AcidityType] | None = None
     soil_fertility_types: list[FertilityType] | None = None
+
+    def update(self, other: "Territory", replace: bool = False) -> None:
+        """
+        Add `other` territory attributes to the currently set attributes. If `replace` is set to True, then
+        replace current territory values whre `other` attributes are not None.
+        """
+        self.usda_zone = other.usda_zone
+        for attribute in (f.name for f in fields(Territory) if f.name != "usda_zone"):
+            update: list | None = getattr(other, attribute)
+            if update is None:
+                continue
+            if replace:
+                setattr(self, attribute, update)
+            else:
+                current: list | None = getattr(self, attribute)
+                if current is None:
+                    setattr(self, attribute, update)
+                current.extend((value for value in update if value not in current))
+                setattr(self, attribute, current)

@@ -14,37 +14,66 @@ from networkx.algorithms.community import greedy_modularity_communities
 from compositioner.adjacency import get_adjacency_graph
 from compositioner.compatability import get_compatability_graph
 from compositioner.models import Plant, Territory
+from compositioner.models.cohabitation import GeneraCohabitation
 from compositioner.models.enumerations import ToleranceType
+
 
 def get_compositions(
     plants_available: list[Plant],
     territory: Territory,
-    cohabitation_attributes: pd.DataFrame,
-    plants_present: list[Plant] | None = None,
+    cohabitation_attributes: list[GeneraCohabitation],
+    plants_present: list[Plant] | None = None,  # FIXME plants_present are definetly not used now
 ) -> list[list[Plant]]:
     """
-    Return plants composition for the given parameters.
+    Return plants composition variants list for the given parameters.
     """
-    logger.debug(f"number of light conditions: {len(territory.light_types)}")
-    logger.debug(f"number of limitation factors: {len(territory.limitation_factors)}")
+    logger.debug(
+        "Number of light conditions: {}", len(territory.light_types) if territory.light_types is not None else "unknown"
+    )
+    logger.debug(
+        "Number of limitation factors: {}",
+        len(territory.limitation_factors) if territory.limitation_factors is not None else "unknown",
+    )
     if plants_present is None:
-        logger.debug("None plants present")
+        logger.trace("None plants present")
         plants_present = []
 
     local_plants = pd.DataFrame(plants_available)
-    local_plants = local_plants[local_plants.light_preferences.map(lambda x: 
-                                        any(light in territory.light_types for light in x.keys()) &
-                                       (ToleranceType.NEGATIVE not in x.values()))]
-    local_plants = local_plants[local_plants.limitation_factors_resistances.map(lambda x: 
-                                        all(factor in x.keys() for factor in territory.limitation_factors) &
-                                        (ToleranceType.NEGATIVE not in [x.get(key) for key in territory.limitation_factors]))]
-    compatability_graph: nx.Graph = get_compatability_graph(pd.DataFrame(plants_available), cohabitation_attributes)
-    comp_graph = compatability_graph.copy()
-    comp_graph = comp_graph.subgraph(local_plants["name_ru"])
+    if territory.light_types and local_plants.shape[0] != 0:
+        local_plants = local_plants[
+            local_plants["light_preferences"].map(
+                lambda x: any(
+                    x.get(lt, ToleranceType.NEGATIVE) != ToleranceType.NEGATIVE for lt in territory.light_types
+                )
+            )
+        ]
+    if territory.limitation_factors and local_plants.shape[0] != 0:
+        local_plants = local_plants[
+            local_plants["limitation_factors_resistances"].map(
+                lambda x: all(
+                    x.get(factor, ToleranceType.NEUTRAL) != ToleranceType.NEGATIVE
+                    for factor in territory.limitation_factors
+                )
+            )
+        ]
+    # TODO: add processing of other factors
+
+    if local_plants.shape[0] == 0:
+        return plants_present
+
+    cohabitation_df = pd.DataFrame(
+        [(c.genus_1, c.genus_2, c.cohabitation.to_value()) for c in cohabitation_attributes],
+        columns=["genus_name_1", "genus_name_2", "cohabitation_type"],
+    )
+    compatability_graph: nx.Graph = get_compatability_graph(pd.DataFrame(plants_available), cohabitation_df)
+    comp_graph = compatability_graph.subgraph(local_plants["name_ru"]).copy()
     communities_list = greedy_modularity_communities(comp_graph, weight="weight")
     logger.debug("number of communities: {}", len(communities_list))
     compositions = [list(com) for com in communities_list]
-    compositions = [plants_present + [plant for plant in plants_available if plant.name_ru in composition] for composition in compositions]
+    compositions = [
+        plants_present + [plant for plant in plants_available if plant.name_ru in composition]
+        for composition in compositions
+    ]
     return compositions
 
 

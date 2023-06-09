@@ -27,6 +27,12 @@ class ToleranceType(Enum):
             return ToleranceType.POSITIVE
         raise ValueError(f"'{value}' is not a valid ToleranceType integer value (-1, 0, 1)")
 
+    def to_value(self) -> Literal[-1, 0, 1]:
+        """
+        Get tolerance type as an integer value in range [-1, 1].
+        """
+        return -1 if self.value == ToleranceType.NEGATIVE else 0 if self.value == ToleranceType.NEUTRAL else 1
+
     def __str__(self) -> str:
         return self.value
 

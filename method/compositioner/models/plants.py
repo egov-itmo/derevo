@@ -81,7 +81,8 @@ class Plant:  # pylint: disable=too-many-instance-attributes
             self.survivability,
             *(str(d_f[1]) for d_f in dict_fields if d_f[1]),
         )
-    
+
+
 @dataclass
 class Compatability:
     """

@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 from loguru import logger
 from sqlalchemy import create_engine, text
 
+from compositioner.models.cohabitation import CohabitationType, GeneraCohabitation
+
 try:
     import compositioner as cm  # pylint: disable=unused-import
 except ModuleNotFoundError:
@@ -21,7 +23,7 @@ except ModuleNotFoundError:
 
 from compositioner import Plant, Territory
 from compositioner import enumerations as c_enum
-from compositioner import get_composition
+from compositioner import get_compositions
 from compositioner.optimal_resolution import get_best_resolution
 
 from .data_collection import (
@@ -77,8 +79,16 @@ if __name__ == "__main__":
         light_types=[c_enum.LightType.LIGHT, c_enum.LightType.DARKENED],
         soil_fertility_types=[c_enum.FertilityType.FERTIL, c_enum.FertilityType.SLIGHTLY_FERTIL],
     )
-    composition_plants = get_composition(
-        plants_available=plants_df, territory=territory_info, plants_present=plants_present
+
+    cohabitation_attributes = [
+        GeneraCohabitation("Род растения", "Род растения", CohabitationType.POSITIVE),
+        GeneraCohabitation("Род растения", "Другой род растения", CohabitationType.NEGATIVE),
+    ]
+    composition_plants = get_compositions(
+        plants_available=plants_df,
+        cohabitation_attributes=cohabitation_attributes,
+        territory=territory_info,
+        plants_present=plants_present,
     )
 
     # get plants from database
@@ -147,16 +157,3 @@ if __name__ == "__main__":
         print(best_resolution)
     except KeyboardInterrupt:
         print("Skipping get_best_resolution")
-
-    # GRAPH_NAME = "recommended_graph.gexf"
-    # print(f"Writing recommended graph for a polygon to {GRAPH_NAME}")
-    # cm.write_recommended_composition_gexf(
-    #     plants,
-    #     plants_with_limitations_resistance,
-    #     plants_suitable_for_light,
-    #     limitations,
-    #     light,
-    #     cohabitation_attributes,
-    #     polygon, # FIXME: polygon is needed here
-    #     GRAPH_NAME
-    # )
