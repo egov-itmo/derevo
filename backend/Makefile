@@ -1,6 +1,6 @@
-VERSION = 0.2.2
+VERSION = 0.4.0
 
-DOCKER_USER_WITH_SLASH = 
+DOCKER_USER_WITH_SLASH =
 
 lint:
 	python -m pylint plants_api

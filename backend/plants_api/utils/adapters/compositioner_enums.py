@@ -71,3 +71,7 @@ class EnumAdapters:  # pylint: disable=too-few-public-methods
         "Однолетники": c_enum.LifeForm.ANNUAL,
         "Болотное растение": c_enum.LifeForm.SWAMP_PLANT,
     }
+
+    aggressiveness_levels = {value: c_enum.AggressivenessLevel.from_value(value) for value in range(-1, 2)}
+
+    survivability_levels = {value: c_enum.SurvivabilityLevel.from_value(value) for value in range(-1, 2)}

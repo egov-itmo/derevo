@@ -35,6 +35,9 @@ async def plant_dto_to_compositioner_plant(  # pylint: disable=too-many-locals,t
     """
     Transform plant DTOs list to list of compositioner Plant types.
     """
+    if len(plants) == 0:
+        return []
+
     limitation_factors_statement = select(
         select(limitation_factors.c.name)
         .where(limitation_factors.c.id == plants_limitation_factors.c.limitation_factor_id)
@@ -71,7 +74,7 @@ async def plant_dto_to_compositioner_plant(  # pylint: disable=too-many-locals,t
         select(climate_zones.c.usda_number)
         .where(climate_zones.c.id == plants_climate_zones.c.climate_zone_id)
         .scalar_subquery(),
-        climate_zones.c.is_stable,
+        plants_climate_zones.c.is_stable,
     ).where(plants_climate_zones.c.plant_id == bindparam("plant_id"))
 
     plants_out: list[Plant] = []
@@ -156,7 +159,7 @@ async def plant_dto_to_compositioner_plant(  # pylint: disable=too-many-locals,t
                     soil_fertility_preferences,
                     soil_type_preferences,
                     (
-                        c_enum.AgressivenessLevel.from_value(plant.spread_aggressiveness_level)
+                        c_enum.AggressivenessLevel.from_value(plant.spread_aggressiveness_level)
                         if plant.spread_aggressiveness_level is not None
                         else None
                     ),
