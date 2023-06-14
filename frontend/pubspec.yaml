@@ -2,7 +2,7 @@ name: landscaping_frontend
 description: Frontend application to allow users to launch plants composition method
 publish_to: 'none'
 
-version: 1.4.0+1
+version: 1.5.0+1
 
 environment:
   sdk: '>=3.0.0-245.0.dev <4.0.0'

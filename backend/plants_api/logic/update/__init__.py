@@ -39,7 +39,11 @@ from plants_api.db.entities import (
 )
 from plants_api.db.entities.enums import CohabitationType
 
-from .document_parse import get_cohabitation, get_plants_from_xlsx_sheets, get_plants_genera
+from .document_parse import (
+    get_cohabitation,
+    get_plants_from_xlsx_sheets,
+    get_plants_genera,
+)
 from .sheets_configuration import sheets_configuration as s_conf
 
 
@@ -212,13 +216,19 @@ async def update_plants_from_xlsx(conn: AsyncConnection, input_xlsx: BytesIO) ->
         insert_statement = insert(plants_climate_zones)
         for name, value in line.items():
             if (name not in s_conf.additional_columns) and (
-                name not in s_conf.plants_columns_mapping or (value := str(value).strip()) not in ("0", "1")
+                name not in s_conf.plants_columns_mapping or (value := str(value).strip()) not in ("-1", "0", "1")
             ):
                 continue
             if name.startswith("USDA"):
-                value = value == "1"
+                value = (
+                    CohabitationType.positive
+                    if value == "1"
+                    else CohabitationType.neutral
+                    if value == "0"
+                    else CohabitationType.negative
+                )
                 usda_number = int(name[len("USDA") :])
-                statement = select(plants_climate_zones.c.is_stable).where(
+                statement = select(plants_climate_zones.c.type).where(
                     (plants_climate_zones.c.plant_id == plant_id)
                     & (plants_climate_zones.c.climate_zone_id == usda_numbers_climate_zones[usda_number])
                 )
@@ -228,15 +238,18 @@ async def update_plants_from_xlsx(conn: AsyncConnection, input_xlsx: BytesIO) ->
                         {
                             "plant_id": plant_id,
                             "climate_zone_id": usda_numbers_climate_zones[usda_number],
-                            "is_stable": value,
+                            "type": value,
                         },
                     )
                     inserted_factors += 1
-                elif res[0] != bool(int(value)):
+                elif res[0] != value:
                     statement = (
                         update(plants_climate_zones)
-                        .where(plant_id=plant_id, climate_zone_id=usda_numbers_climate_zones[usda_number])
-                        .values(is_stable=value)
+                        .values(type=value)
+                        .where(
+                            plants_climate_zones.c.plant_id == plant_id,
+                            plants_climate_zones.c.climate_zone_id == usda_numbers_climate_zones[usda_number],
+                        )
                     )
                     await conn.execute(statement)
                     updated_factors += 1
@@ -248,15 +261,22 @@ async def update_plants_from_xlsx(conn: AsyncConnection, input_xlsx: BytesIO) ->
                     await conn.execute(statement)
                 continue
             try:
+                value = (
+                    CohabitationType.positive
+                    if value == "1"
+                    else CohabitationType.neutral
+                    if value == "0"
+                    else CohabitationType.negative
+                )
                 plants_to_table, table_column, table_types = type_table_name[s_conf.plants_columns_mapping[name]]
-                statement = select(plants_to_table.c.is_stable).where(
+                statement = select(plants_to_table.c.type).where(
                     (plants_to_table.c.plant_id == plant_id)
                     & (table_column == select(table_types.c.id).where(table_types.c.name == name).scalar_subquery())
                 )
                 if (res := (await conn.execute(statement)).fetchone()) is None:
                     statement = insert(plants_to_table).values(
                         plant_id=plant_id,
-                        is_stable=bool(int(value)),
+                        type=value,
                         **{
                             table_column.name: select(table_types.c.id)
                             .where(table_types.c.name == name)
@@ -265,7 +285,7 @@ async def update_plants_from_xlsx(conn: AsyncConnection, input_xlsx: BytesIO) ->
                     )
                     await conn.execute(statement)
                     inserted_factors += 1
-                elif res[0] != bool(int(value)):
+                elif res[0] != value:
                     statement = (
                         update(plants_to_table)
                         .where(
@@ -275,7 +295,7 @@ async def update_plants_from_xlsx(conn: AsyncConnection, input_xlsx: BytesIO) ->
                                 == select(table_types.c.id).where(table_types.c.name == name).scalar_subquery()
                             )
                         )
-                        .values(is_stable=bool(int(value)))
+                        .values(type=value)
                     )
                     await conn.execute(statement)
                     updated_factors += 1

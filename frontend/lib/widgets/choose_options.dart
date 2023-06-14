@@ -5,9 +5,11 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geojson_vi/geojson_vi.dart';
 import 'package:http/http.dart' as http;
 import 'package:landscaping_frontend/config/config.dart';
-import 'package:landscaping_frontend/entities/limitation_factors.dart';
-import 'package:landscaping_frontend/models/limitations_response.dart';
-import 'package:landscaping_frontend/models/method_request.dart';
+import 'package:landscaping_frontend/models/compositions.dart';
+import 'package:landscaping_frontend/models/limitation_factors.dart';
+import 'package:landscaping_frontend/notifiers/compositions.dart';
+import 'package:landscaping_frontend/notifiers/limitations_response.dart';
+import 'package:landscaping_frontend/notifiers/method_request.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
@@ -64,6 +66,7 @@ class _ChooseOptionsState extends State<ChooseOptions> {
     List<Widget> selects = [];
     var limitations = context.watch<LimitationsResponseModel>();
     var request = context.watch<MethodRequestModel>();
+    var result = context.watch<CompositionsModel>();
 
     for (NameAndSelect nameAndSelect in limitationFactors) {
       selects.add(Text("Выберите ${nameAndSelect.limitationFactorName}"));
@@ -95,7 +98,9 @@ class _ChooseOptionsState extends State<ChooseOptions> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () => _callMethodCalculation(request),
+                  onPressed: () async {
+                    result.compositions = await _callMethodCalculation(request);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: widget.theme.colorScheme.primary,
                     foregroundColor: widget.theme.colorScheme.onPrimary,
@@ -167,7 +172,45 @@ class _ChooseOptionsState extends State<ChooseOptions> {
     }
   }
 
-  void _callMethodCalculation(MethodRequestModel request) {
+  Future<Compositions> _callMethodCalculation(
+      MethodRequestModel request) async {
+    var func = appConfig.apiHost.startsWith("https://") ? Uri.https : Uri.http;
+    var host = appConfig.apiHost.startsWith(RegExp("http(s?):\\/\\/"))
+        ? appConfig.apiHost.substring(appConfig.apiHost.indexOf("://") + 3)
+        : appConfig.apiHost;
+    Uri methodUri = func(
+      host,
+      "/api/compositions/get_by_polygon",
+      {
+        "light_type_id": request.lightTypeId,
+        "humidity_type_id": request.humidityTypeId,
+        "soil_acidity_type_id": request.soilAcidityTypeId,
+        "soil_fertility_type_id": request.soilFertilityTypeId,
+        "soil_type_id": request.soilTypeId,
+      }..removeWhere((key, value) => value == null),
+    );
     debugPrint('Requesting backend with $request');
+    var response = await http.post(
+      methodUri,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "territory": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              for (var latLng in request.polygon)
+                [latLng.longitude, latLng.latitude]
+            ]
+          ]
+        },
+        "plants_present": request.presentPlants
+      }),
+    );
+    if (response.statusCode == 200) {
+      return Compositions.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+    } else {
+      debugPrint(jsonDecode(utf8.decode(response.bodyBytes)).toString());
+      throw Exception('Ошибка работы метода (${response.statusCode})');
+    }
   }
 }

@@ -34,15 +34,26 @@ def _check_names(
     """
     enums = {entry.name.lower() for entry in concrete_enum}
     if any((lf.name.lower() if isinstance(lf, Enum) else lf.lower()) not in enums for lf in gdf["name"].unique()):
-        logger.warning("Some {} geometries are dropped as their names are not in enum values", concrete_enum.__name__)
-        logger.debug("Number of {} polygons before removal: {}", concrete_enum.__name__, gdf.shape[0])
+        logger.warning(
+            "Some {} geometries are dropped as their names are not in enum values",
+            concrete_enum.__name__,
+        )
+        logger.debug(
+            "Number of {} polygons before removal: {}",
+            concrete_enum.__name__,
+            gdf.shape[0],
+        )
         gdf.drop(
             (
                 gdf[~gdf["name"].apply(lambda lf: lf.name.lower() if isinstance(lf, Enum) else lf.lower()).isin(enums)]
             ).index,
             inplace=True,
         )
-        logger.debug("Number of {} polygons after removal: {}", concrete_enum.__name__, gdf.shape[0])
+        logger.debug(
+            "Number of {} polygons after removal: {}",
+            concrete_enum.__name__,
+            gdf.shape[0],
+        )
 
 
 def _names_to_enum(values: Iterable[str | Enum], concrete_enum: type[Enum]) -> list[Enum]:
@@ -50,6 +61,13 @@ def _names_to_enum(values: Iterable[str | Enum], concrete_enum: type[Enum]) -> l
     Construct list of given enum types from their string names.
     """
     return [concrete_enum(v.capitalize()) if isinstance(v, str) else v for v in values]
+
+
+def _names_to_unique_enum(values: Iterable[str | Enum], concrete_enum: type[Enum]) -> list[Enum]:
+    """
+    Construct list of given enum types from their string names.
+    """
+    return list({concrete_enum(v.capitalize()) if isinstance(v, str) else v for v in values})
 
 
 @dataclass
@@ -119,10 +137,10 @@ class GlobalTerritory:
         """
         return Territory(
             self.usda_zone,
-            _names_to_enum(self.limitation_factors["name"], LimitationFactor),
-            _names_to_enum(self.light_types["name"], LightType),
-            _names_to_enum(self.humidity_types["name"], HumidityType),
-            _names_to_enum(self.soil_types["name"], SoilType),
-            _names_to_enum(self.soil_acidity_types["name"], AcidityType),
-            _names_to_enum(self.soil_fertility_types["name"], FertilityType),
+            _names_to_unique_enum(self.limitation_factors["name"], LimitationFactor),
+            _names_to_unique_enum(self.light_types["name"], LightType),
+            _names_to_unique_enum(self.humidity_types["name"], HumidityType),
+            _names_to_unique_enum(self.soil_types["name"], SoilType),
+            _names_to_unique_enum(self.soil_acidity_types["name"], AcidityType),
+            _names_to_unique_enum(self.soil_fertility_types["name"], FertilityType),
         )

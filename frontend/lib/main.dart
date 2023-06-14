@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:landscaping_frontend/config/config.dart';
-import 'package:landscaping_frontend/models/limitations_response.dart';
-import 'package:landscaping_frontend/models/method_request.dart';
+import 'package:landscaping_frontend/notifiers/compositions.dart';
+import 'package:landscaping_frontend/notifiers/limitations_response.dart';
+import 'package:landscaping_frontend/notifiers/method_request.dart';
 import 'package:landscaping_frontend/pages/map.dart';
 import 'package:landscaping_frontend/pages/plants_list.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,8 @@ Future<void> main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => MethodRequestModel()),
-      ChangeNotifierProvider(create: (context) => LimitationsResponseModel())
+      ChangeNotifierProvider(create: (context) => LimitationsResponseModel()),
+      ChangeNotifierProvider(create: (context) => CompositionsModel()),
     ],
     child: const LandscapingFrontendApp(),
   ));

@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:landscaping_frontend/config/config.dart';
-import 'package:landscaping_frontend/entities/limitation_factors.dart';
-import 'package:landscaping_frontend/models/method_request.dart';
+import 'package:landscaping_frontend/models/limitation_factors.dart';
+import 'package:landscaping_frontend/notifiers/method_request.dart';
 import 'package:provider/provider.dart';
 
 class LimitationFactorSelect extends StatefulWidget {
