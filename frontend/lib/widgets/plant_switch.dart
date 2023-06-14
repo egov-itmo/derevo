@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/method_request.dart';
+import '../notifiers/method_request.dart';
 
 class PlantSwitch extends StatelessWidget {
   final int plantId;

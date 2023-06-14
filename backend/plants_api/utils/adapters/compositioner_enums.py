@@ -3,6 +3,16 @@ Compositioner enumerations names mapping is hardcoded here.
 """
 
 from compositioner import enumerations as c_enum
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncConnection
+
+from plants_api.db.entities import (
+    humidity_types,
+    light_types,
+    soil_acidity_types,
+    soil_fertility_types,
+    soil_types,
+)
 
 
 class EnumAdapters:  # pylint: disable=too-few-public-methods
@@ -71,3 +81,61 @@ class EnumAdapters:  # pylint: disable=too-few-public-methods
         "Однолетники": c_enum.LifeForm.ANNUAL,
         "Болотное растение": c_enum.LifeForm.SWAMP_PLANT,
     }
+
+    aggressiveness_levels = {value: c_enum.AggressivenessLevel.from_value(value) for value in range(-1, 2)}
+
+    survivability_levels = {value: c_enum.SurvivabilityLevel.from_value(value) for value in range(-1, 2)}
+
+
+async def get_light_type_by_id(conn: AsyncConnection, light_type_id: int | None) -> c_enum.LightType | None:
+    """
+    Return enum value given identifier in the database. Throw exception if entity is not found.
+    """
+    if light_type_id is None:
+        return None
+    statement = select(light_types.c.name).where(light_types.c.id == light_type_id)
+    return EnumAdapters.light[(await conn.execute(statement)).scalar_one()]
+
+
+async def get_humidity_type_by_id(conn: AsyncConnection, humidity_type_id: int | None) -> c_enum.HumidityType | None:
+    """
+    Return enum value given identifier in the database. Throw exception if entity is not found.
+    """
+    if humidity_type_id is None:
+        return None
+    statement = select(humidity_types.c.name).where(humidity_types.c.id == humidity_type_id)
+    return EnumAdapters.humidity[(await conn.execute(statement)).scalar_one()]
+
+
+async def get_soil_type_by_id(conn: AsyncConnection, soil_type_id: int | None) -> c_enum.SoilType | None:
+    """
+    Return enum value given identifier in the database. Throw exception if entity is not found.
+    """
+    if soil_type_id is None:
+        return None
+    statement = select(soil_types.c.name).where(soil_types.c.id == soil_type_id)
+    return EnumAdapters.soil[(await conn.execute(statement)).scalar_one()]
+
+
+async def get_soil_fertility_type_by_id(
+    conn: AsyncConnection, soil_fertility_type_id: int | None
+) -> c_enum.FertilityType | None:
+    """
+    Return enum value given identifier in the database. Throw exception if entity is not found.
+    """
+    if soil_fertility_type_id is None:
+        return None
+    statement = select(soil_fertility_types.c.name).where(soil_fertility_types.c.id == soil_fertility_type_id)
+    return EnumAdapters.fertility[(await conn.execute(statement)).scalar_one()]
+
+
+async def get_soil_acidity_type_by_id(
+    conn: AsyncConnection, soil_acidity_type_id: int | None
+) -> c_enum.AcidityType | None:
+    """
+    Return enum value given identifier in the database. Throw exception if entity is not found.
+    """
+    if soil_acidity_type_id is None:
+        return None
+    statement = select(soil_acidity_types.c.name).where(soil_acidity_types.c.id == soil_acidity_type_id)
+    return EnumAdapters.acidity[(await conn.execute(statement)).scalar_one()]

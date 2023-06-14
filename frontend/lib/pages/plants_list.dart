@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:landscaping_frontend/config/config.dart';
-import 'package:landscaping_frontend/entities/plants.dart';
+import 'package:landscaping_frontend/models/plants.dart';
 import 'package:landscaping_frontend/widgets/plant_switch.dart';
 
 class PlantsListPage extends StatefulWidget {
@@ -56,21 +56,17 @@ class _PlantsListPageState extends State<PlantsListPage> {
 
 class PlantsTable extends StatelessWidget {
   final List<Plant> plants;
+  final bool withSwitch;
 
-  const PlantsTable(this.plants, {super.key});
+  const PlantsTable(this.plants, {super.key, this.withSwitch = true});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Table(
-          border: TableBorder.all(),
-          columnWidths: const {
+    var widths = withSwitch
+        ? const {
             0: FixedColumnWidth(70),
-            1: FixedColumnWidth(150),
-            2: FixedColumnWidth(150),
+            1: FixedColumnWidth(180),
+            2: FixedColumnWidth(160),
             3: FixedColumnWidth(120),
             4: FixedColumnWidth(120),
             5: FixedColumnWidth(80),
@@ -79,11 +75,30 @@ class PlantsTable extends StatelessWidget {
             8: FixedColumnWidth(115),
             9: FixedColumnWidth(105),
             10: FixedColumnWidth(102),
-          },
+          }
+        : const {
+            0: FixedColumnWidth(180),
+            1: FixedColumnWidth(160),
+            2: FixedColumnWidth(120),
+            3: FixedColumnWidth(120),
+            4: FixedColumnWidth(80),
+            5: FixedColumnWidth(80),
+            6: FixedColumnWidth(110),
+            7: FixedColumnWidth(115),
+            8: FixedColumnWidth(105),
+            9: FixedColumnWidth(102),
+          };
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Table(
+          border: TableBorder.all(),
+          columnWidths: widths,
           children: [
             TableRow(
               children: [
-                "Наличие",
+                if (withSwitch) "Наличие",
                 "Название",
                 "Латинское название",
                 "Род",
@@ -109,7 +124,8 @@ class PlantsTable extends StatelessWidget {
                   .toList(),
             ),
             for (Plant plant in plants)
-              plant.toRow(firstWidget: PlantSwitch(plant.id))
+              plant.toRow(
+                  firstWidget: withSwitch ? PlantSwitch(plant.id) : null)
           ],
         ),
       ),

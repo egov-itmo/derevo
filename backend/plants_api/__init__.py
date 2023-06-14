@@ -9,4 +9,4 @@ __maintainer__ = __author__
 
 __email__ = "kanootoko@gmail.com"
 __license__ = "MIT"
-__version__ = "0.3.0"
+__version__ = "0.4.1"

@@ -17,6 +17,4 @@ class LimitationsResponseModel extends ChangeNotifier {
     _lightFactors = newValue;
     notifyListeners();
   }
-
-  void ready() {}
 }

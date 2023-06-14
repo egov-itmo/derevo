@@ -28,7 +28,8 @@ def get_compositions(
     Return plants composition variants list for the given parameters.
     """
     logger.debug(
-        "Number of light conditions: {}", len(territory.light_types) if territory.light_types is not None else "unknown"
+        "Number of light conditions: {}",
+        len(territory.light_types) if territory.light_types is not None else "unknown",
     )
     logger.debug(
         "Number of limitation factors: {}",
@@ -59,7 +60,7 @@ def get_compositions(
     # TODO: add processing of other factors
 
     if local_plants.shape[0] == 0:
-        return plants_present
+        return [plants_present]
 
     cohabitation_df = pd.DataFrame(
         [(c.genus_1, c.genus_2, c.cohabitation.to_value()) for c in cohabitation_attributes],
@@ -68,10 +69,16 @@ def get_compositions(
     compatability_graph: nx.Graph = get_compatability_graph(pd.DataFrame(plants_available), cohabitation_df)
     comp_graph = compatability_graph.subgraph(local_plants["name_ru"]).copy()
     communities_list = greedy_modularity_communities(comp_graph, weight="weight")
-    logger.debug("number of communities: {}", len(communities_list))
+    logger.debug(
+        "Number of communities: {} (sizes: {})",
+        len(communities_list),
+        ", ".join(map(str, (len(community) for community in communities_list))),
+    )
     compositions = [list(com) for com in communities_list]
+    present_names = {plant.name_ru for plant in plants_present}
     compositions = [
-        plants_present + [plant for plant in plants_available if plant.name_ru in composition]
+        plants_present
+        + [plant for plant in plants_available if plant.name_ru in composition and plant.name_ru not in present_names]
         for composition in compositions
     ]
     return compositions
@@ -150,7 +157,7 @@ def get_updated_composition(
     comp_graph = compatability_graph.copy()
     comp_graph = comp_graph.subgraph(df_comp["name_ru"])
     communities_list = greedy_modularity_communities(comp_graph, weight="weight")
-    logger.debug("number of communities: {}", len(communities_list))
+    logger.debug("Number of communities: {}", len(communities_list))
 
     compositions = [list(com) for com in communities_list]
     current_graph = get_adjacency_graph(species_in_parks, target_parks=[greenery_polygon["name"]])
@@ -264,7 +271,7 @@ def get_recommended_composition(
     comp_graph = compatability_graph.copy()
     comp_graph = comp_graph.subgraph(df_comp["name_ru"])
     communities_list = greedy_modularity_communities(comp_graph, weight="weight")
-    logger.debug("number of communities: {}", len(communities_list))
+    logger.debug("Number of communities: {}", len(communities_list))
 
     compositions = [list(com) for com in communities_list]
     graph_variants = []
@@ -320,7 +327,7 @@ def get_composition_unknown(
     """
     compatability_graph = get_compatability_graph(plants, cohabitation_attributes)
     communities_list = greedy_modularity_communities(compatability_graph, weight="weight")
-    logger.debug("number of communities: {}", len(communities_list))
+    logger.debug("Number of communities: {}", len(communities_list))
     compositions = [list(com) for com in communities_list]
     graph_variants = []
     for composition in compositions:

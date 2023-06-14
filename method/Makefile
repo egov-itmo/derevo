@@ -1,4 +1,5 @@
 SOURCE_DIR := compositioner example
+VERSION := 0.1.0
 
 lint:
 	python -m pylint ${SOURCE_DIR}
@@ -26,3 +27,7 @@ udpate-pypi: clean build
 
 install-from-build:
 	python -m wheel install dist/pg_save-*.whl
+
+docker-build:
+	docker build --tag local/compositioner:$(VERSION) .
+	docker tag local/compositioner:$(VERSION) local/compositioner:latest

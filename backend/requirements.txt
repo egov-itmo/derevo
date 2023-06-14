@@ -1,6 +1,7 @@
 alembic
 asyncpg
 click
+compositioner
 fastapi
 geoalchemy2
 loguru
