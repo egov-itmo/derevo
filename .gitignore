@@ -2,5 +2,8 @@
 *.xlsx
 *.zip
 .vscode
-.env
+*.env
 /data
+/backend.env
+/frontend-config.json
+/export

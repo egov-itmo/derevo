@@ -1,21 +1,21 @@
 import 'dart:io';
-import 'package:flutter/services.dart';
+
+import 'package:flutter/material.dart';
+import 'package:global_configuration/global_configuration.dart';
 import 'package:landscaping_frontend/config/config.dart';
 import 'package:landscaping_frontend/models/limitations_response.dart';
-import 'package:provider/provider.dart';
-import 'package:yaml/yaml.dart';
-import 'package:flutter/material.dart';
-import 'package:landscaping_frontend/widgets/choose_options.dart';
-import 'package:landscaping_frontend/widgets/landscape_map.dart';
 import 'package:landscaping_frontend/models/method_request.dart';
+import 'package:landscaping_frontend/pages/map.dart';
+import 'package:landscaping_frontend/pages/plants_list.dart';
+import 'package:provider/provider.dart';
 
 final HttpClient httpClient = HttpClient();
 
 Future<void> main() async {
-  final yamlString = await rootBundle.loadString('assets/my_config.yaml');
-  final dynamic yamlMap = loadYaml(yamlString);
+  WidgetsFlutterBinding.ensureInitialized();
 
-  appConfig.apiHost = yamlMap['api_host'] ?? appConfig.apiHost;
+  await GlobalConfiguration().loadFromAsset("config.json");
+  appConfig.apiHost = GlobalConfiguration().getValue("api_host");
 
   runApp(MultiProvider(
     providers: [
@@ -32,35 +32,63 @@ class LandscapingFrontendApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Landscaping Frontend App',
-      theme: ThemeData(
-        colorSchemeSeed: Colors.green[800],
-        scaffoldBackgroundColor: Colors.green[100],
-        useMaterial3: true,
-      ),
-      home: const LandscapingHome(),
-    );
+        title: 'Landscaping Frontend App',
+        theme: ThemeData(
+          colorSchemeSeed: Colors.green[800],
+          scaffoldBackgroundColor: Colors.green[100],
+          useMaterial3: true,
+        ),
+        home: const Headered(child: MapPage()),
+        routes: {
+          '/plants': (BuildContext context) =>
+              const Headered(child: PlantsListPage()),
+        });
   }
 }
 
-class LandscapingHome extends StatelessWidget {
-  const LandscapingHome({super.key});
+class Headered extends StatelessWidget {
+  final Widget child;
+
+  const Headered({
+    required this.child,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    return Scaffold(
-      body: Stack(
-        children: [
-          const LandscapeMap(),
-          Positioned(
-            right: 40,
-            top: 40,
-            width: 300,
-            child: ChooseOptions(theme: theme),
-          ),
-        ],
+    var theme = Theme.of(context);
+    return Column(children: [
+      SizedBox(
+        child: Container(
+          height: 40,
+          padding: const EdgeInsets.all(2.0),
+          color: theme.primaryColor,
+          alignment: Alignment.center,
+          child: Row(children: [
+            ElevatedButton(
+              onPressed: () {
+                var current =
+                    ModalRoute.of(context)?.settings.name ?? "unknown";
+                if (current == '/plants' && Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                } else if (current != '/') {
+                  Navigator.pushNamed(context, '/');
+                }
+              },
+              child: const Text("Main page"),
+            ),
+            const SizedBox(width: 10),
+            ElevatedButton(
+                onPressed: () {
+                  if (ModalRoute.of(context)?.settings.name != 'plants') {
+                    Navigator.pushNamed(context, '/plants');
+                  }
+                },
+                child: const Text("Plants")),
+          ]),
+        ),
       ),
-    );
+      Expanded(child: Scaffold(body: child)),
+    ]);
   }
 }

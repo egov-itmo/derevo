@@ -56,6 +56,6 @@ async def get_light(conn: AsyncConnection, geometry: geom.Polygon | geom.MultiPo
         select(light_types.c.name, ST_AsGeoJSON(light_type_parts.c.geometry))
         .select_from(light_types)
         .join(light_type_parts, light_type_parts.c.light_type_id == light_types.c.id)
-        .where(func.ST_Intersects(light_type_parts.c.geometry, select(buffered_geom.c.geometry).as_scalar()))
+        .where(func.ST_Intersects(light_type_parts.c.geometry, select(buffered_geom.c.geometry).scalar_subquery()))
     )
     return [{"name": name, "geometry": geom} for name, geom in await conn.execute(statement)]

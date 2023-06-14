@@ -22,7 +22,7 @@ from .routers import update_router
     status_code=status.HTTP_200_OK,
 )
 async def update_plants(
-    connection: AsyncConnection = Depends(get_connection), file: UploadFile = File(...)
+    file: UploadFile = File(...), connection: AsyncConnection = Depends(get_connection)
 ) -> PlantsResponse:
     """
     Get all plants information from the database.

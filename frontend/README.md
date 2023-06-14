@@ -4,4 +4,4 @@ Frontend application to allow users to launch plants composition method and obse
 
 ## Before launch
 
-Use [config.yml.example](config.yml.example) to create config.yml with right settings.
+Go to assets/cfg and use [config.yml.example](config.yml.example) to create config.yml with right settings.

@@ -2,7 +2,7 @@ name: landscaping_frontend
 description: Frontend application to allow users to launch plants composition method
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.4.0+1
 
 environment:
   sdk: '>=3.0.0-245.0.dev <4.0.0'
@@ -19,8 +19,9 @@ dependencies:
   flutter_map_geojson: ^1.0.1
   positioned_tap_detector_2: ^1.0.4
   provider: ^6.0.5
-  geojson: ^1.0.0
-  yaml: ^3.1.1
+  global_configuration: ^2.0.0-nullsafety.1
+  geojson_vi: ^2.0.7
+  url_launcher: ^6.1.10
 
 dev_dependencies:
   flutter_test:
@@ -34,4 +35,4 @@ flutter:
   uses-material-design: true
 
   assets:
-    - config.yml
+    - assets/cfg/

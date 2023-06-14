@@ -23,3 +23,4 @@ class PlantDto:
     is_invasive: Optional[bool]
     genus: Optional[str]
     photo_url: Optional[str]
+    thumbnail_url: Optional[str]

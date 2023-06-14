@@ -32,6 +32,7 @@ class JWTDecodeError(PlantsApiError):
         super().__init__()
         self.token = token
 
+    def get_status_code(self) -> int:
         """
         Return '401 Unauthorized' status code.
         """

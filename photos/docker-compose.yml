@@ -3,9 +3,8 @@ version: '3.1'
 services:
   photos_server:
     container_name: greenery_photos
-    image: nginx:latest
+    build: .
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
       - ./plants_photos:/plants_photos
     ports:
       - 6065:80
