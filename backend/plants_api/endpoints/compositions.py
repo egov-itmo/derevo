@@ -2,22 +2,18 @@
 get_compositions endpoint is defined here.
 """
 from typing import Any
+
 from compositioner import Territory
 from fastapi import Depends
-from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncConnection
 from starlette import status
 
 from plants_api.db.connection import get_connection
-from plants_api.logic.compositions import (
-    get_global_territory,
-    get_plants_compositions,
-    get_territory,
-)
+from plants_api.logic.compositions import get_global_territory, get_plants_compositions, get_territory
 from plants_api.logic.plants import (
     get_genera_cohabitation,
     get_plants_by_ids,
-    get_plants_from_db,
+    get_plants_compositioner,
 )
 from plants_api.schemas.compositions import CompositionsResponse
 from plants_api.schemas.geojson import Geometry
@@ -52,10 +48,7 @@ async def get_compositions(  # pylint: disable=too-many-arguments,too-many-local
     """
     Get all plants information from the database.
     """
-    # TODO: cache following three values
-    logger.debug("Getting plants list")
-    plants_available_cm = await plant_dto_to_compositioner_plant(connection, await get_plants_from_db(connection))
-    logger.debug("Getting global territory")
+    plants_available_cm = await get_plants_compositioner(connection)
     global_territory = await get_global_territory(connection)
     genus_cohabitation = await get_genera_cohabitation(connection)
 
