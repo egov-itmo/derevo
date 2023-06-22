@@ -28,11 +28,29 @@ from plants_api.dto import PlantDto
 from plants_api.logic.plants import get_plants_by_name_ru
 from plants_api.utils.adapters.compositioner_enums import EnumAdapters
 
+_cached_global_territory: GlobalTerritory | None = None
 
-async def get_global_territory(conn: AsyncConnection) -> GlobalTerritory:
+
+async def get_global_territory(conn: AsyncConnection, use_cached: bool = True) -> GlobalTerritory:
     """
     Collect polygons of different factors as a GlobalTerritory for the copositioner method.
+
+    Collects once and uses cached version unless `use_cache` is not set to False.
     """
+    global _cached_global_territory  # pylint: disable=invalid-name,global-statement
+    if use_cached and _cached_global_territory is not None:
+        logger.debug(
+            "Using cached global territory with the next number of polygons: {} limitation factor,"
+            " {} light type, {} humidity type,"
+            " and {} territory (soil + acidity + fertility)",
+            _cached_global_territory.limitation_factors.shape[0],
+            _cached_global_territory.light_types.shape[0],
+            _cached_global_territory.humidity_types.shape[0],
+            _cached_global_territory.soil_types.shape[0],
+        )
+        return _cached_global_territory
+
+    logger.debug("Getting global territory")
     usda_zone = c_enum.UsdaZone.USDA5  # hard-coded for now
 
     lf_gdf = await greenlet_spawn(
@@ -112,6 +130,7 @@ async def get_global_territory(conn: AsyncConnection) -> GlobalTerritory:
         terr_gdf[["acidity_type", "geometry"]].rename({"acidity_type": "name"}, axis=1).dropna(subset="name"),
         terr_gdf[["fertility_type", "geometry"]].rename({"fertility_type": "name"}, axis=1).dropna(subset="name"),
     )
+    _cached_global_territory = global_territory
     logger.debug(
         "Global territory has next number of polygons: {} limitation factor, {} light type, {} humidity type,"
         " and {} territory (soil + acidity + fertility)",

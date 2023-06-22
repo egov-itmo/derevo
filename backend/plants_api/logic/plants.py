@@ -2,8 +2,9 @@
 Plants endpoints logic of getting entities from the database is defined here.
 """
 
-from compositioner import CohabitationType as CmCohabitationType
+from compositioner import CohabitationType as CmCohabitationType, Plant
 from compositioner import GeneraCohabitation
+from loguru import logger
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncConnection
 
@@ -11,6 +12,7 @@ from plants_api.db.entities import cohabitation, genera, plant_types, plants
 from plants_api.db.entities.enums import CohabitationType
 from plants_api.dto import PlantDto
 from plants_api.utils import get_photo_url
+from plants_api.utils.adapters.plants import plant_dto_to_compositioner_plant
 from plants_api.utils.photos import get_thumbnail_url
 
 _select_plants = (
@@ -63,6 +65,22 @@ async def get_plants_by_name_ru(conn: AsyncConnection, names_ru: list[str]) -> l
     ]
 
 
+_cached_plants_compositioner: list[Plant] | None = None
+
+
+async def get_plants_compositioner(conn: AsyncConnection, use_cached: bool = True) -> list[Plant]:
+    """
+    Return all database plants as a list of `compositioner.Plant` classes.
+    """
+    global _cached_plants_compositioner  # pylint: disable=invalid-name,global-statement
+    if use_cached and _cached_plants_compositioner is not None:
+        logger.debug("Using cached compositioner plants list")
+        return _cached_plants_compositioner
+    logger.debug("Getting plants list")
+    _cached_plants_compositioner = await plant_dto_to_compositioner_plant(conn, await get_plants_from_db(conn))
+    return _cached_plants_compositioner
+
+
 async def get_plants_from_db(conn: AsyncConnection) -> list[PlantDto]:
     """
     Get all plants from database.
@@ -78,10 +96,19 @@ async def get_plants_from_db(conn: AsyncConnection) -> list[PlantDto]:
     ]
 
 
-async def get_genera_cohabitation(conn: AsyncConnection) -> list[GeneraCohabitation]:
+_cached_genera_cohabitation: list[GeneraCohabitation] | None = None
+
+
+async def get_genera_cohabitation(conn: AsyncConnection, use_cached: bool = True) -> list[GeneraCohabitation]:
     """
     Get all genus cohabitations from database.
     """
+    global _cached_genera_cohabitation  # pylint: disable=invalid-name,global-statement
+    if use_cached and _cached_genera_cohabitation is not None:
+        logger.debug("Using cached genera cohabitation data")
+        return _cached_genera_cohabitation
+
+    logger.debug("Getting genera cohabitation data from database")
     genera_1 = genera.alias("genera_1")
     genera_2 = genera.alias("genera_2")
     statement = (
@@ -96,7 +123,8 @@ async def get_genera_cohabitation(conn: AsyncConnection) -> list[GeneraCohabitat
         CohabitationType.neutral: CmCohabitationType.NEUTRAL,
         CohabitationType.positive: CmCohabitationType.POSITIVE,
     }
-    return [
+    _cached_genera_cohabitation = [
         GeneraCohabitation(genus_1, genus_2, enum_adapter[cohabitation_type])
         for genus_1, genus_2, cohabitation_type in await conn.execute(statement)
     ]
+    return _cached_genera_cohabitation
