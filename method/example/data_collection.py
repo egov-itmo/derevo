@@ -327,6 +327,21 @@ def collect_species_in_parks(connection: Connection) -> pd.DataFrame:
     return species_in_parks
 
 
+def _cut_non_overlapping_parts(gdf):
+    new_gdf = gdf.copy()
+    spatial_index = gdf.sindex
+    for idx, row in gdf.iterrows():
+        geometry = row.geometry
+        intersecting_indices = list(spatial_index.intersection(geometry.bounds))
+        for idx2 in intersecting_indices:
+            if idx == idx2:
+                continue
+            if geometry.intersects(gdf.iloc[idx2].geometry):
+                geometry = geometry.intersection(gdf.iloc[idx2].geometry)
+        new_gdf.at[idx, 'geometry'] = geometry
+    new_gdf = new_gdf[~new_gdf.geometry.is_empty]
+    return new_gdf
+
 def collect_smoke_area_from_osm(
     city: str,
     city_crs: int,
@@ -371,7 +386,9 @@ def collect_smoke_area_from_osm(
 
     max_area = gdf.buffer(gdf.height * upper_limit)
     min_area = gdf.buffer(gdf.height * lower_limit)
-    gdf["geometry"] = max_area.difference(min_area).to_crs(4326)
+    gdf["geometry"] = max_area.difference(min_area)
+    gdf = _cut_non_overlapping_parts(gdf).dissolve().explode()
+    gdf = gdf[gdf.area > 200].to_crs(4326) 
     logger.debug("Got {} chimneys polygons", gdf.shape[0])
 
     return gdf
