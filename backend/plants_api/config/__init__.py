@@ -29,6 +29,11 @@ class AppSettings:
     db_pool_size: int = 15
     photos_dir: str = "photos"
     photos_prefix: str = "localhost:6065/images/"
+    jwt_secret_key: str = (
+        "this key will be used to sign JWTs, do not update it as all of the users current authorizations will fail"
+    )
+    jwt_access_token_exp_time: int = 3 * 24 * 60 * 60  # in seconds = 3 days
+    jwt_refresh_token_exp_time: int = 3 * 30 * 24 * 60 * 60  # in seconds = 3 months
     application_name = f"plants_api ({api_version})"
 
     @property

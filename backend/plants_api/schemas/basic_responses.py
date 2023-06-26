@@ -13,3 +13,18 @@ class OkResponse(BaseModel):
     """
 
     result: Literal["Ok"] = "Ok"
+
+
+class IdsResponse(BaseModel):
+    """
+    List of identifiers inserted.
+    """
+
+    ids: list[int]
+
+    @classmethod
+    def from_list(cls, ids: list[int]) -> "IdsResponse":
+        """
+        Construct IdsResponse from list of identifiers.
+        """
+        return cls(ids=ids)

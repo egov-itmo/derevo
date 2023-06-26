@@ -13,7 +13,7 @@ from plants_api.db.connection import get_connection
 from plants_api.logic.update import update_plants_from_xlsx
 from plants_api.schemas.plants import PlantsResponse
 
-from .routers import update_router
+from .router import update_router
 
 
 @update_router.post(

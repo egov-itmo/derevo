@@ -19,6 +19,7 @@ from sqlalchemy import engine_from_config, pool
 from plants_api.config.app_settings_global import app_settings, AppSettings
 from plants_api.db import DeclarativeBase
 from plants_api.db.entities import *  # pylint: disable=wildcard-import,unused-wildcard-import
+from plants_api.db.entities.users import *  # pylint: disable=wildcard-import,unused-wildcard-import
 
 config = context.config
 section = config.config_ini_section
