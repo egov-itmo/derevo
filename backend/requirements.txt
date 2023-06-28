@@ -4,6 +4,7 @@ click
 compositioner
 fastapi
 geoalchemy2
+jwt
 loguru
 pandas
 pillow
