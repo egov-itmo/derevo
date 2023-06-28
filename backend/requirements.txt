@@ -9,6 +9,7 @@ pandas
 pillow
 psycopg2
 pydantic
+pyjwt
 pyproj
 python-multipart
 shapely

@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncConnection
 
 from plants_api.db.entities import plants
 from plants_api.config.app_settings_global import app_settings
-from plants_api.logic.exceptions.common import DependencyNotFoundById
+from plants_api.exceptions.logic.common import DependencyNotFoundById
 from plants_api.utils.photos import get_thumbnail
 
 

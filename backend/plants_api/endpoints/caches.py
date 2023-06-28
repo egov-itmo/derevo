@@ -14,7 +14,7 @@ from .routers import system_router
 
 
 @system_router.post(
-    "/system/update_caches",
+    "/system/refresh_caches",
     response_model=OkResponse,
     status_code=status.HTTP_200_OK,
 )

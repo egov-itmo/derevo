@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncConnection
 from starlette import status
 
 from plants_api.db.connection import get_connection
-from plants_api.logic.exceptions.photos import PhotoOpenError
+from plants_api.exceptions.logic.photos import PhotoOpenError
 from plants_api.logic.update.photos import set_photo_to_plant
 from plants_api.schemas.basic_responses import OkResponse
 

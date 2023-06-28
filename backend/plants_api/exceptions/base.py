@@ -1,8 +1,6 @@
-# pylint: disable=method-hidden
 """
-Top exceptions for a plants backend service are defined here.
+Head API exception class is defined here.
 """
-
 from fastapi import HTTPException, status
 
 
@@ -21,22 +19,3 @@ class PlantsApiError(HTTPException):
             but it defaults to 500 - Internal Server Error.
         """
         return status.HTTP_500_INTERNAL_SERVER_ERROR
-
-
-class JWTDecodeError(PlantsApiError):
-    """
-    Thrown a failed attempt to decode JWT token value, either because a bad format or missing essential keys.
-    """
-
-    def __init__(self, token: str):
-        super().__init__()
-        self.token = token
-
-    def get_status_code(self) -> int:
-        """
-        Return '401 Unauthorized' status code.
-        """
-        return status.HTTP_401_UNAUTHORIZED
-
-    def __str__(self) -> str:
-        return "JWT decoding decoding error"

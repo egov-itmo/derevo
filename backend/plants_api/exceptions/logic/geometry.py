@@ -3,7 +3,7 @@ Exceptions connected with geometry are defined here.
 """
 from fastapi import status
 
-from plants_api.utils.exceptions import PlantsApiError
+from plants_api.exceptions import PlantsApiError
 
 
 class TooLargeGeometryError(PlantsApiError):

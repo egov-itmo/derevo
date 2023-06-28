@@ -10,10 +10,12 @@ from sqlalchemy.ext.asyncio import AsyncConnection
 from starlette import status
 
 from plants_api.db.connection import get_connection
+from plants_api.dto.users import User
 from plants_api.logic.update import update_plants_from_xlsx
 from plants_api.schemas.plants import PlantsResponse
+from plants_api.utils.dependencies import user_dependency
 
-from .routers import update_router
+from .router import update_router
 
 
 @update_router.post(
@@ -22,11 +24,13 @@ from .routers import update_router
     status_code=status.HTTP_200_OK,
 )
 async def update_plants(
-    file: UploadFile = File(...), connection: AsyncConnection = Depends(get_connection)
+    file: UploadFile = File(...),
+    user: User = Depends(user_dependency),
+    connection: AsyncConnection = Depends(get_connection),
 ) -> PlantsResponse:
     """
     Get all plants information from the database.
     """
-    logger.info("Updating plants from file {}", file.filename)
+    logger.info("User {} requested plants update from file {}", user, file.filename)
     content = BytesIO(await file.read())
     return (await update_plants_from_xlsx(connection, content)).getvalue()
