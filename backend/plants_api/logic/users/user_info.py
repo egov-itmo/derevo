@@ -12,9 +12,9 @@ from plants_api.exceptions.logic.users import UserNotFoundError
 from plants_api.utils.tokens import Token
 
 
-async def get_user_info(conn: AsyncConnection, email: str) -> UserDTO:
+async def get_user_info(conn: AsyncConnection, email: str, device: str | None = None) -> UserDTO:
     """
-    Return the information of given user by email.
+    Return the information of given user by email, setting `device` if it was given.
     """
     statement = select(
         users.c.id,
@@ -24,7 +24,7 @@ async def get_user_info(conn: AsyncConnection, email: str) -> UserDTO:
     user = (await conn.execute(statement)).fetchone()
     if user is None:
         raise UserNotFoundError(email)
-    return UserDTO(user[0], email, user[1], user[2])
+    return UserDTO(user[0], email, user[1], user[2], device)
 
 
 async def validate_user_token(conn: AsyncConnection, token: Token) -> bool:

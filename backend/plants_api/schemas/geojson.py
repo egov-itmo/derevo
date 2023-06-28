@@ -3,14 +3,16 @@
 Geojson response model and its inner parts are defined here.
 """
 import json
-import typing as tp
-from typing import Any, Iterable
+from typing import Any, Generic, Iterable, Literal, TypeVar
 
 import pandas as pd
 import shapely.geometry as geom
 from loguru import logger
 from pydantic import BaseModel, Field
+from pydantic.generics import GenericModel
 from sqlalchemy.engine.row import Row
+
+FeaturePropertiesType = TypeVar("FeaturePropertiesType")  # pylint: disable=invalid-name
 
 
 class Crs(BaseModel):
@@ -19,7 +21,7 @@ class Crs(BaseModel):
     """
 
     type: str
-    properties: dict[str, tp.Any]
+    properties: dict[str, Any]
 
     @property
     def code(self) -> int:
@@ -43,8 +45,8 @@ class Geometry(BaseModel):
     Geometry representation for GeoJSON model.
     """
 
-    type: tp.Literal["Point", "Polygon", "MultiPolygon", "LineString"] = Field(default="Polygon")
-    coordinates: list[tp.Any] = Field(
+    type: Literal["Point", "Polygon", "MultiPolygon", "LineString"] = Field(default="Polygon")
+    coordinates: list[Any] = Field(
         description="list[int] for Point,\n" "list[list[list[int]]] for Polygon",
         default=[[[30.22, 59.86], [30.22, 59.85], [30.25, 59.85], [30.25, 59.86], [30.22, 59.86]]],
     )
@@ -64,17 +66,19 @@ class Geometry(BaseModel):
                 return geom.LineString(self.coordinates)
 
 
-class Feature(BaseModel):
+class Feature(GenericModel, Generic[FeaturePropertiesType]):
     """
     Feature representation for GeoJSON model.
     """
 
-    type: tp.Literal["Feature"] = "Feature"
+    type: Literal["Feature"] = "Feature"
     geometry: Geometry
-    properties: dict[str, tp.Any] = {}
+    properties: FeaturePropertiesType = Field(default_factory=lambda: {})
 
     @classmethod
-    def from_series(cls, series: pd.Series, geometry_column: str = "geometry", include_nulls: bool = True) -> "Feature":
+    def from_series(
+        cls, series: pd.Series, geometry_column: str = "geometry", include_nulls: bool = True
+    ) -> "Feature[FeaturePropertiesType]":
         """
         Construct Feature object from series with a given geometrty column.
         """
@@ -90,7 +94,7 @@ class Feature(BaseModel):
     @classmethod
     def from_dict(
         cls, feature: dict[str, Any], geometry_column: str = "geometry", include_nulls: bool = True
-    ) -> "Feature":
+    ) -> "Feature[FeaturePropertiesType]":
         """
         Construct Feature object from dictionary with a given geometrty field.
         """
@@ -104,7 +108,9 @@ class Feature(BaseModel):
         return cls(geometry=geometry, properties=properties)
 
     @classmethod
-    def from_row(cls, row: dict[str, Any], geometry_column: str = "geometry", include_nulls: bool = True) -> "Feature":
+    def from_row(
+        cls, row: dict[str, Any], geometry_column: str = "geometry", include_nulls: bool = True
+    ) -> "Feature[FeaturePropertiesType]":
         """
         Construct Feature object from dictionary with a given geometrty field.
         """
@@ -120,19 +126,19 @@ class Feature(BaseModel):
         return cls(geometry=geometry, properties=properties)
 
 
-class GeoJSONResponse(BaseModel):
+class GeoJSONResponse(GenericModel, Generic[FeaturePropertiesType]):
     """
     GeoJSON model representation.
     """
 
     crs: Crs
-    type: tp.Literal["FeatureCollection"] = "FeatureCollection"
-    features: list[Feature]
+    type: Literal["FeatureCollection"] = "FeatureCollection"
+    features: list[Feature[FeaturePropertiesType]]
 
     @classmethod
     async def from_df(
         cls, data_df: pd.DataFrame, geometry_column: str = "geometry", crs: Crs = crs_4326, include_nulls: bool = True
-    ) -> "GeoJSONResponse":
+    ) -> "GeoJSONResponse[FeaturePropertiesType]":
         """
         Construct GeoJSON model from pandas DataFrame with one column containing GeoJSON geometries.
         """
@@ -148,12 +154,11 @@ class GeoJSONResponse(BaseModel):
         geometry_field: str = "geometry",
         crs: Crs = crs_4326,
         include_nulls: bool = True,
-    ) -> "GeoJSONResponse":
+    ) -> "GeoJSONResponse[FeaturePropertiesType]":
         """
         Construct GeoJSON model from list of dictionaries or SQLAlchemy Row classes from the database,
-            with one field in each containing GeoJSON geometries.
+        with one field in each containing GeoJSON geometries.
         """
-
         func = Feature.from_row if isinstance(next(iter(features), None), Row) else Feature.from_dict
         features = [
             func(feature, geometry_field, include_nulls) for feature in features

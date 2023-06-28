@@ -11,6 +11,7 @@ from plants_api.exceptions.logic.geometry import TooLargeGeometryError
 from plants_api.logic.limitations import get_limitation_factors as get_limitation_factors_from_db
 from plants_api.logic.limitations import get_light as get_light_from_db
 from plants_api.schemas import GeoJSONResponse
+from plants_api.schemas.features import Limitation
 from plants_api.schemas.geometry import GeometryPostRequest
 
 from .routers import limitations_router
@@ -22,6 +23,7 @@ _AREA_MAX = 6_000_000
 @limitations_router.post(
     "/limitation_factors",
     status_code=status.HTTP_200_OK,
+    response_model=GeoJSONResponse[Limitation],
 )
 async def get_limitation_factors(
     geometry: GeometryPostRequest,
@@ -40,6 +42,7 @@ async def get_limitation_factors(
 @limitations_router.post(
     "/light_factors",
     status_code=status.HTTP_200_OK,
+    response_model=GeoJSONResponse[Limitation],
 )
 async def get_light(
     geometry: GeometryPostRequest,

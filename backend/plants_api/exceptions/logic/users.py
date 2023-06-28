@@ -12,8 +12,8 @@ class UserExistsError(PlantsApiError):
     """
 
     def __init__(self, email: str):
-        super().__init__()
         self.email = email
+        super().__init__()
 
     def get_status_code(self) -> int:
         """
@@ -31,8 +31,8 @@ class UserNotFoundError(PlantsApiError):
     """
 
     def __init__(self, email: str):
-        super().__init__()
         self.email = email
+        super().__init__()
 
     def get_status_code(self) -> int:
         """
@@ -50,8 +50,8 @@ class UserNotApprovedError(PlantsApiError):
     """
 
     def __init__(self, email: str):
-        super().__init__()
         self.email = email
+        super().__init__()
 
     def get_status_code(self) -> int:
         """
@@ -69,8 +69,8 @@ class UserCredentialsInvalidError(PlantsApiError):
     """
 
     def __init__(self, email: str):
-        super().__init__()
         self.email = email
+        super().__init__()
 
     def get_status_code(self) -> int:
         """
@@ -88,8 +88,8 @@ class AccessTokenExpiredError(PlantsApiError):
     """
 
     def __init__(self, access_token: str):
-        super().__init__()
         self.access_token = access_token
+        super().__init__()
 
     def get_status_code(self) -> int:
         """
@@ -107,8 +107,8 @@ class AccessWithdrawnError(PlantsApiError):
     """
 
     def __init__(self, access_token: str):
-        super().__init__()
         self.access_token = access_token
+        super().__init__()
 
     def get_status_code(self) -> int:
         """
@@ -126,8 +126,8 @@ class RefreshTokenNotFoundError(PlantsApiError):
     """
 
     def __init__(self, refresh_token: str):
-        super().__init__()
         self.refresh_token = refresh_token
+        super().__init__()
 
     def get_status_code(self) -> int:
         """
@@ -145,8 +145,8 @@ class RefreshTokenExpiredError(PlantsApiError):
     """
 
     def __init__(self, refresh_token: str):
-        super().__init__()
         self.refresh_token = refresh_token
+        super().__init__()
 
     def get_status_code(self) -> int:
         """
@@ -164,8 +164,8 @@ class AccessTokenUsedToRefreshError(PlantsApiError):
     """
 
     def __init__(self, token: str):
-        super().__init__()
         self.token = token
+        super().__init__()
 
     def get_status_code(self) -> int:
         """

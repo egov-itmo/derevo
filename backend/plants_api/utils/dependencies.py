@@ -26,8 +26,8 @@ async def user_dependency(
     """
     Return user fetched from the database by email from a validated access token.
 
-    Ensures that User is active and valid.
+    Ensures that User is approved to login and valid.
     """
     if not await validate_user_token(conn, access_token):
         raise AccessTokenExpiredError(access_token)
-    return await get_user_info(conn, access_token.email)
+    return await get_user_info(conn, access_token.email, access_token.device)

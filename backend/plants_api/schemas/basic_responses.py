@@ -1,6 +1,6 @@
 # pylint: disable=no-name-in-module, too-few-public-methods
 """
-Basic responses are defined here.
+Basic response schemas are defined here.
 """
 from typing import Literal
 

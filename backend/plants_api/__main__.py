@@ -22,7 +22,7 @@ from plants_api.db.connection.session import SessionManager
 from plants_api.endpoints import list_of_routes
 from plants_api.utils.dotenv import try_load_envfile
 
-LAST_UPDATE = "2023-06-26"
+LAST_UPDATE = "2023-06-28"
 
 
 def bind_routes(application: FastAPI, prefix: str) -> None:

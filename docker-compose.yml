@@ -13,7 +13,7 @@ services:
 
   backend:
     container_name: landscaping-backend
-    image: 'landscaping-backend:0.4.2'
+    image: 'landscaping-backend:0.5.0'
     build: backend
     # ports:
     #   - 6066:80
