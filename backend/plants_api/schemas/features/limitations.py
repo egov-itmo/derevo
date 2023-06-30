@@ -1,7 +1,6 @@
 """
 Limitation DTO is defined here.
 """
-
 from dataclasses import dataclass
 
 

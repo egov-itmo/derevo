@@ -39,11 +39,12 @@ known_renames = {normalize(key): normalize(val) for key, val in known_renames.it
 @click.argument(
     "photos_path",
     type=click.Path(exists=True, file_okay=False),
-    help="Directory with plants photos named with russian names",
 )
-def main(api_host: str, photos_path: str):
+def main(api_host: str, photos_path: str):  # pylint: disable=too-many-locals
     """
-    Скрипт для загрузки информации о фотографиях в базу данных. Обрабатывает фотографии с названиями фйлов
+    Скрипт для загрузки информации о фотографиях в базу данных.
+
+    Обрабатывает фотографии с названиями фйлов
     из [green]заданной папки[/green] как названия растений, сравнивает с названиями, возвращенными back-end'ом
     и загружает фотографии для совпавших.
     """

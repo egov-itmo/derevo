@@ -32,5 +32,5 @@ async def update_plants(
     Get all plants information from the database.
     """
     logger.info("User {} requested plants update from file {}", user, file.filename)
-    content = BytesIO(await file.read())
-    return (await update_plants_from_xlsx(connection, content)).getvalue()
+    with BytesIO(await file.read()) as content:
+        return (await update_plants_from_xlsx(connection, content)).getvalue()

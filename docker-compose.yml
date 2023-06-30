@@ -8,8 +8,8 @@ services:
     volumes:
       - ./photos/plants_photos:/plants_photos
     restart: unless-stopped
-    # ports:
-    #   - 6065:80
+    ports:
+      - 6065:80
 
   backend:
     container_name: landscaping-backend
