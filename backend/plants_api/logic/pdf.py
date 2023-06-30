@@ -83,7 +83,7 @@ def compositions_to_pdf(  # pylint: disable=too-many-locals,too-many-branches
                         pdf.add_page(page)
                     layout = SingleColumnLayout(page, Decimal(12.0), Decimal(12.0))
                     table = FixedColumnWidthTable(
-                        1 + min(len(composition) - j // _PLANTS_PER_PAGE, _PLANTS_PER_PAGE),
+                        1 + min(len(composition) - j, _PLANTS_PER_PAGE),
                         10,
                         list(map(Decimal, [20, 20, 10, 10, 10, 10, 10, 10, 10, 20])),
                     )
