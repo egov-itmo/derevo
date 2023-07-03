@@ -8,6 +8,7 @@ from pathlib import Path
 
 from borb.pdf import Document, FixedColumnWidthTable, Image, Page, Paragraph, SingleColumnLayout
 from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
+from compositioner import Territory
 from loguru import logger
 from PIL import Image as PilImage
 
@@ -47,7 +48,7 @@ _PLANTS_PER_PAGE = 10
 
 
 def compositions_to_pdf(  # pylint: disable=too-many-locals,too-many-branches
-    compositions: list[list[PlantDto]],
+    compositions: list[list[PlantDto]], territory: Territory
 ) -> Document:
     """
     Form a PDF file with a given compositions.
@@ -56,7 +57,7 @@ def compositions_to_pdf(  # pylint: disable=too-many-locals,too-many-branches
     page = Page(*_PAGE_SIZE)
     pdf.add_page(page)
     layout = SingleColumnLayout(page, Decimal(12.0), Decimal(12.0))
-    layout.add(Paragraph("Next plants composition variants are possible for the given territory:"))
+    layout.add(Paragraph(f"Next plants composition variants are possible for the given territory ({territory}):"))
     finished_first_composition = False
     for i, composition in enumerate(compositions, 1):
         if finished_first_composition:
@@ -91,7 +92,7 @@ def compositions_to_pdf(  # pylint: disable=too-many-locals,too-many-branches
                 layout.add(
                     Paragraph(
                         f"Option #{i} - page {j // _PLANTS_PER_PAGE + 1} of"
-                        f" {ceil(len(composition)) // _PLANTS_PER_PAGE + 1}:"
+                        f" {ceil(len(composition) / _PLANTS_PER_PAGE)}:"
                         f" plants {j + 1}..{min(len(composition), j + _PLANTS_PER_PAGE)}",
                         font=_FONT,
                     )
@@ -146,10 +147,9 @@ def compositions_to_pdf(  # pylint: disable=too-many-locals,too-many-branches
                 except Exception as exc:  # pylint: disable=broad-except,redefined-outer-name
                     logger.warning("Could not add image {} to PDF: {}", plant.thumbnail_url, exc)
             table.add(img_to_add)
-        if len(composition) % _PLANTS_PER_PAGE != 0:
-            try:
-                layout.add(table)
-            except AssertionError as exc:  # pylint: disable=redefined-outer-name
-                logger.warning("Could not insert page: {}", exc.args)
+        try:
+            layout.add(table)
+        except AssertionError as exc:  # pylint: disable=redefined-outer-name
+            logger.warning("Could not insert page: {}", exc.args)
 
     return pdf

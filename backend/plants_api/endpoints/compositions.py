@@ -30,19 +30,28 @@ from plants_api.utils.adapters.plants import plant_dto_to_compositioner_plant
 from .routers import compositions_router
 
 
-async def _get_compositions(  # pylint: disable=too-many-arguments,too-many-locals
+def _listify(value: Any) -> list | None:
+    """
+    Return list containing the only `value` element or `value` itself if it is a list.
+    """
+    if isinstance(value, list):
+        return value
+    return [value] if value is not None else []
+
+
+async def _get_territory_information(  # pylint: disable=too-many-arguments
     connection: AsyncConnection,
     territory: Geometry,
-    plants_present: list[int] | None = None,
     light_type_id: int | None = None,
     humidity_type_id: int | None = None,
     soil_type_id: int | None = None,
     soil_fertility_type_id: int | None = None,
     soil_acidity_type_id: int | None = None,
-) -> list[list[PlantDto]]:
-    plants_available_cm = await get_plants_compositioner(connection)
+):
+    """
+    Get territory information from the database combined with given data.
+    """
     global_territory = await get_global_territory(connection)
-    genus_cohabitation = await get_genera_cohabitation(connection)
 
     light_type = await get_light_type_by_id(connection, light_type_id)
     humidity_type = await get_humidity_type_by_id(connection, humidity_type_id)
@@ -50,14 +59,7 @@ async def _get_compositions(  # pylint: disable=too-many-arguments,too-many-loca
     soil_fertility_type = await get_soil_fertility_type_by_id(connection, soil_fertility_type_id)
     soil_acidity_type = await get_soil_acidity_type_by_id(connection, soil_acidity_type_id)
 
-    plants_present_cm = await plant_dto_to_compositioner_plant(
-        connection,
-        await get_plants_by_ids(connection, plants_present) if plants_present is not None else [],
-    )
     territory_cm = get_territory(territory.as_shapely_geometry(), global_territory)
-
-    def _listify(value: Any) -> list | None:
-        return [value] if value is not None else None
 
     territory_cm.update(
         Territory(
@@ -68,6 +70,25 @@ async def _get_compositions(  # pylint: disable=too-many-arguments,too-many-loca
             soil_fertility_types=_listify(soil_fertility_type),
         )
     )
+    return territory_cm
+
+
+async def _get_compositions(
+    connection: AsyncConnection,
+    territory_cm: Territory,
+    plants_present: list[int] | None = None,
+) -> list[list[PlantDto]]:
+    plants_available_cm = await get_plants_compositioner(connection)
+    genus_cohabitation = await get_genera_cohabitation(connection)
+
+    if plants_present is not None:
+        plants_present_cm = await plant_dto_to_compositioner_plant(
+            connection,
+            await get_plants_by_ids(connection, plants_present),
+        )
+    else:
+        plants_present_cm = []
+
     return await get_plants_compositions(
         connection,
         plants_available_cm,
@@ -95,16 +116,16 @@ async def get_compositions(  # pylint: disable=too-many-arguments
     """
     Get all plants information from the database.
     """
-    compositions = await _get_compositions(
+    territory_cm = await _get_territory_information(
         connection,
         territory,
-        plants_present,
         light_type_id,
         humidity_type_id,
         soil_type_id,
         soil_fertility_type_id,
         soil_acidity_type_id,
     )
+    compositions = await _get_compositions(connection, territory_cm, plants_present)
     return CompositionsResponse.from_dtos(compositions)
 
 
@@ -125,17 +146,17 @@ async def get_compositions_pdf(  # pylint: disable=too-many-arguments
     """
     Get plants compositions as a PDF file.
     """
-    compositions = await _get_compositions(
+    territory_cm = await _get_territory_information(
         connection,
         territory,
-        plants_present,
         light_type_id,
         humidity_type_id,
         soil_type_id,
         soil_fertility_type_id,
         soil_acidity_type_id,
     )
-    pdf = compositions_to_pdf(compositions)
+    compositions = await _get_compositions(connection, territory_cm, plants_present)
+    pdf = compositions_to_pdf(compositions, territory_cm)
     with BytesIO() as buffer:
         PDF.dumps(buffer, pdf)
         return Response(buffer.getvalue(), headers={"Content-Disposition": 'attachment; filename="compositions.pdf"'})

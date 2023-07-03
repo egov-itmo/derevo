@@ -22,6 +22,7 @@ dependencies:
   global_configuration: ^2.0.0-nullsafety.1
   geojson_vi: ^2.0.7
   url_launcher: ^6.1.10
+  file_saver: ^0.2.5
 
 dev_dependencies:
   flutter_test:

@@ -34,10 +34,11 @@ class _ResultsTableState extends State<ResultsTable> {
   Widget build(BuildContext context) {
     var compositionsButtons = [
       for (int i = 0; i < min(widget.compositions.length, 9); i++)
-        IconButton(
+        ElevatedButton.icon(
             onPressed: () => setState(() {
                   currentCompositionIndex = i;
                 }),
+            label: Text("${widget.compositions[i].plants.length}"),
             icon: Icon(
               _numbersIcons[i],
               color: i == currentCompositionIndex ? Colors.green : Colors.grey,
