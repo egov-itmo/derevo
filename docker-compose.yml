@@ -13,7 +13,7 @@ services:
 
   backend:
     container_name: landscaping-backend
-    image: 'landscaping-backend:0.5.0'
+    image: 'landscaping-backend:0.6.0'
     build: backend
     # ports:
     #   - 6066:80
@@ -24,7 +24,7 @@ services:
 
   frontend:
     container_name: landscaping-frontend
-    image: 'landscaping-frontend:1.5.1'
+    image: 'landscaping-frontend:1.6.0'
     build: frontend
     volumes:
       - ./frontend-config.json:/usr/share/nginx/html/assets/assets/cfg/config.json
