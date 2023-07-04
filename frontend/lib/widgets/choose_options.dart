@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:file/memory.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geojson_vi/geojson_vi.dart';
@@ -12,6 +15,7 @@ import 'package:landscaping_frontend/notifiers/limitations_response.dart';
 import 'package:landscaping_frontend/notifiers/method_request.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'limitation_factors_select_state.dart';
 
@@ -99,13 +103,24 @@ class _ChooseOptionsState extends State<ChooseOptions> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    result.compositions = await _callMethodCalculation(request);
+                    result.compositions = await _getCompositions(request);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: widget.theme.colorScheme.primary,
                     foregroundColor: widget.theme.colorScheme.onPrimary,
                   ),
                   child: const Text("Подобрать породный состав"),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _openCompositionsPdf(request);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: widget.theme.colorScheme.primary,
+                    foregroundColor: widget.theme.colorScheme.onPrimary,
+                  ),
+                  child: const Text("Скачать pdf композиций"),
                 ),
               ],
             ),
@@ -172,8 +187,7 @@ class _ChooseOptionsState extends State<ChooseOptions> {
     }
   }
 
-  Future<Compositions> _callMethodCalculation(
-      MethodRequestModel request) async {
+  Future<Compositions> _getCompositions(MethodRequestModel request) async {
     var func = appConfig.apiHost.startsWith("https://") ? Uri.https : Uri.http;
     var host = appConfig.apiHost.startsWith(RegExp("http(s?):\\/\\/"))
         ? appConfig.apiHost.substring(appConfig.apiHost.indexOf("://") + 3)
@@ -181,13 +195,15 @@ class _ChooseOptionsState extends State<ChooseOptions> {
     Uri methodUri = func(
       host,
       "/api/compositions/get_by_polygon",
-      {
+      ({
         "light_type_id": request.lightTypeId,
         "humidity_type_id": request.humidityTypeId,
         "soil_acidity_type_id": request.soilAcidityTypeId,
         "soil_fertility_type_id": request.soilFertilityTypeId,
         "soil_type_id": request.soilTypeId,
-      }..removeWhere((key, value) => value == null),
+      }..removeWhere((key, value) => value == null))
+          .map((key, value) =>
+              (MapEntry<String, String>(key, value.toString()))),
     );
     debugPrint('Requesting backend with $request');
     var response = await http.post(
@@ -212,5 +228,44 @@ class _ChooseOptionsState extends State<ChooseOptions> {
       debugPrint(jsonDecode(utf8.decode(response.bodyBytes)).toString());
       throw Exception('Ошибка работы метода (${response.statusCode})');
     }
+  }
+
+  Future<void> _openCompositionsPdf(MethodRequestModel request) async {
+    var func = appConfig.apiHost.startsWith("https://") ? Uri.https : Uri.http;
+    var host = appConfig.apiHost.startsWith(RegExp("http(s?):\\/\\/"))
+        ? appConfig.apiHost.substring(appConfig.apiHost.indexOf("://") + 3)
+        : appConfig.apiHost;
+    Uri methodUri = func(
+      host,
+      "/api/compositions/get_by_polygon/pdf",
+      ({
+        "light_type_id": request.lightTypeId,
+        "humidity_type_id": request.humidityTypeId,
+        "soil_acidity_type_id": request.soilAcidityTypeId,
+        "soil_fertility_type_id": request.soilFertilityTypeId,
+        "soil_type_id": request.soilTypeId,
+      }..removeWhere((key, value) => value == null))
+          .map((key, value) =>
+              (MapEntry<String, String>(key, value.toString()))),
+    );
+    debugPrint('Requesting compositions pdf from backend with $request');
+    var response = await http.post(
+      methodUri,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "territory": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              for (var latLng in request.polygon)
+                [latLng.longitude, latLng.latitude]
+            ]
+          ]
+        },
+        "plants_present": request.presentPlants
+      }),
+    );
+    FileSaver.instance
+        .saveFile(name: "compositions.pdf", bytes: response.bodyBytes);
   }
 }

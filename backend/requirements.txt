@@ -1,10 +1,12 @@
 alembic
 asyncpg
+borb
 click
 compositioner
 fastapi
 geoalchemy2
 loguru
+openpyxl
 pandas
 pillow
 psycopg2

@@ -125,9 +125,9 @@ def main(backend_address: str, limitation_factor_type: str, new_limitation_facto
         print(f"Could not delete old limitation factors: {exc!r}")
         sys.exit(1)
 
-    buffer = BytesIO()
-    gdf.to_file(buffer, driver="GeoJSON")  # GeoJSON in buffer to get geometries
-    data = json.loads(buffer.getvalue())  # json data as dict
+    with BytesIO() as buffer:
+        gdf.to_file(buffer, driver="GeoJSON")  # GeoJSON in buffer to get geometries
+        data = json.loads(buffer.getvalue())  # json data as dict
     try:
         response = requests.post(
             f"{backend_address}/api/update/limitation_factors",

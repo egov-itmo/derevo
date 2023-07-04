@@ -10,11 +10,13 @@ from sqlalchemy.ext.asyncio import AsyncConnection
 from starlette import status
 
 from plants_api.db.connection import get_connection
+from plants_api.dto.users import User
 from plants_api.exceptions.logic.photos import PhotoOpenError
 from plants_api.logic.update.photos import set_photo_to_plant
 from plants_api.schemas.basic_responses import OkResponse
+from plants_api.utils.dependencies import user_dependency
 
-from .routers import update_router
+from .router import update_router
 
 
 @update_router.post(
@@ -22,14 +24,18 @@ from .routers import update_router
     response_model=OkResponse,
     status_code=status.HTTP_200_OK,
 )
-async def get_plants(
-    plant_id: int, photo_data: UploadFile = File(...), connection: AsyncConnection = Depends(get_connection)
+async def get_plant_photo(
+    plant_id: int,
+    _user: User = Depends(user_dependency),
+    photo_data: UploadFile = File(...),
+    connection: AsyncConnection = Depends(get_connection),
 ) -> OkResponse:
     """
-    Set given plant photo.
+    Set given plant photo and create a thumbnail.
     """
     try:
-        photo = Image.open(BytesIO(await photo_data.read()))
+        with BytesIO(await photo_data.read()) as buffer:
+            photo = Image.open(buffer)
     except Exception as exc:  # pylint: disable=broad-exception-caught
         logger.warning("Error on updating photo for plant with id={}: {!r}", plant_id, exc)
         raise PhotoOpenError(plant_id) from exc

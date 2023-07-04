@@ -8,8 +8,8 @@ from starlette import status
 
 from plants_api.db.connection import get_connection
 from plants_api.exceptions.logic.geometry import TooLargeGeometryError
-from plants_api.logic.limitations import get_limitation_factors as get_limitation_factors_from_db
 from plants_api.logic.limitations import get_light as get_light_from_db
+from plants_api.logic.limitations import get_limitation_factors as get_limitation_factors_from_db
 from plants_api.schemas import GeoJSONResponse
 from plants_api.schemas.features import Limitation
 from plants_api.schemas.geometry import GeometryPostRequest
@@ -28,7 +28,7 @@ _AREA_MAX = 6_000_000
 async def get_limitation_factors(
     geometry: GeometryPostRequest,
     conn: AsyncConnection = Depends(get_connection),
-) -> GeoJSONResponse:
+) -> GeoJSONResponse[Limitation]:
     """
     Return limitation factors around the given area.
     """
@@ -47,7 +47,7 @@ async def get_limitation_factors(
 async def get_light(
     geometry: GeometryPostRequest,
     conn: AsyncConnection = Depends(get_connection),
-) -> GeoJSONResponse:
+) -> GeoJSONResponse[Limitation]:
     """
     Return light factors around the given area.
     """

@@ -13,6 +13,7 @@ from plants_api.logic.limitations import get_all_limitation_factors
 from plants_api.logic.update import delete_limitation_factors, insert_limitation_factors
 from plants_api.schemas.basic_requests import IdsRequest
 from plants_api.schemas.basic_responses import IdsResponse, OkResponse
+from plants_api.schemas.features.basic import IdOnly
 from plants_api.schemas.geojson import GeoJSONResponse
 from plants_api.schemas.update.limitation_factors import LimitationFactorsGeometryInsertionRequest
 from plants_api.utils.dependencies import user_dependency
@@ -39,14 +40,14 @@ async def add_limitation_factors(
 
 @update_router.post(
     "/limitation_factors/get_all/{type_id}",
-    response_model=GeoJSONResponse[dict[str, Any]],
+    response_model=GeoJSONResponse[IdOnly],
     status_code=status.HTTP_200_OK,
 )
 async def get_limitation_factors_by_type(
     type_id: int,
     _user: User = Depends(user_dependency),
     connection: AsyncConnection = Depends(get_connection),
-) -> GeoJSONResponse:
+) -> GeoJSONResponse[IdOnly]:
     """
     Get all limitation factor polygons of the given limitation factor from the database.
     """
