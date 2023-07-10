@@ -2,8 +2,8 @@
 Plants endpoints logic of getting entities from the database is defined here.
 """
 
-from compositioner import CohabitationType as CmCohabitationType, Plant
-from compositioner import GeneraCohabitation
+from derevo import CohabitationType as CmCohabitationType, Plant
+from derevo import GeneraCohabitation
 from loguru import logger
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncConnection
@@ -12,7 +12,7 @@ from plants_api.db.entities import cohabitation, genera, plant_types, plants
 from plants_api.db.entities.enums import CohabitationType
 from plants_api.dto import PlantDto
 from plants_api.utils import get_photo_url
-from plants_api.utils.adapters.plants import plant_dto_to_compositioner_plant
+from plants_api.utils.adapters.plants import plant_dto_to_derevo_plant
 from plants_api.utils.photos import get_thumbnail_url
 
 _select_plants = (
@@ -65,20 +65,20 @@ async def get_plants_by_name_ru(conn: AsyncConnection, names_ru: list[str]) -> l
     ]
 
 
-_cached_plants_compositioner: list[Plant] | None = None
+_cached_plants_derevo: list[Plant] | None = None
 
 
-async def get_plants_compositioner(conn: AsyncConnection, use_cached: bool = True) -> list[Plant]:
+async def get_plants_derevo(conn: AsyncConnection, use_cached: bool = True) -> list[Plant]:
     """
-    Return all database plants as a list of `compositioner.Plant` classes.
+    Return all database plants as a list of `derevo.Plant` classes.
     """
-    global _cached_plants_compositioner  # pylint: disable=invalid-name,global-statement
-    if use_cached and _cached_plants_compositioner is not None:
-        logger.debug("Using cached compositioner plants list")
-        return _cached_plants_compositioner
+    global _cached_plants_derevo  # pylint: disable=invalid-name,global-statement
+    if use_cached and _cached_plants_derevo is not None:
+        logger.debug("Using cached derevo plants list")
+        return _cached_plants_derevo
     logger.debug("Getting plants list")
-    _cached_plants_compositioner = await plant_dto_to_compositioner_plant(conn, await get_plants_from_db(conn))
-    return _cached_plants_compositioner
+    _cached_plants_derevo = await plant_dto_to_derevo_plant(conn, await get_plants_from_db(conn))
+    return _cached_plants_derevo
 
 
 async def get_plants_from_db(conn: AsyncConnection) -> list[PlantDto]:

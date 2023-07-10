@@ -1,8 +1,8 @@
 __pycache__
 /.vscode
-/example/compositioner
+/example/derevo
 *.png
 *.gfxn
 /build
 /dist
-/compositioner.egg-info
+/derevo.egg-info

@@ -1,12 +1,12 @@
 FROM python:3.10-slim as builder
 
 RUN pip install setuptools setuptools build
-ADD compositioner /compositioner/compositioner/
+ADD derevo /derevo/derevo/
 
-COPY pyproject.toml README.md /compositioner/
+COPY pyproject.toml README.md /derevo/
 
-RUN cd /compositioner && python -m build . --no-isolation
+RUN cd /derevo && python -m build . --no-isolation
 
 FROM scratch
 
-COPY --from=builder /compositioner/dist/*.whl /
+COPY --from=builder /derevo/dist/*.whl /

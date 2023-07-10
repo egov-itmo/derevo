@@ -8,7 +8,7 @@ from pathlib import Path
 
 from borb.pdf import Document, FixedColumnWidthTable, Image, Page, Paragraph, SingleColumnLayout
 from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
-from compositioner import Territory
+from derevo import Territory
 from loguru import logger
 from PIL import Image as PilImage
 

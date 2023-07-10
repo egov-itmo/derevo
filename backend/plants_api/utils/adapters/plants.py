@@ -1,9 +1,9 @@
 """
-PlantDTO to compositioner.Plant adapter is defined here.
+PlantDTO to derevo.Plant adapter is defined here.
 """
 
-from compositioner import Plant
-from compositioner import enumerations as c_enum
+from derevo import Plant
+from derevo import enumerations as c_enum
 from loguru import logger
 from sqlalchemy import bindparam, select
 from sqlalchemy.ext.asyncio import AsyncConnection
@@ -27,7 +27,7 @@ from plants_api.db.entities import (
 from plants_api.db.entities.enums import CohabitationType
 from plants_api.dto.plants import PlantDto
 
-from .compositioner_enums import EnumAdapters
+from .derevo_enums import EnumAdapters
 
 _cohabitation_type_to_tolerance_types = {
     CohabitationType.negative: c_enum.ToleranceType.NEGATIVE,
@@ -37,11 +37,11 @@ _cohabitation_type_to_tolerance_types = {
 }
 
 
-async def plant_dto_to_compositioner_plant(  # pylint: disable=too-many-locals,too-many-statements
+async def plant_dto_to_derevo_plant(  # pylint: disable=too-many-locals,too-many-statements
     conn: AsyncConnection, plants: list[PlantDto]
 ) -> list[Plant]:
     """
-    Transform plant DTOs list to list of compositioner Plant types.
+    Transform plant DTOs list to list of derevo Plant types.
     """
     if len(plants) == 0:
         return []
@@ -200,7 +200,7 @@ async def plant_dto_to_compositioner_plant(  # pylint: disable=too-many-locals,t
             )
         except Exception as exc:  # pylint: disable=broad-except
             logger.error(
-                "Could not transform PlantDTO with id={} to compositioner.Plant: {!r}",
+                "Could not transform PlantDTO with id={} to derevo.Plant: {!r}",
                 plant.id,
                 exc,
             )

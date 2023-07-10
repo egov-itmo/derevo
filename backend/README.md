@@ -4,7 +4,7 @@ This is an api to access plants data and update in by uploading a formed xlsx fi
 
 ## preparation
 
-Currently `compositioner` module is not on the PyPi, so it needs to be installed manually before running folowing
+Currently `derevo` module is not on the PyPi, so it needs to be installed manually before running folowing
 commands.
 
 0. To install python dependencies (if you wish to run script without Docker)

@@ -5,7 +5,7 @@ from io import BytesIO
 from typing import Any
 
 from borb.pdf import PDF
-from compositioner import Territory
+from derevo import Territory
 from fastapi import Depends, Response
 from sqlalchemy.ext.asyncio import AsyncConnection
 from starlette import status
@@ -14,18 +14,18 @@ from plants_api.db.connection import get_connection
 from plants_api.dto.plants import PlantDto
 from plants_api.logic.compositions import get_global_territory, get_plants_compositions, get_territory
 from plants_api.logic.pdf import compositions_to_pdf
-from plants_api.logic.plants import get_genera_cohabitation, get_plants_by_ids, get_plants_compositioner
+from plants_api.logic.plants import get_genera_cohabitation, get_plants_by_ids, get_plants_derevo
 from plants_api.schemas.compositions import CompositionsResponse
 from plants_api.schemas.geojson import Geometry
 from plants_api.schemas.plants import PlantsResponse
-from plants_api.utils.adapters.compositioner_enums import (
+from plants_api.utils.adapters.derevo_enums import (
     get_humidity_type_by_id,
     get_light_type_by_id,
     get_soil_acidity_type_by_id,
     get_soil_fertility_type_by_id,
     get_soil_type_by_id,
 )
-from plants_api.utils.adapters.plants import plant_dto_to_compositioner_plant
+from plants_api.utils.adapters.plants import plant_dto_to_derevo_plant
 
 from .routers import compositions_router
 
@@ -78,11 +78,11 @@ async def _get_compositions(
     territory_cm: Territory,
     plants_present: list[int] | None = None,
 ) -> list[list[PlantDto]]:
-    plants_available_cm = await get_plants_compositioner(connection)
+    plants_available_cm = await get_plants_derevo(connection)
     genus_cohabitation = await get_genera_cohabitation(connection)
 
     if plants_present is not None:
-        plants_present_cm = await plant_dto_to_compositioner_plant(
+        plants_present_cm = await plant_dto_to_derevo_plant(
             connection,
             await get_plants_by_ids(connection, plants_present),
         )
