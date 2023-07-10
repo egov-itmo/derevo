@@ -1,1 +1,7 @@
-sphinx_rtd_theme
+geopandas>=0.12.0
+loguru>=0.6.0
+matplotlib>=3.5
+networkx>=3.1
+numpy>=1.24.0
+pandas>=1.5.0
+sphinx_rtd_theme>=1.2.2

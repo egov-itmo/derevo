@@ -10,18 +10,10 @@ build:
   tools:
     python: "3.9"
     # You can also specify other tool versions:
-    # nodejs: "19"
-    # rust: "1.64"
-    # golang: "1.19"
 
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
-  configuration: method/docs/conf.py
-
-# Optionally build your docs in additional formats such as PDF and ePub
-# formats:
-#    - pdf
-#    - epub
+  configuration: method/docs/source/conf.py
 
 # Optional but recommended, declare the Python requirements required
 # to build your documentation
