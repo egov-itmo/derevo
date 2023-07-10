@@ -1,5 +1,5 @@
 """
-Compositioner usage example.
+Derevo library usage example.
 
 Run as `example` module
 """
@@ -10,21 +10,21 @@ import matplotlib.pyplot as plt
 from loguru import logger
 from sqlalchemy import create_engine, text
 
-from compositioner.models.cohabitation import CohabitationType, GeneraCohabitation
+from derevo.models.cohabitation import CohabitationType, GeneraCohabitation
 
 try:
-    import compositioner as cm  # pylint: disable=unused-import
+    import derevo as cm  # pylint: disable=unused-import
 except ModuleNotFoundError:
     from pathlib import Path
 
-    print("Compositioner module cannot be imported as usual, trying to use local instance in parent directory")
+    print("Derevo module cannot be imported as usual, trying to use local instance in parent directory")
     sys.path.append(Path(__file__).resolve().parent)
-    import compositioner as cm
+    import derevo as cm
 
-from compositioner import Plant, Territory
-from compositioner import enumerations as c_enum
-from compositioner import get_compositions
-from compositioner.optimal_resolution import get_best_resolution
+from derevo import Plant, Territory
+from derevo import enumerations as c_enum
+from derevo import get_compositions
+from derevo.optimal_resolution import get_best_resolution
 
 from .data_collection import (
     collect_cohabitations,
@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     # method usage example
 
-    plants_df: list[Plant] = [
+    plants_list: list[Plant] = [
         Plant(
             name_ru="Название растения",
             name_latin="latin name",
@@ -85,7 +85,7 @@ if __name__ == "__main__":
         GeneraCohabitation("Род растения", "Другой род растения", CohabitationType.NEGATIVE),
     ]
     composition_plants = get_compositions(
-        plants_available=plants_df,
+        plants_available=plants_list,
         cohabitation_attributes=cohabitation_attributes,
         territory=territory_info,
         plants_present=plants_present,
@@ -131,7 +131,7 @@ if __name__ == "__main__":
     # getting limitation and plants factors from the database
     with engine.connect() as conn:
         logger.debug("collecting plants data")
-        plants_df = collect_plants_dataframe(conn)
+        plants_list = collect_plants_dataframe(conn)
         plants_with_limitations_resistance = collect_plants_with_limitation_resistance(conn)
         plants_suitable_for_light = collect_plants_suitable_for_light(conn)
         cohabitation_attributes = collect_cohabitations(conn)
@@ -148,7 +148,7 @@ if __name__ == "__main__":
     try:
         fig, ax = plt.subplots()
         best_resolution = get_best_resolution(
-            plants_df, plants_with_limitations_resistance, plants_suitable_for_light, cohabitation_attributes, ax
+            plants_list, plants_with_limitations_resistance, plants_suitable_for_light, cohabitation_attributes, ax
         )
         IMG_NAME = "resolution_image.png"
         print(f"Saving image to {IMG_NAME}. Best resolution DataFrame:")

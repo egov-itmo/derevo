@@ -2,7 +2,7 @@ alembic
 asyncpg
 borb
 click
-compositioner
+derevo
 fastapi
 geoalchemy2
 loguru

@@ -2,10 +2,10 @@
 Main compositioning method logic is defined here.
 """
 import geopandas as gpd
-from compositioner import GeneraCohabitation, GlobalTerritory, Plant, Territory
-from compositioner import enumerations as c_enum
-from compositioner import get_compositions
-from compositioner import get_territory as cm_get_territory
+from derevo import GeneraCohabitation, GlobalTerritory, Plant, Territory
+from derevo import enumerations as c_enum
+from derevo import get_compositions
+from derevo import get_territory as cm_get_territory
 from loguru import logger
 from shapely.geometry.base import BaseGeometry
 from sqlalchemy import select
@@ -26,7 +26,7 @@ from plants_api.db.entities import (
 )
 from plants_api.dto import PlantDto
 from plants_api.logic.plants import get_plants_by_name_ru
-from plants_api.utils.adapters.compositioner_enums import EnumAdapters
+from plants_api.utils.adapters.derevo_enums import EnumAdapters
 
 _cached_global_territory: GlobalTerritory | None = None
 

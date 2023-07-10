@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>derevo.models package &mdash; derevo 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="derevo package" href="derevo.html" />
+</head>
+
+<body class="wy-body-for-nav">
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+          <a href="../index.html" class="icon icon-home">
+            derevo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../derevo/index.html">derevo</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Components</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="derevo.html">derevo package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="derevo.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">derevo.models package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.html#module-derevo.adjacency">derevo.adjacency module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.html#module-derevo.combined">derevo.combined module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.html#module-derevo.compatability">derevo.compatability module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.html#module-derevo.composition">derevo.composition module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.html#module-derevo.optimal_resolution">derevo.optimal_resolution module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.html#module-derevo.prepare_polygons">derevo.prepare_polygons module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.html#module-derevo.territories">derevo.territories module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.html#module-derevo">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">derevo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Components</a></li>
+          <li class="breadcrumb-item"><a href="derevo.html">derevo package</a></li>
+      <li class="breadcrumb-item active">derevo.models package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/components/derevo.models.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <section id="derevo-models-package">
+<h1>derevo.models package<a class="headerlink" href="#derevo-models-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-derevo.models.cohabitation">
+<span id="derevo-models-cohabitation-module"></span><h2>derevo.models.cohabitation module<a class="headerlink" href="#module-derevo.models.cohabitation" title="Permalink to this heading"></a></h2>
+<p>Genus cohabitation attributes model is defined here.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.cohabitation.CohabitationType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.cohabitation.</span></span><span class="sig-name descname"><span class="pre">CohabitationType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/cohabitation.html#CohabitationType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.cohabitation.CohabitationType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration used to two genera cohabitation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.cohabitation.CohabitationType.NEGATIVE">
+<span class="sig-name descname"><span class="pre">NEGATIVE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NEGATIVE'</span></em><a class="headerlink" href="#derevo.models.cohabitation.CohabitationType.NEGATIVE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.cohabitation.CohabitationType.NEUTRAL">
+<span class="sig-name descname"><span class="pre">NEUTRAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NEUTRAL'</span></em><a class="headerlink" href="#derevo.models.cohabitation.CohabitationType.NEUTRAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.cohabitation.CohabitationType.POSITIVE">
+<span class="sig-name descname"><span class="pre">POSITIVE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'POSITIVE'</span></em><a class="headerlink" href="#derevo.models.cohabitation.CohabitationType.POSITIVE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="derevo.models.cohabitation.CohabitationType.to_value">
+<span class="sig-name descname"><span class="pre">to_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Literal[-1,</span> <span class="pre">0,</span> <span class="pre">1]</span></span></span><a class="reference internal" href="../_modules/derevo/models/cohabitation.html#CohabitationType.to_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.cohabitation.CohabitationType.to_value" title="Permalink to this definition"></a></dt>
+<dd><p>Get tolerance type as an integer value in range [-1, 1].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.cohabitation.GeneraCohabitation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.cohabitation.</span></span><span class="sig-name descname"><span class="pre">GeneraCohabitation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genus_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genus_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#derevo.models.cohabitation.CohabitationType" title="derevo.models.cohabitation.CohabitationType"><span class="pre">CohabitationType</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/cohabitation.html#GeneraCohabitation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.cohabitation.GeneraCohabitation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Contains cohabitation type of two plant genus</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.cohabitation.GeneraCohabitation.genus_1">
+<span class="sig-name descname"><span class="pre">genus_1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#derevo.models.cohabitation.GeneraCohabitation.genus_1" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.cohabitation.GeneraCohabitation.genus_2">
+<span class="sig-name descname"><span class="pre">genus_2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#derevo.models.cohabitation.GeneraCohabitation.genus_2" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.cohabitation.GeneraCohabitation.cohabitation">
+<span class="sig-name descname"><span class="pre">cohabitation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.cohabitation.CohabitationType" title="derevo.models.cohabitation.CohabitationType"><span class="pre">CohabitationType</span></a></em><a class="headerlink" href="#derevo.models.cohabitation.GeneraCohabitation.cohabitation" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-derevo.models.enumerations">
+<span id="derevo-models-enumerations-module"></span><h2>derevo.models.enumerations module<a class="headerlink" href="#module-derevo.models.enumerations" title="Permalink to this heading"></a></h2>
+<p>Enumeration models are defined here.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.enumerations.ToleranceType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.enumerations.</span></span><span class="sig-name descname"><span class="pre">ToleranceType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#ToleranceType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.ToleranceType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration used to describe plant resistance to some factor.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.ToleranceType.NEGATIVE">
+<span class="sig-name descname"><span class="pre">NEGATIVE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NEGATIVE'</span></em><a class="headerlink" href="#derevo.models.enumerations.ToleranceType.NEGATIVE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.ToleranceType.NEUTRAL">
+<span class="sig-name descname"><span class="pre">NEUTRAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NEUTRAL'</span></em><a class="headerlink" href="#derevo.models.enumerations.ToleranceType.NEUTRAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.ToleranceType.POSITIVE">
+<span class="sig-name descname"><span class="pre">POSITIVE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'POSITIVE'</span></em><a class="headerlink" href="#derevo.models.enumerations.ToleranceType.POSITIVE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="derevo.models.enumerations.ToleranceType.from_value">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal[-1,</span> <span class="pre">0,</span> <span class="pre">1]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#derevo.models.enumerations.ToleranceType" title="derevo.models.enumerations.ToleranceType"><span class="pre">ToleranceType</span></a></span></span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#ToleranceType.from_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.ToleranceType.from_value" title="Permalink to this definition"></a></dt>
+<dd><p>Construct ToleranceType from integer value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="derevo.models.enumerations.ToleranceType.to_value">
+<span class="sig-name descname"><span class="pre">to_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Literal[-1,</span> <span class="pre">0,</span> <span class="pre">1]</span></span></span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#ToleranceType.to_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.ToleranceType.to_value" title="Permalink to this definition"></a></dt>
+<dd><p>Get tolerance type as an integer value in range [-1, 1].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LightType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.enumerations.</span></span><span class="sig-name descname"><span class="pre">LightType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#LightType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.LightType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration used to describe possible light types.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LightType.DARK">
+<span class="sig-name descname"><span class="pre">DARK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DARK'</span></em><a class="headerlink" href="#derevo.models.enumerations.LightType.DARK" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LightType.DARKENED">
+<span class="sig-name descname"><span class="pre">DARKENED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DARKENED'</span></em><a class="headerlink" href="#derevo.models.enumerations.LightType.DARKENED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LightType.LIGHT">
+<span class="sig-name descname"><span class="pre">LIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LIGHT'</span></em><a class="headerlink" href="#derevo.models.enumerations.LightType.LIGHT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AcidityType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.enumerations.</span></span><span class="sig-name descname"><span class="pre">AcidityType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#AcidityType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.AcidityType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration used to describe soil acidity types.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AcidityType.STRONGLY_ACIDIC">
+<span class="sig-name descname"><span class="pre">STRONGLY_ACIDIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#derevo.models.enumerations.AcidityType.STRONGLY_ACIDIC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AcidityType.ACIDIC">
+<span class="sig-name descname"><span class="pre">ACIDIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#derevo.models.enumerations.AcidityType.ACIDIC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AcidityType.SLIGHTLY_ACIDIC">
+<span class="sig-name descname"><span class="pre">SLIGHTLY_ACIDIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#derevo.models.enumerations.AcidityType.SLIGHTLY_ACIDIC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AcidityType.NEUTRAL">
+<span class="sig-name descname"><span class="pre">NEUTRAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="headerlink" href="#derevo.models.enumerations.AcidityType.NEUTRAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AcidityType.SLIGHTLY_ALCALINE">
+<span class="sig-name descname"><span class="pre">SLIGHTLY_ALCALINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#derevo.models.enumerations.AcidityType.SLIGHTLY_ALCALINE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AcidityType.ALCALINE">
+<span class="sig-name descname"><span class="pre">ALCALINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9</span></em><a class="headerlink" href="#derevo.models.enumerations.AcidityType.ALCALINE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AcidityType.STRONGLY_ALCALINE">
+<span class="sig-name descname"><span class="pre">STRONGLY_ALCALINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">11</span></em><a class="headerlink" href="#derevo.models.enumerations.AcidityType.STRONGLY_ALCALINE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AcidityType.from_value">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#derevo.models.enumerations.AcidityType" title="derevo.models.enumerations.AcidityType"><span class="pre">AcidityType</span></a></span></span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#AcidityType.from_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.AcidityType.from_value" title="Permalink to this definition"></a></dt>
+<dd><p>Construct AcidityType from pH value.</p>
+<p>Values:
+- &lt;=3 - <cite>STRONGLY_ACIDIC</cite>
+- 4..5 - <cite>ACIDIC</cite>
+- 6 - <cite>SLIGHTLY_ACIDIC</cite>
+- 7 - <cite>NEUTRAl</cite>
+- 8 - <cite>SLIGHTLY_ALCALINE</cite>
+- 9..10 - <cite>ALCALINE</cite>
+- &gt;=11 - <cite>STRONGLY_ALCALINE</cite></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.enumerations.FertilityType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.enumerations.</span></span><span class="sig-name descname"><span class="pre">FertilityType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#FertilityType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.FertilityType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration used to describe soil fertility types.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.FertilityType.BARREN">
+<span class="sig-name descname"><span class="pre">BARREN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BARREN'</span></em><a class="headerlink" href="#derevo.models.enumerations.FertilityType.BARREN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.FertilityType.SLIGHTLY_FERTIL">
+<span class="sig-name descname"><span class="pre">SLIGHTLY_FERTIL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SLIGHTLY_FERTIL'</span></em><a class="headerlink" href="#derevo.models.enumerations.FertilityType.SLIGHTLY_FERTIL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.FertilityType.FERTIL">
+<span class="sig-name descname"><span class="pre">FERTIL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FERTIL'</span></em><a class="headerlink" href="#derevo.models.enumerations.FertilityType.FERTIL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SoilType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.enumerations.</span></span><span class="sig-name descname"><span class="pre">SoilType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#SoilType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.SoilType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration used to describe soil types.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SoilType.SANDY">
+<span class="sig-name descname"><span class="pre">SANDY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SANDY'</span></em><a class="headerlink" href="#derevo.models.enumerations.SoilType.SANDY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SoilType.SUBSANDY">
+<span class="sig-name descname"><span class="pre">SUBSANDY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SUBSANDY'</span></em><a class="headerlink" href="#derevo.models.enumerations.SoilType.SUBSANDY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SoilType.LOAMY">
+<span class="sig-name descname"><span class="pre">LOAMY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LOAMY'</span></em><a class="headerlink" href="#derevo.models.enumerations.SoilType.LOAMY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SoilType.CLAYEY">
+<span class="sig-name descname"><span class="pre">CLAYEY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CLAYEY'</span></em><a class="headerlink" href="#derevo.models.enumerations.SoilType.CLAYEY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SoilType.ROCKY">
+<span class="sig-name descname"><span class="pre">ROCKY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ROCKY'</span></em><a class="headerlink" href="#derevo.models.enumerations.SoilType.ROCKY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SoilType.GRAVELLY">
+<span class="sig-name descname"><span class="pre">GRAVELLY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GRAVELLY'</span></em><a class="headerlink" href="#derevo.models.enumerations.SoilType.GRAVELLY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SoilType.HEAVY">
+<span class="sig-name descname"><span class="pre">HEAVY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'HEAVY'</span></em><a class="headerlink" href="#derevo.models.enumerations.SoilType.HEAVY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SoilType.DRAINED">
+<span class="sig-name descname"><span class="pre">DRAINED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DRAINED'</span></em><a class="headerlink" href="#derevo.models.enumerations.SoilType.DRAINED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.enumerations.HumidityType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.enumerations.</span></span><span class="sig-name descname"><span class="pre">HumidityType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#HumidityType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.HumidityType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration used to describe humidity types.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.HumidityType.LOW">
+<span class="sig-name descname"><span class="pre">LOW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LOW'</span></em><a class="headerlink" href="#derevo.models.enumerations.HumidityType.LOW" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.HumidityType.NORMAL">
+<span class="sig-name descname"><span class="pre">NORMAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NORMAL'</span></em><a class="headerlink" href="#derevo.models.enumerations.HumidityType.NORMAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.HumidityType.HIGH">
+<span class="sig-name descname"><span class="pre">HIGH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'HIGH'</span></em><a class="headerlink" href="#derevo.models.enumerations.HumidityType.HIGH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LimitationFactor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.enumerations.</span></span><span class="sig-name descname"><span class="pre">LimitationFactor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#LimitationFactor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.LimitationFactor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration used to describe limitation factor.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LimitationFactor.OVERCONSOLIDATION">
+<span class="sig-name descname"><span class="pre">OVERCONSOLIDATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OVERCONSOLIDATION'</span></em><a class="headerlink" href="#derevo.models.enumerations.LimitationFactor.OVERCONSOLIDATION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LimitationFactor.SALINIZATION">
+<span class="sig-name descname"><span class="pre">SALINIZATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SALINIZATION'</span></em><a class="headerlink" href="#derevo.models.enumerations.LimitationFactor.SALINIZATION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LimitationFactor.DROUGHT">
+<span class="sig-name descname"><span class="pre">DROUGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DROUGHT'</span></em><a class="headerlink" href="#derevo.models.enumerations.LimitationFactor.DROUGHT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LimitationFactor.FLOODING">
+<span class="sig-name descname"><span class="pre">FLOODING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FLOODING'</span></em><a class="headerlink" href="#derevo.models.enumerations.LimitationFactor.FLOODING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LimitationFactor.GAS_POLLUTION">
+<span class="sig-name descname"><span class="pre">GAS_POLLUTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GAS_POLLUTION'</span></em><a class="headerlink" href="#derevo.models.enumerations.LimitationFactor.GAS_POLLUTION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LimitationFactor.WINDINESS">
+<span class="sig-name descname"><span class="pre">WINDINESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'WINDINESS'</span></em><a class="headerlink" href="#derevo.models.enumerations.LimitationFactor.WINDINESS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.enumerations.UsdaZone">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.enumerations.</span></span><span class="sig-name descname"><span class="pre">UsdaZone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#UsdaZone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.UsdaZone" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enueration used to describe USDA zones.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.UsdaZone.USDA1">
+<span class="sig-name descname"><span class="pre">USDA1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USDA1'</span></em><a class="headerlink" href="#derevo.models.enumerations.UsdaZone.USDA1" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.UsdaZone.USDA2">
+<span class="sig-name descname"><span class="pre">USDA2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USDA2'</span></em><a class="headerlink" href="#derevo.models.enumerations.UsdaZone.USDA2" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.UsdaZone.USDA3">
+<span class="sig-name descname"><span class="pre">USDA3</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USDA3'</span></em><a class="headerlink" href="#derevo.models.enumerations.UsdaZone.USDA3" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.UsdaZone.USDA4">
+<span class="sig-name descname"><span class="pre">USDA4</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USDA4'</span></em><a class="headerlink" href="#derevo.models.enumerations.UsdaZone.USDA4" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.UsdaZone.USDA5">
+<span class="sig-name descname"><span class="pre">USDA5</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USDA5'</span></em><a class="headerlink" href="#derevo.models.enumerations.UsdaZone.USDA5" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.UsdaZone.USDA6">
+<span class="sig-name descname"><span class="pre">USDA6</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USDA6'</span></em><a class="headerlink" href="#derevo.models.enumerations.UsdaZone.USDA6" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.UsdaZone.USDA7">
+<span class="sig-name descname"><span class="pre">USDA7</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USDA7'</span></em><a class="headerlink" href="#derevo.models.enumerations.UsdaZone.USDA7" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.UsdaZone.USDA8">
+<span class="sig-name descname"><span class="pre">USDA8</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USDA8'</span></em><a class="headerlink" href="#derevo.models.enumerations.UsdaZone.USDA8" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.UsdaZone.USDA9">
+<span class="sig-name descname"><span class="pre">USDA9</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USDA9'</span></em><a class="headerlink" href="#derevo.models.enumerations.UsdaZone.USDA9" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.UsdaZone.USDA10">
+<span class="sig-name descname"><span class="pre">USDA10</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USDA10'</span></em><a class="headerlink" href="#derevo.models.enumerations.UsdaZone.USDA10" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.UsdaZone.USDA11">
+<span class="sig-name descname"><span class="pre">USDA11</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USDA11'</span></em><a class="headerlink" href="#derevo.models.enumerations.UsdaZone.USDA11" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="derevo.models.enumerations.UsdaZone.from_value">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">4</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">5</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">6</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">7</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">8</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">9</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">10</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">11</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#derevo.models.enumerations.UsdaZone" title="derevo.models.enumerations.UsdaZone"><span class="pre">UsdaZone</span></a></span></span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#UsdaZone.from_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.UsdaZone.from_value" title="Permalink to this definition"></a></dt>
+<dd><p>Construct UsdaZone from integer value. Valid values are integers in range [1, 11].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AggressivenessLevel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.enumerations.</span></span><span class="sig-name descname"><span class="pre">AggressivenessLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#AggressivenessLevel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.AggressivenessLevel" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration used to describe plant spread agressiveness.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AggressivenessLevel.AGGRESSIVE">
+<span class="sig-name descname"><span class="pre">AGGRESSIVE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AGGRESSIVE'</span></em><a class="headerlink" href="#derevo.models.enumerations.AggressivenessLevel.AGGRESSIVE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AggressivenessLevel.NEUTRAL">
+<span class="sig-name descname"><span class="pre">NEUTRAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NEUTRAL'</span></em><a class="headerlink" href="#derevo.models.enumerations.AggressivenessLevel.NEUTRAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AggressivenessLevel.SUPPRESSED">
+<span class="sig-name descname"><span class="pre">SUPPRESSED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SUPPRESSED'</span></em><a class="headerlink" href="#derevo.models.enumerations.AggressivenessLevel.SUPPRESSED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="derevo.models.enumerations.AggressivenessLevel.from_value">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal[-1,</span> <span class="pre">0,</span> <span class="pre">1]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#derevo.models.enumerations.AggressivenessLevel" title="derevo.models.enumerations.AggressivenessLevel"><span class="pre">AggressivenessLevel</span></a></span></span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#AggressivenessLevel.from_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.AggressivenessLevel.from_value" title="Permalink to this definition"></a></dt>
+<dd><p>Construct AgressivenessLevel from integer value.</p>
+<p>Values:
+- -1 - <cite>SUPPRESSED</cite>
+- 0 - <cite>NEUTRAL</cite>
+- 1 - <cite>AGGRESSIVE</cite></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SurvivabilityLevel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.enumerations.</span></span><span class="sig-name descname"><span class="pre">SurvivabilityLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#SurvivabilityLevel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.SurvivabilityLevel" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration used to describe plant spread agressiveness.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SurvivabilityLevel.STRONG">
+<span class="sig-name descname"><span class="pre">STRONG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'STRONG'</span></em><a class="headerlink" href="#derevo.models.enumerations.SurvivabilityLevel.STRONG" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SurvivabilityLevel.NORMAL">
+<span class="sig-name descname"><span class="pre">NORMAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NORMAL'</span></em><a class="headerlink" href="#derevo.models.enumerations.SurvivabilityLevel.NORMAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SurvivabilityLevel.WEAK">
+<span class="sig-name descname"><span class="pre">WEAK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'WEAK'</span></em><a class="headerlink" href="#derevo.models.enumerations.SurvivabilityLevel.WEAK" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="derevo.models.enumerations.SurvivabilityLevel.from_value">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal[-1,</span> <span class="pre">0,</span> <span class="pre">1]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#derevo.models.enumerations.SurvivabilityLevel" title="derevo.models.enumerations.SurvivabilityLevel"><span class="pre">SurvivabilityLevel</span></a></span></span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#SurvivabilityLevel.from_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.SurvivabilityLevel.from_value" title="Permalink to this definition"></a></dt>
+<dd><p>Construct SurvivabilityLevel from integer value.</p>
+<p>Values:
+- -1 - <cite>WEAK</cite>
+- 0 - <cite>NORMAL</cite>
+- 1 - <cite>STRONG</cite></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LifeForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.enumerations.</span></span><span class="sig-name descname"><span class="pre">LifeForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/enumerations.html#LifeForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.enumerations.LifeForm" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration used to describe plant life form.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LifeForm.TREE">
+<span class="sig-name descname"><span class="pre">TREE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'TREE'</span></em><a class="headerlink" href="#derevo.models.enumerations.LifeForm.TREE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LifeForm.BUSH">
+<span class="sig-name descname"><span class="pre">BUSH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BUSH'</span></em><a class="headerlink" href="#derevo.models.enumerations.LifeForm.BUSH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LifeForm.GROUND_COVER">
+<span class="sig-name descname"><span class="pre">GROUND_COVER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GROUND_COVER'</span></em><a class="headerlink" href="#derevo.models.enumerations.LifeForm.GROUND_COVER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LifeForm.LIANA">
+<span class="sig-name descname"><span class="pre">LIANA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LIANA'</span></em><a class="headerlink" href="#derevo.models.enumerations.LifeForm.LIANA" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LifeForm.PERENNIAL">
+<span class="sig-name descname"><span class="pre">PERENNIAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PERENNIAL'</span></em><a class="headerlink" href="#derevo.models.enumerations.LifeForm.PERENNIAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LifeForm.BULBOUS">
+<span class="sig-name descname"><span class="pre">BULBOUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BULBOUS'</span></em><a class="headerlink" href="#derevo.models.enumerations.LifeForm.BULBOUS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LifeForm.ANNUAL">
+<span class="sig-name descname"><span class="pre">ANNUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ANNUAL'</span></em><a class="headerlink" href="#derevo.models.enumerations.LifeForm.ANNUAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.enumerations.LifeForm.SWAMP_PLANT">
+<span class="sig-name descname"><span class="pre">SWAMP_PLANT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SWAMP_PLANT'</span></em><a class="headerlink" href="#derevo.models.enumerations.LifeForm.SWAMP_PLANT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-derevo.models.global_territory">
+<span id="derevo-models-global-territory-module"></span><h2>derevo.models.global_territory module<a class="headerlink" href="#module-derevo.models.global_territory" title="Permalink to this heading"></a></h2>
+<p>Global territory model class is defined here.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.models.global_territory._check_names">
+<span class="sig-prename descclassname"><span class="pre">derevo.models.global_territory.</span></span><span class="sig-name descname"><span class="pre">_check_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concrete_enum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.LightType" title="derevo.models.enumerations.LightType"><span class="pre">LightType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.LimitationFactor" title="derevo.models.enumerations.LimitationFactor"><span class="pre">LimitationFactor</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.HumidityType" title="derevo.models.enumerations.HumidityType"><span class="pre">derevo.models.enumerations.HumidityType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.SoilType" title="derevo.models.enumerations.SoilType"><span class="pre">SoilType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.AcidityType" title="derevo.models.enumerations.AcidityType"><span class="pre">AcidityType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.FertilityType" title="derevo.models.enumerations.FertilityType"><span class="pre">FertilityType</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/global_territory.html#_check_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.global_territory._check_names" title="Permalink to this definition"></a></dt>
+<dd><p>Remove rows which name cannot be cast to the given enumeration.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.models.global_territory._names_to_enum">
+<span class="sig-prename descclassname"><span class="pre">derevo.models.global_territory.</span></span><span class="sig-name descname"><span class="pre">_names_to_enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Enum</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concrete_enum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">enum.Enum</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">enum.Enum</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/derevo/models/global_territory.html#_names_to_enum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.global_territory._names_to_enum" title="Permalink to this definition"></a></dt>
+<dd><p>Construct list of given enum types from their string names.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.models.global_territory._names_to_unique_enum">
+<span class="sig-prename descclassname"><span class="pre">derevo.models.global_territory.</span></span><span class="sig-name descname"><span class="pre">_names_to_unique_enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Enum</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concrete_enum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">enum.Enum</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">enum.Enum</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/derevo/models/global_territory.html#_names_to_unique_enum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.global_territory._names_to_unique_enum" title="Permalink to this definition"></a></dt>
+<dd><p>Construct list of given enum types from their string names.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.global_territory.GlobalTerritory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.global_territory.</span></span><span class="sig-name descname"><span class="pre">GlobalTerritory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usda_zone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#derevo.models.enumerations.UsdaZone" title="derevo.models.enumerations.UsdaZone"><span class="pre">UsdaZone</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limitation_factors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">light_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">humidity_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_acidity_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_fertility_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/global_territory.html#GlobalTerritory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.global_territory.GlobalTerritory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Global territory model (for a whole city for example) that contains all of its factors data.</p>
+<p>Missing or None value in init means that the parameter is unknown and will not be taken in the account.</p>
+<p>Fields notes:
+- <cite>limitation_factors</cite> GeoDataFrame must contain column ‘name’ with values corresponding to <cite>LimitationFactor</cite>
+emueration
+- <cite>light_types</cite> GeoDataFrame must contain column ‘name’ with values corresponding to <cite>LightType</cite> enumeration
+- <cite>humidity_types</cite> GeoDataFrame must contain column ‘name’ with values corresponding to <cite>HumidityType</cite> enumeration
+- <cite>soil_types</cite> GeoDataFrame must contain column ‘name’ with values corresponding to <cite>SoilType</cite> enumeration
+- <cite>soil_acidity_types</cite> GeoDataFrame must contain column ‘name’ with values corresponding
+to <cite>AcidityType</cite> enumeration
+- <cite>soil_fertility_types</cite> GeoDataFrame must contain column ‘name’ with values corresponding
+to <cite>FertilityType</cite> enumeration</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.global_territory.GlobalTerritory.usda_zone">
+<span class="sig-name descname"><span class="pre">usda_zone</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.enumerations.UsdaZone" title="derevo.models.enumerations.UsdaZone"><span class="pre">UsdaZone</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#derevo.models.global_territory.GlobalTerritory.usda_zone" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.global_territory.GlobalTerritory.limitation_factors">
+<span class="sig-name descname"><span class="pre">limitation_factors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#derevo.models.global_territory.GlobalTerritory.limitation_factors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.global_territory.GlobalTerritory.light_types">
+<span class="sig-name descname"><span class="pre">light_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#derevo.models.global_territory.GlobalTerritory.light_types" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.global_territory.GlobalTerritory.humidity_types">
+<span class="sig-name descname"><span class="pre">humidity_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#derevo.models.global_territory.GlobalTerritory.humidity_types" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.global_territory.GlobalTerritory.soil_types">
+<span class="sig-name descname"><span class="pre">soil_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#derevo.models.global_territory.GlobalTerritory.soil_types" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.global_territory.GlobalTerritory.soil_acidity_types">
+<span class="sig-name descname"><span class="pre">soil_acidity_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#derevo.models.global_territory.GlobalTerritory.soil_acidity_types" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.global_territory.GlobalTerritory.soil_fertility_types">
+<span class="sig-name descname"><span class="pre">soil_fertility_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Ellipsis</span></em><a class="headerlink" href="#derevo.models.global_territory.GlobalTerritory.soil_fertility_types" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="derevo.models.global_territory.GlobalTerritory.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/global_territory.html#GlobalTerritory.__post_init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.global_territory.GlobalTerritory.__post_init__" title="Permalink to this definition"></a></dt>
+<dd><p>Check that each of the DataFrames contains ‘name’ column. Throw ValueError otherwise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="derevo.models.global_territory.GlobalTerritory.as_territory">
+<span class="sig-name descname"><span class="pre">as_territory</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#derevo.models.territory.Territory" title="derevo.models.territory.Territory"><span class="pre">Territory</span></a></span></span><a class="reference internal" href="../_modules/derevo/models/global_territory.html#GlobalTerritory.as_territory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.global_territory.GlobalTerritory.as_territory" title="Permalink to this definition"></a></dt>
+<dd><p>Get global territory information as Territory class.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-derevo.models.plants">
+<span id="derevo-models-plants-module"></span><h2>derevo.models.plants module<a class="headerlink" href="#module-derevo.models.plants" title="Permalink to this heading"></a></h2>
+<p>Plant model class is defined here.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.plants.</span></span><span class="sig-name descname"><span class="pre">Plant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_ru:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_latin:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genus:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">life_form:</span> <span class="pre">~derevo.models.enumerations.LifeForm</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limitation_factors_resistances:</span> <span class="pre">dict[derevo.models.enumerations.LimitationFactor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derevo.models.enumerations.ToleranceType]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usda_zone_preferences:</span> <span class="pre">dict[derevo.models.enumerations.UsdaZone</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derevo.models.enumerations.ToleranceType]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">light_preferences:</span> <span class="pre">dict[derevo.models.enumerations.LightType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derevo.models.enumerations.ToleranceType]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">humidity_preferences:</span> <span class="pre">dict[derevo.models.enumerations.HumidityType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derevo.models.enumerations.ToleranceType]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_acidity_preferences:</span> <span class="pre">dict[derevo.models.enumerations.AcidityType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derevo.models.enumerations.ToleranceType]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_fertility_preferences:</span> <span class="pre">dict[derevo.models.enumerations.FertilityType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derevo.models.enumerations.ToleranceType]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_type_preferences:</span> <span class="pre">dict[derevo.models.enumerations.SoilType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derevo.models.enumerations.ToleranceType]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggresiveness:</span> <span class="pre">~derevo.models.enumerations.AggressivenessLevel</span> <span class="pre">=</span> <span class="pre">AggressivenessLevel.NEUTRAL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">survivability:</span> <span class="pre">~derevo.models.enumerations.SurvivabilityLevel</span> <span class="pre">=</span> <span class="pre">SurvivabilityLevel.NORMAL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_invasive:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/plants.html#Plant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.plants.Plant" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Plant class for the derevo methods.</p>
+<p>Fields:
+- <cite>name_ru</cite> (str): russian name of the plant.
+- <cite>name_latin</cite> (str): latin name of the plant.
+- <cite>genus</cite> (str | None, <em>optional</em>): genera name of the plant, required for method but optional. Defaults to None.
+- <cite>limitation_factors_resistances</cite> (dict[LimitationFactor, ToleranceType], <em>optional</em>): dictionary with keys
+as limitation factors and values as a tolerance type for a plant to the given limitation factor. Defaults to {}.
+- <cite>usda_zone_preferences</cite> (dict[UsdaZone, ToleranceType], <em>optional</em>): dictionary with keys as USDA zones and
+values as a tolerance type for a plant to the given USDA zone. Default to {}.
+- <cite>light_preferences</cite> (dict[LightType, ToleranceType], <em>optional</em>): dictionary with keys as light types and
+values as a tolerance type for a plant to the given light type. Default to {}.
+- <cite>humidity_preferences</cite> (dict[HumidityType, ToleranceType], <em>optional</em>): dictionary with keys as humidity types
+and values as a tolerance type for a plant to the given humidity type. Default to {}.
+- <cite>soil_acidity_preferences</cite> (dict[AcidityType, ToleranceType], <em>optional</em>): dictionary with keys as soil acidity
+types and values as a tolerance type for a plant to the given soil acidity type. Default to {}.
+- <cite>soil_fertility_preferences</cite> (dict[FertilityType, ToleranceType], <em>optional</em>): dictionary with keys as soil
+fertility types and values as a tolerance type for a plant to the given soil fertility type. Default to {}.
+- <cite>soil_type_preferences</cite> (dict[SoilType, ToleranceType], <em>optional</em>): dictionary with keys as soil types and
+values as a tolerance type for a plant to the given soil type. Default to {}.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.name_ru">
+<span class="sig-name descname"><span class="pre">name_ru</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#derevo.models.plants.Plant.name_ru" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.name_latin">
+<span class="sig-name descname"><span class="pre">name_latin</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#derevo.models.plants.Plant.name_latin" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.genus">
+<span class="sig-name descname"><span class="pre">genus</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#derevo.models.plants.Plant.genus" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.life_form">
+<span class="sig-name descname"><span class="pre">life_form</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.enumerations.LifeForm" title="derevo.models.enumerations.LifeForm"><span class="pre">LifeForm</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#derevo.models.plants.Plant.life_form" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.limitation_factors_resistances">
+<span class="sig-name descname"><span class="pre">limitation_factors_resistances</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.LimitationFactor" title="derevo.models.enumerations.LimitationFactor"><span class="pre">derevo.models.enumerations.LimitationFactor</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.enumerations.ToleranceType" title="derevo.models.enumerations.ToleranceType"><span class="pre">derevo.models.enumerations.ToleranceType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#derevo.models.plants.Plant.limitation_factors_resistances" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.usda_zone_preferences">
+<span class="sig-name descname"><span class="pre">usda_zone_preferences</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.UsdaZone" title="derevo.models.enumerations.UsdaZone"><span class="pre">derevo.models.enumerations.UsdaZone</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.enumerations.ToleranceType" title="derevo.models.enumerations.ToleranceType"><span class="pre">derevo.models.enumerations.ToleranceType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#derevo.models.plants.Plant.usda_zone_preferences" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.light_preferences">
+<span class="sig-name descname"><span class="pre">light_preferences</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.LightType" title="derevo.models.enumerations.LightType"><span class="pre">derevo.models.enumerations.LightType</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.enumerations.ToleranceType" title="derevo.models.enumerations.ToleranceType"><span class="pre">derevo.models.enumerations.ToleranceType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#derevo.models.plants.Plant.light_preferences" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.humidity_preferences">
+<span class="sig-name descname"><span class="pre">humidity_preferences</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.HumidityType" title="derevo.models.enumerations.HumidityType"><span class="pre">derevo.models.enumerations.HumidityType</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.enumerations.ToleranceType" title="derevo.models.enumerations.ToleranceType"><span class="pre">derevo.models.enumerations.ToleranceType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#derevo.models.plants.Plant.humidity_preferences" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.soil_acidity_preferences">
+<span class="sig-name descname"><span class="pre">soil_acidity_preferences</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.AcidityType" title="derevo.models.enumerations.AcidityType"><span class="pre">derevo.models.enumerations.AcidityType</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.enumerations.ToleranceType" title="derevo.models.enumerations.ToleranceType"><span class="pre">derevo.models.enumerations.ToleranceType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#derevo.models.plants.Plant.soil_acidity_preferences" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.soil_fertility_preferences">
+<span class="sig-name descname"><span class="pre">soil_fertility_preferences</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.FertilityType" title="derevo.models.enumerations.FertilityType"><span class="pre">derevo.models.enumerations.FertilityType</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.enumerations.ToleranceType" title="derevo.models.enumerations.ToleranceType"><span class="pre">derevo.models.enumerations.ToleranceType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#derevo.models.plants.Plant.soil_fertility_preferences" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.soil_type_preferences">
+<span class="sig-name descname"><span class="pre">soil_type_preferences</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.SoilType" title="derevo.models.enumerations.SoilType"><span class="pre">derevo.models.enumerations.SoilType</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.enumerations.ToleranceType" title="derevo.models.enumerations.ToleranceType"><span class="pre">derevo.models.enumerations.ToleranceType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#derevo.models.plants.Plant.soil_type_preferences" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.aggresiveness">
+<span class="sig-name descname"><span class="pre">aggresiveness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.enumerations.AggressivenessLevel" title="derevo.models.enumerations.AggressivenessLevel"><span class="pre">AggressivenessLevel</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NEUTRAL'</span></em><a class="headerlink" href="#derevo.models.plants.Plant.aggresiveness" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.survivability">
+<span class="sig-name descname"><span class="pre">survivability</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.enumerations.SurvivabilityLevel" title="derevo.models.enumerations.SurvivabilityLevel"><span class="pre">SurvivabilityLevel</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NORMAL'</span></em><a class="headerlink" href="#derevo.models.plants.Plant.survivability" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Plant.is_invasive">
+<span class="sig-name descname"><span class="pre">is_invasive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#derevo.models.plants.Plant.is_invasive" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.plants.Compatability">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.plants.</span></span><span class="sig-name descname"><span class="pre">Compatability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genus_name_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genus_name_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#derevo.models.enumerations.ToleranceType" title="derevo.models.enumerations.ToleranceType"><span class="pre">ToleranceType</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/plants.html#Compatability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.plants.Compatability" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Compatibility class for cohabitation attributes</p>
+<p>Fields:
+- <cite>genus_name_1</cite> (str): genera name of the plant, required for method
+- <cite>genus_name_2</cite> (str): genera name of the corresponding plant, required for method
+- <cite>cohabitation_type</cite> (ToleranceType): type of cohabitation</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Compatability.genus_name_1">
+<span class="sig-name descname"><span class="pre">genus_name_1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#derevo.models.plants.Compatability.genus_name_1" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Compatability.genus_name_2">
+<span class="sig-name descname"><span class="pre">genus_name_2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#derevo.models.plants.Compatability.genus_name_2" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.plants.Compatability.cohabitation_type">
+<span class="sig-name descname"><span class="pre">cohabitation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.enumerations.ToleranceType" title="derevo.models.enumerations.ToleranceType"><span class="pre">ToleranceType</span></a></em><a class="headerlink" href="#derevo.models.plants.Compatability.cohabitation_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-derevo.models.territory">
+<span id="derevo-models-territory-module"></span><h2>derevo.models.territory module<a class="headerlink" href="#module-derevo.models.territory" title="Permalink to this heading"></a></h2>
+<p>Territory model class is defined here.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="derevo.models.territory.Territory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">derevo.models.territory.</span></span><span class="sig-name descname"><span class="pre">Territory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usda_zone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#derevo.models.enumerations.UsdaZone" title="derevo.models.enumerations.UsdaZone"><span class="pre">UsdaZone</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limitation_factors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.LimitationFactor" title="derevo.models.enumerations.LimitationFactor"><span class="pre">derevo.models.enumerations.LimitationFactor</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">light_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.LightType" title="derevo.models.enumerations.LightType"><span class="pre">derevo.models.enumerations.LightType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">humidity_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.HumidityType" title="derevo.models.enumerations.HumidityType"><span class="pre">derevo.models.enumerations.HumidityType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.SoilType" title="derevo.models.enumerations.SoilType"><span class="pre">derevo.models.enumerations.SoilType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_acidity_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.AcidityType" title="derevo.models.enumerations.AcidityType"><span class="pre">derevo.models.enumerations.AcidityType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_fertility_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.FertilityType" title="derevo.models.enumerations.FertilityType"><span class="pre">derevo.models.enumerations.FertilityType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/models/territory.html#Territory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.territory.Territory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Description of the territory for composition creation.</p>
+<p>None value means that the parameter is unknown and will not be taken in the account.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.territory.Territory.usda_zone">
+<span class="sig-name descname"><span class="pre">usda_zone</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#derevo.models.enumerations.UsdaZone" title="derevo.models.enumerations.UsdaZone"><span class="pre">UsdaZone</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#derevo.models.territory.Territory.usda_zone" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.territory.Territory.limitation_factors">
+<span class="sig-name descname"><span class="pre">limitation_factors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.LimitationFactor" title="derevo.models.enumerations.LimitationFactor"><span class="pre">derevo.models.enumerations.LimitationFactor</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#derevo.models.territory.Territory.limitation_factors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.territory.Territory.light_types">
+<span class="sig-name descname"><span class="pre">light_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.LightType" title="derevo.models.enumerations.LightType"><span class="pre">derevo.models.enumerations.LightType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#derevo.models.territory.Territory.light_types" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.territory.Territory.humidity_types">
+<span class="sig-name descname"><span class="pre">humidity_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.HumidityType" title="derevo.models.enumerations.HumidityType"><span class="pre">derevo.models.enumerations.HumidityType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#derevo.models.territory.Territory.humidity_types" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.territory.Territory.soil_types">
+<span class="sig-name descname"><span class="pre">soil_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.SoilType" title="derevo.models.enumerations.SoilType"><span class="pre">derevo.models.enumerations.SoilType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#derevo.models.territory.Territory.soil_types" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.territory.Territory.soil_acidity_types">
+<span class="sig-name descname"><span class="pre">soil_acidity_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.AcidityType" title="derevo.models.enumerations.AcidityType"><span class="pre">derevo.models.enumerations.AcidityType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#derevo.models.territory.Territory.soil_acidity_types" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="derevo.models.territory.Territory.soil_fertility_types">
+<span class="sig-name descname"><span class="pre">soil_fertility_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#derevo.models.enumerations.FertilityType" title="derevo.models.enumerations.FertilityType"><span class="pre">derevo.models.enumerations.FertilityType</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#derevo.models.territory.Territory.soil_fertility_types" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="derevo.models.territory.Territory.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#derevo.models.territory.Territory" title="derevo.models.territory.Territory"><span class="pre">Territory</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/derevo/models/territory.html#Territory.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.models.territory.Territory.update" title="Permalink to this definition"></a></dt>
+<dd><p>Add <cite>other</cite> territory attributes to the currently set attributes. If <cite>replace</cite> is set to True, then
+replace current territory values whre <cite>other</cite> attributes are not None.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-derevo.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-derevo.models" title="Permalink to this heading"></a></h2>
+<p>Model classes are defined here.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="derevo.html" class="btn btn-neutral float-left" title="derevo package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, IDU (Alexander Antonov, Aleksei Sokol and others).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+</body>
+</html>

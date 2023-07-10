@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>derevo.models.enumerations &mdash; derevo 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+          <a href="../../../index.html" class="icon icon-home">
+            derevo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../derevo/index.html">derevo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../components/index.html">Components</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">derevo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">derevo.models.enumerations</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <h1>Source code for derevo.models.enumerations</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Enumeration models are defined here.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span>
+
+
+<div class="viewcode-block" id="ToleranceType"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.ToleranceType">[docs]</a><span class="k">class</span> <span class="nc">ToleranceType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration used to describe plant resistance to some factor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">NEGATIVE</span> <span class="o">=</span> <span class="s2">&quot;NEGATIVE&quot;</span>
+    <span class="n">NEUTRAL</span> <span class="o">=</span> <span class="s2">&quot;NEUTRAL&quot;</span>
+    <span class="n">POSITIVE</span> <span class="o">=</span> <span class="s2">&quot;POSITIVE&quot;</span>
+
+<div class="viewcode-block" id="ToleranceType.from_value"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.ToleranceType.from_value">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_value</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToleranceType&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct ToleranceType from integer value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">POSITIVE</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39; is not a valid ToleranceType integer value (-1, 0, 1)&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ToleranceType.to_value"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.ToleranceType.to_value">[docs]</a>    <span class="k">def</span> <span class="nf">to_value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Literal</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get tolerance type as an integer value in range [-1, 1].</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span> <span class="k">else</span> <span class="mi">1</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
+
+
+<div class="viewcode-block" id="LightType"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.LightType">[docs]</a><span class="k">class</span> <span class="nc">LightType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration used to describe possible light types.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">DARK</span> <span class="o">=</span> <span class="s2">&quot;DARK&quot;</span>
+    <span class="n">DARKENED</span> <span class="o">=</span> <span class="s2">&quot;DARKENED&quot;</span>
+    <span class="n">LIGHT</span> <span class="o">=</span> <span class="s2">&quot;LIGHT&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;LightType.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="AcidityType"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.AcidityType">[docs]</a><span class="k">class</span> <span class="nc">AcidityType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration used to describe soil acidity types.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">STRONGLY_ACIDIC</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">ACIDIC</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">SLIGHTLY_ACIDIC</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">NEUTRAL</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">SLIGHTLY_ALCALINE</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">ALCALINE</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">STRONGLY_ALCALINE</span> <span class="o">=</span> <span class="mi">11</span>
+
+<div class="viewcode-block" id="AcidityType.from_value"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.AcidityType.from_value">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_value</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;AcidityType&quot;</span><span class="p">:</span>  <span class="c1"># pylint: disable=too-many-return-statements</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct AcidityType from pH value.</span>
+
+<span class="sd">        Values:</span>
+<span class="sd">        - &lt;=3 - `STRONGLY_ACIDIC`</span>
+<span class="sd">        - 4..5 - `ACIDIC`</span>
+<span class="sd">        - 6 - `SLIGHTLY_ACIDIC`</span>
+<span class="sd">        - 7 - `NEUTRAl`</span>
+<span class="sd">        - 8 - `SLIGHTLY_ALCALINE`</span>
+<span class="sd">        - 9..10 - `ALCALINE`</span>
+<span class="sd">        - &gt;=11 - `STRONGLY_ALCALINE`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AcidityType</span><span class="o">.</span><span class="n">STRONGLY_ACIDIC</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AcidityType</span><span class="o">.</span><span class="n">ACIDIC</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AcidityType</span><span class="o">.</span><span class="n">SLIGHTLY_ACIDIC</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AcidityType</span><span class="o">.</span><span class="n">NEUTRAL</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AcidityType</span><span class="o">.</span><span class="n">SLIGHTLY_ALCALINE</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">AcidityType</span><span class="o">.</span><span class="n">ALCALINE</span>
+        <span class="k">return</span> <span class="n">AcidityType</span><span class="o">.</span><span class="n">STRONGLY_ALCALINE</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;AcidityType.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="FertilityType"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.FertilityType">[docs]</a><span class="k">class</span> <span class="nc">FertilityType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration used to describe soil fertility types.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">BARREN</span> <span class="o">=</span> <span class="s2">&quot;BARREN&quot;</span>
+    <span class="n">SLIGHTLY_FERTIL</span> <span class="o">=</span> <span class="s2">&quot;SLIGHTLY_FERTIL&quot;</span>
+    <span class="n">FERTIL</span> <span class="o">=</span> <span class="s2">&quot;FERTIL&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;FertilityType.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="SoilType"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.SoilType">[docs]</a><span class="k">class</span> <span class="nc">SoilType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration used to describe soil types.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">SANDY</span> <span class="o">=</span> <span class="s2">&quot;SANDY&quot;</span>
+    <span class="n">SUBSANDY</span> <span class="o">=</span> <span class="s2">&quot;SUBSANDY&quot;</span>
+    <span class="n">LOAMY</span> <span class="o">=</span> <span class="s2">&quot;LOAMY&quot;</span>
+    <span class="n">CLAYEY</span> <span class="o">=</span> <span class="s2">&quot;CLAYEY&quot;</span>
+    <span class="n">ROCKY</span> <span class="o">=</span> <span class="s2">&quot;ROCKY&quot;</span>
+    <span class="n">GRAVELLY</span> <span class="o">=</span> <span class="s2">&quot;GRAVELLY&quot;</span>
+    <span class="n">HEAVY</span> <span class="o">=</span> <span class="s2">&quot;HEAVY&quot;</span>
+    <span class="n">DRAINED</span> <span class="o">=</span> <span class="s2">&quot;DRAINED&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;SoilType.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="HumidityType"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.HumidityType">[docs]</a><span class="k">class</span> <span class="nc">HumidityType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration used to describe humidity types.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">LOW</span> <span class="o">=</span> <span class="s2">&quot;LOW&quot;</span>
+    <span class="n">NORMAL</span> <span class="o">=</span> <span class="s2">&quot;NORMAL&quot;</span>
+    <span class="n">HIGH</span> <span class="o">=</span> <span class="s2">&quot;HIGH&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;HumidityType.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="LimitationFactor"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.LimitationFactor">[docs]</a><span class="k">class</span> <span class="nc">LimitationFactor</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration used to describe limitation factor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">OVERCONSOLIDATION</span> <span class="o">=</span> <span class="s2">&quot;OVERCONSOLIDATION&quot;</span>
+    <span class="n">SALINIZATION</span> <span class="o">=</span> <span class="s2">&quot;SALINIZATION&quot;</span>
+    <span class="n">DROUGHT</span> <span class="o">=</span> <span class="s2">&quot;DROUGHT&quot;</span>
+    <span class="n">FLOODING</span> <span class="o">=</span> <span class="s2">&quot;FLOODING&quot;</span>
+    <span class="n">GAS_POLLUTION</span> <span class="o">=</span> <span class="s2">&quot;GAS_POLLUTION&quot;</span>
+    <span class="n">WINDINESS</span> <span class="o">=</span> <span class="s2">&quot;WINDINESS&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;LimitationFactor.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="UsdaZone"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.UsdaZone">[docs]</a><span class="k">class</span> <span class="nc">UsdaZone</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enueration used to describe USDA zones.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">USDA1</span> <span class="o">=</span> <span class="s2">&quot;USDA1&quot;</span>
+    <span class="n">USDA2</span> <span class="o">=</span> <span class="s2">&quot;USDA2&quot;</span>
+    <span class="n">USDA3</span> <span class="o">=</span> <span class="s2">&quot;USDA3&quot;</span>
+    <span class="n">USDA4</span> <span class="o">=</span> <span class="s2">&quot;USDA4&quot;</span>
+    <span class="n">USDA5</span> <span class="o">=</span> <span class="s2">&quot;USDA5&quot;</span>
+    <span class="n">USDA6</span> <span class="o">=</span> <span class="s2">&quot;USDA6&quot;</span>
+    <span class="n">USDA7</span> <span class="o">=</span> <span class="s2">&quot;USDA7&quot;</span>
+    <span class="n">USDA8</span> <span class="o">=</span> <span class="s2">&quot;USDA8&quot;</span>
+    <span class="n">USDA9</span> <span class="o">=</span> <span class="s2">&quot;USDA9&quot;</span>
+    <span class="n">USDA10</span> <span class="o">=</span> <span class="s2">&quot;USDA10&quot;</span>
+    <span class="n">USDA11</span> <span class="o">=</span> <span class="s2">&quot;USDA11&quot;</span>
+
+<div class="viewcode-block" id="UsdaZone.from_value"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.UsdaZone.from_value">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_value</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;UsdaZone&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct UsdaZone from integer value. Valid values are integers in range [1, 11].</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">11</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39; is not a valid UsdaZone integer value intrange[1, 11]&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;USDA</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;UsdaZone.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="AggressivenessLevel"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.AggressivenessLevel">[docs]</a><span class="k">class</span> <span class="nc">AggressivenessLevel</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration used to describe plant spread agressiveness.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">AGGRESSIVE</span> <span class="o">=</span> <span class="s2">&quot;AGGRESSIVE&quot;</span>
+    <span class="n">NEUTRAL</span> <span class="o">=</span> <span class="s2">&quot;NEUTRAL&quot;</span>
+    <span class="n">SUPPRESSED</span> <span class="o">=</span> <span class="s2">&quot;SUPPRESSED&quot;</span>
+
+<div class="viewcode-block" id="AggressivenessLevel.from_value"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.AggressivenessLevel.from_value">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_value</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;AggressivenessLevel&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct AgressivenessLevel from integer value.</span>
+
+<span class="sd">        Values:</span>
+<span class="sd">        - -1 - `SUPPRESSED`</span>
+<span class="sd">        - 0 - `NEUTRAL`</span>
+<span class="sd">        - 1 - `AGGRESSIVE`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AggressivenessLevel</span><span class="o">.</span><span class="n">SUPPRESSED</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AggressivenessLevel</span><span class="o">.</span><span class="n">NEUTRAL</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AggressivenessLevel</span><span class="o">.</span><span class="n">AGGRESSIVE</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39; is not a valid AgressivenessLevel integer value (-1, 0, 1)&quot;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;AggressivenessLevel.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="SurvivabilityLevel"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.SurvivabilityLevel">[docs]</a><span class="k">class</span> <span class="nc">SurvivabilityLevel</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration used to describe plant spread agressiveness.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">STRONG</span> <span class="o">=</span> <span class="s2">&quot;STRONG&quot;</span>
+    <span class="n">NORMAL</span> <span class="o">=</span> <span class="s2">&quot;NORMAL&quot;</span>
+    <span class="n">WEAK</span> <span class="o">=</span> <span class="s2">&quot;WEAK&quot;</span>
+
+<div class="viewcode-block" id="SurvivabilityLevel.from_value"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.SurvivabilityLevel.from_value">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_value</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;SurvivabilityLevel&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct SurvivabilityLevel from integer value.</span>
+
+<span class="sd">        Values:</span>
+<span class="sd">        - -1 - `WEAK`</span>
+<span class="sd">        - 0 - `NORMAL`</span>
+<span class="sd">        - 1 - `STRONG`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">SurvivabilityLevel</span><span class="o">.</span><span class="n">WEAK</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">SurvivabilityLevel</span><span class="o">.</span><span class="n">NORMAL</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">SurvivabilityLevel</span><span class="o">.</span><span class="n">WEAK</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39; is not a valid SurvivabilityLevel integer value (-1, 0, 1)&quot;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;SurvivabilityLevel.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="LifeForm"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.enumerations.LifeForm">[docs]</a><span class="k">class</span> <span class="nc">LifeForm</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration used to describe plant life form.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">TREE</span> <span class="o">=</span> <span class="s2">&quot;TREE&quot;</span>
+    <span class="n">BUSH</span> <span class="o">=</span> <span class="s2">&quot;BUSH&quot;</span>
+    <span class="n">GROUND_COVER</span> <span class="o">=</span> <span class="s2">&quot;GROUND_COVER&quot;</span>
+    <span class="n">LIANA</span> <span class="o">=</span> <span class="s2">&quot;LIANA&quot;</span>
+    <span class="n">PERENNIAL</span> <span class="o">=</span> <span class="s2">&quot;PERENNIAL&quot;</span>
+    <span class="n">BULBOUS</span> <span class="o">=</span> <span class="s2">&quot;BULBOUS&quot;</span>
+    <span class="n">ANNUAL</span> <span class="o">=</span> <span class="s2">&quot;ANNUAL&quot;</span>
+    <span class="n">SWAMP_PLANT</span> <span class="o">=</span> <span class="s2">&quot;SWAMP_PLANT&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;LifeForm.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, IDU (Alexander Antonov, Aleksei Sokol and others).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+</body>
+</html>

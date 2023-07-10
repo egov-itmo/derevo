@@ -13,7 +13,7 @@ Repository of science research at ITMO University #622263 "Planning city greener
     and keeps database schema syncronized.
 - [**frontend**](frontend/README.md) - frontend written on Flutter, which can be compiled to web-interface used with Nginx.
 - [**photos**](photos/README.md) - plants photos hosting Docker service and photos preparation/insertion scripts.
-- [**method**](method/README.md) - compositioner module containing plants compositions generation and graph algorithms.
+- [**method**](method/README.md) - derevo module containing plants compositions generation and graph algorithms.
 
 ## Description
 
@@ -28,7 +28,7 @@ We also provide methods of knowledge database creation and spatial environmental
 
 ## General scheme of work
 
-![General scheme of work](https://news.egov.itmo.ru/photo/algoritm_nahozhdeniya_kompozicij_rastenij-1.png) 
+![General scheme of work](https://news.egov.itmo.ru/photo/algoritm_nahozhdeniya_kompozicij_rastenij-1.png)
 
 ## Example
 

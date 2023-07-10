@@ -11,8 +11,10 @@ from loguru import logger
 from sqlalchemy import text
 from sqlalchemy.engine import Connection
 
-from compositioner import Plant, enumerations as c_enum
-from .compositioner_enums import EnumAdapters as c_adapt
+from derevo import Plant
+from derevo import enumerations as c_enum
+
+from .derevo_enums import EnumAdapters as c_adapt
 
 
 def collect_plants(connection: Connection) -> list[Plant]:  # pylint: disable=too-many-locals
@@ -186,14 +188,12 @@ def collect_plants_dataframe(connection: Connection) -> pd.DataFrame:
 
     plants = pd.read_sql(
         text(
-            """
-        SELECT plants.id, plant_types.name AS plant_type, name_ru, name_latin,
-            spread_aggressiveness_level AS aggressiveness, survivability_level AS survivability,
-            is_invasive, genus_id
-        FROM plants
-            JOIN plant_types ON plants.type_id = plant_types.id
-        WHERE genus_id IS NOT NULL
-        """
+            "SELECT plants.id, plant_types.name AS plant_type, name_ru, name_latin,"
+            "     spread_aggressiveness_level AS aggressiveness, survivability_level AS survivability,"
+            "     is_invasive, genus_id"
+            " FROM plants"
+            "     JOIN plant_types ON plants.type_id = plant_types.id"
+            " WHERE genus_id IS NOT NULL"
         ),
         con=connection,
     )
@@ -206,16 +206,14 @@ def collect_plants_with_limitation_resistance(connection: Connection) -> pd.Data
 
     plants_with_limitations_resistance = pd.read_sql(
         text(
-            """
-        SELECT p.id, pt.name AS plant_type, p.name_ru, p.name_latin,
-            p.spread_aggressiveness_level AS aggressiveness, p.survivability_level AS survivability,
-            p.is_invasive, p.genus_id, plf.limitation_factor_id, lf.name
-        FROM plants p
-            JOIN plant_types pt ON p.type_id = pt.id
-            JOIN plants_limitation_factors plf ON plf.plant_id = p.id
-            JOIN limitation_factors lf ON lf.id = plf.limitation_factor_id
-        WHERE plf.is_stable = true
-        """
+            "SELECT p.id, pt.name AS plant_type, p.name_ru, p.name_latin,"
+            "     p.spread_aggressiveness_level AS aggressiveness, p.survivability_level AS survivability,"
+            "     p.is_invasive, p.genus_id, plf.limitation_factor_id, lf.name"
+            " FROM plants p"
+            "     JOIN plant_types pt ON p.type_id = pt.id"
+            "     JOIN plants_limitation_factors plf ON plf.plant_id = p.id"
+            "     JOIN limitation_factors lf ON lf.id = plf.limitation_factor_id"
+            " WHERE plf.is_stable = true"
         ),
         con=connection,
     )
@@ -228,16 +226,14 @@ def collect_plants_suitable_for_light(connection: Connection) -> pd.DataFrame:
 
     plants_suitable_for_light = pd.read_sql(
         text(
-            """
-        SELECT p.id, pt.name AS plant_type, p.name_ru, p.name_latin,
-            p.spread_aggressiveness_level AS aggressiveness, p.survivability_level AS survivability,
-            p.is_invasive, p.genus_id, plt.light_type_id, lt.name
-        FROM plants p
-            JOIN plant_types pt ON p.type_id = pt.id
-            JOIN plants_light_types plt ON plt.plant_id = p.id
-            JOIN light_types lt ON lt.id = plt.light_type_id
-        WHERE plt.is_stable = true
-        """
+            "SELECT p.id, pt.name AS plant_type, p.name_ru, p.name_latin,"
+            "     p.spread_aggressiveness_level AS aggressiveness, p.survivability_level AS survivability,"
+            "     p.is_invasive, p.genus_id, plt.light_type_id, lt.name"
+            " FROM plants p"
+            "     JOIN plant_types pt ON p.type_id = pt.id"
+            "     JOIN plants_light_types plt ON plt.plant_id = p.id"
+            "     JOIN light_types lt ON lt.id = plt.light_type_id"
+            " WHERE plt.is_stable = true"
         ),
         con=connection,
     )
@@ -250,11 +246,10 @@ def collect_cohabitations(connection: Connection) -> pd.DataFrame:
 
     cohabitation_attributes = pd.read_sql(
         text(
-            """SELECT g1.name_ru as genus_name_1, g2.name_ru as genus_name_2,
-                                                    cohabitation_type
-                                                  FROM cohabitation c
-                                                JOIN genera g1 on c.genus_id_1 = g1.id
-                                                JOIN genera g2 on c.genus_id_2 = g2.id"""
+            "SELECT g1.name_ru as genus_name_1, g2.name_ru as genus_name_2, cohabitation_type"
+            " FROM cohabitation c"
+            "   JOIN genera g1 on c.genus_id_1 = g1.id"
+            "   JOIN genera g2 on c.genus_id_2 = g2.id"
         ),
         con=connection,
     )
@@ -266,12 +261,7 @@ def collect_limitation_polygons(connection: Connection) -> gpd.GeoDataFrame:
     """Get GeoDataFrame with limitation polygons from database."""
 
     limitations = pd.read_sql(
-        text(
-            """
-        SELECT id, limitation_factor_id, ST_AsText(geometry) as geometry
-        FROM limitation_factor_parts
-        """
-        ),
+        text("SELECT id, limitation_factor_id, ST_AsText(geometry) as geometry FROM limitation_factor_parts"),
         con=connection,
     )
     limitations["geometry"] = gpd.GeoSeries.from_wkt(limitations["geometry"])
@@ -284,12 +274,7 @@ def collect_light_polygons(connection: Connection) -> gpd.GeoDataFrame:
     """Get GeoDataFrame with light polygons from database."""
 
     light = pd.read_sql(
-        text(
-            """
-        SELECT id, light_type_id, ST_AsText(geometry) as geometry
-        FROM light_type_parts
-        """
-        ),
+        text("SELECT id, light_type_id, ST_AsText(geometry) as geometry FROM light_type_parts"),
         con=connection,
     )
     light["geometry"] = gpd.GeoSeries.from_wkt(light["geometry"])
@@ -315,12 +300,10 @@ def collect_species_in_parks(connection: Connection) -> pd.DataFrame:
 
     species_in_parks = pd.read_sql(
         text(
-            """
-        SELECT plants.id, name_ru, name as park_name
-        FROM plants
-            JOIN plants_parks ON plants.id = plants_parks.plant_id
-            JOIN parks ON plants_parks.park_id = parks.id
-        """
+            "SELECT plants.id, name_ru, name as park_name"
+            " FROM plants"
+            "   JOIN plants_parks ON plants.id = plants_parks.plant_id"
+            "   JOIN parks ON plants_parks.park_id = parks.id"
         ),
         con=connection,
     )
@@ -338,9 +321,10 @@ def _cut_non_overlapping_parts(gdf):
                 continue
             if geometry.intersects(gdf.iloc[idx2].geometry):
                 geometry = geometry.intersection(gdf.iloc[idx2].geometry)
-        new_gdf.at[idx, 'geometry'] = geometry
+        new_gdf.at[idx, "geometry"] = geometry
     new_gdf = new_gdf[~new_gdf.geometry.is_empty]
     return new_gdf
+
 
 def collect_smoke_area_from_osm(
     city: str,
@@ -388,7 +372,7 @@ def collect_smoke_area_from_osm(
     min_area = gdf.buffer(gdf.height * lower_limit)
     gdf["geometry"] = max_area.difference(min_area)
     gdf = _cut_non_overlapping_parts(gdf).dissolve().explode()
-    gdf = gdf[gdf.area > 200].to_crs(4326) 
+    gdf = gdf[gdf.area > 200].to_crs(4326)
     logger.debug("Got {} chimneys polygons", gdf.shape[0])
 
     return gdf

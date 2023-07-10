@@ -1,4 +1,4 @@
-# Compositioner
+# Derevo library
 
 This is a standalone module which can be installed and used without plants backend and frontend.
 
@@ -10,7 +10,7 @@ It contains methods to generate stable plants compotions.
 1. Install with `python -m pip install .`
 
 Wheel can be built the same way, by running `python -m build .` (you would need to install `build` package before that).
-To install package from .wheel, use `python -m wheel install dist/compositioner-0.1.0-py3-none-any.whl`.
+To install package from .wheel, use `python -m wheel install dist/derevo-0.1.0-py3-none-any.whl`.
 
 Following packages are need to be installed on your system to successfully build the module: `build virtualenv`
 
@@ -23,9 +23,9 @@ All commands are presented in Makefile for reference.
 
 ## Packing in docker for a backend service
 
-For the backend docker image to build, `compositioner` must be installed in it. As they are in different directories,
-  and `compositioner` is not on PyPi yet, it was decided to be a best way to store built wheel rosource in a dummy
-  container called `local/compositioner`. It should be built using `make docker-build` before building backend image.
+For the backend docker image to build, `derevo` must be installed in it. As they are in different directories,
+  and `derevo` is not on PyPi yet, it was decided to be a best way to store built wheel rosource in a dummy
+  container called `local/derevo`. It should be built using `make docker-build` before building backend image.
 
 
 ## Development

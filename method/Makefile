@@ -1,33 +1,33 @@
-SOURCE_DIR := compositioner example
+SOURCE_DIR := derevo example
 VERSION := 0.1.0
 
 lint:
-	python -m pylint ${SOURCE_DIR}
+	pylint ${SOURCE_DIR}
 
 format:
-	python -m black ${SOURCE_DIR}
+	black ${SOURCE_DIR}
 
 run-example:
 	USE_PYGEOS=0 python -m example
 
 install:
-	python -m pip install .
+	pip install .
 
 install-dev:
-	python -m pip install -e . --config-settings editable_mode=strict
+	pip install -e . --config-settings editable_mode=strict
 
 build:
 	python -m build .
 
 clean:
-	rm -rf ./build ./dist ./pg_save.egg-info
+	rm -rf ./build ./dist ./derevo.egg-info
 
 udpate-pypi: clean build
 	python -m twine upload  dist/*
 
 install-from-build:
-	python -m wheel install dist/pg_save-*.whl
+	python -m wheel install dist/derevo-*.whl
 
 docker-build:
-	docker build --tag local/compositioner:$(VERSION) .
-	docker tag local/compositioner:$(VERSION) local/compositioner:latest
+	docker build --tag local/derevo:$(VERSION) .
+	docker tag local/derevo:$(VERSION) local/derevo:latest

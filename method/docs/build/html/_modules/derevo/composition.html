@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>derevo.composition &mdash; derevo 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+          <a href="../../index.html" class="icon icon-home">
+            derevo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../derevo/index.html">derevo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../components/index.html">Components</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">derevo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">derevo.composition</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <h1>Source code for derevo.composition</h1><div class="highlight"><pre>
+<span></span><span class="c1"># pylint: disable=too-many-arguments,too-many-locals</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Composition-related methods are defined here.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span>
+
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">loguru</span> <span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">from</span> <span class="nn">networkx.algorithms.community</span> <span class="kn">import</span> <span class="n">greedy_modularity_communities</span>
+
+<span class="kn">from</span> <span class="nn">derevo.adjacency</span> <span class="kn">import</span> <span class="n">get_adjacency_graph</span>
+<span class="kn">from</span> <span class="nn">derevo.compatability</span> <span class="kn">import</span> <span class="n">get_compatability_graph</span>
+<span class="kn">from</span> <span class="nn">derevo.models</span> <span class="kn">import</span> <span class="n">Plant</span><span class="p">,</span> <span class="n">Territory</span>
+<span class="kn">from</span> <span class="nn">derevo.models.cohabitation</span> <span class="kn">import</span> <span class="n">GeneraCohabitation</span>
+<span class="kn">from</span> <span class="nn">derevo.models.enumerations</span> <span class="kn">import</span> <span class="n">ToleranceType</span>
+
+
+<div class="viewcode-block" id="get_compositions"><a class="viewcode-back" href="../../components/derevo.html#derevo.composition.get_compositions">[docs]</a><span class="k">def</span> <span class="nf">get_compositions</span><span class="p">(</span>
+    <span class="n">plants_available</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Plant</span><span class="p">],</span>
+    <span class="n">territory</span><span class="p">:</span> <span class="n">Territory</span><span class="p">,</span>
+    <span class="n">cohabitation_attributes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">GeneraCohabitation</span><span class="p">],</span>
+    <span class="n">plants_present</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Plant</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># FIXME plants_present are definetly not used now</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Plant</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return plants composition variants list for the given parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Number of light conditions: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">territory</span><span class="o">.</span><span class="n">light_types</span><span class="p">)</span> <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">light_types</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Number of limitation factors: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">territory</span><span class="o">.</span><span class="n">limitation_factors</span><span class="p">)</span> <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">limitation_factors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">plants_present</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;None plants present&quot;</span><span class="p">)</span>
+        <span class="n">plants_present</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">local_plants</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">plants_available</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">light_types</span> <span class="ow">and</span> <span class="n">local_plants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">local_plants</span> <span class="o">=</span> <span class="n">local_plants</span><span class="p">[</span>
+            <span class="n">local_plants</span><span class="p">[</span><span class="s2">&quot;light_preferences&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span>
+                    <span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">lt</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span> <span class="k">for</span> <span class="n">lt</span> <span class="ow">in</span> <span class="n">territory</span><span class="o">.</span><span class="n">light_types</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">]</span>
+    <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">limitation_factors</span> <span class="ow">and</span> <span class="n">local_plants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">local_plants</span> <span class="o">=</span> <span class="n">local_plants</span><span class="p">[</span>
+            <span class="n">local_plants</span><span class="p">[</span><span class="s2">&quot;limitation_factors_resistances&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">all</span><span class="p">(</span>
+                    <span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span>
+                    <span class="k">for</span> <span class="n">factor</span> <span class="ow">in</span> <span class="n">territory</span><span class="o">.</span><span class="n">limitation_factors</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">]</span>
+    <span class="c1"># TODO: add processing of other factors</span>
+
+    <span class="k">if</span> <span class="n">local_plants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">plants_present</span><span class="p">]</span>
+
+    <span class="n">cohabitation_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[(</span><span class="n">c</span><span class="o">.</span><span class="n">genus_1</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">genus_2</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">cohabitation</span><span class="o">.</span><span class="n">to_value</span><span class="p">())</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cohabitation_attributes</span><span class="p">],</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;genus_name_1&quot;</span><span class="p">,</span> <span class="s2">&quot;genus_name_2&quot;</span><span class="p">,</span> <span class="s2">&quot;cohabitation_type&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">compatability_graph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span> <span class="o">=</span> <span class="n">get_compatability_graph</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">plants_available</span><span class="p">),</span> <span class="n">cohabitation_df</span><span class="p">)</span>
+    <span class="n">comp_graph</span> <span class="o">=</span> <span class="n">compatability_graph</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">local_plants</span><span class="p">[</span><span class="s2">&quot;name_ru&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">communities_list</span> <span class="o">=</span> <span class="n">greedy_modularity_communities</span><span class="p">(</span><span class="n">comp_graph</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Number of communities: </span><span class="si">{}</span><span class="s2"> (sizes: </span><span class="si">{}</span><span class="s2">)&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">communities_list</span><span class="p">),</span>
+        <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">community</span><span class="p">)</span> <span class="k">for</span> <span class="n">community</span> <span class="ow">in</span> <span class="n">communities_list</span><span class="p">))),</span>
+    <span class="p">)</span>
+    <span class="n">compositions</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">com</span><span class="p">)</span> <span class="k">for</span> <span class="n">com</span> <span class="ow">in</span> <span class="n">communities_list</span><span class="p">]</span>
+    <span class="n">present_names</span> <span class="o">=</span> <span class="p">{</span><span class="n">plant</span><span class="o">.</span><span class="n">name_ru</span> <span class="k">for</span> <span class="n">plant</span> <span class="ow">in</span> <span class="n">plants_present</span><span class="p">}</span>
+    <span class="n">compositions</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">plants_present</span>
+        <span class="o">+</span> <span class="p">[</span><span class="n">plant</span> <span class="k">for</span> <span class="n">plant</span> <span class="ow">in</span> <span class="n">plants_available</span> <span class="k">if</span> <span class="n">plant</span><span class="o">.</span><span class="n">name_ru</span> <span class="ow">in</span> <span class="n">composition</span> <span class="ow">and</span> <span class="n">plant</span><span class="o">.</span><span class="n">name_ru</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">present_names</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">composition</span> <span class="ow">in</span> <span class="n">compositions</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">compositions</span></div>
+
+
+<div class="viewcode-block" id="_intersection_check"><a class="viewcode-back" href="../../components/derevo.html#derevo.composition._intersection_check">[docs]</a><span class="k">def</span> <span class="nf">_intersection_check</span><span class="p">(</span><span class="n">greenery_polygon</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span> <span class="n">factor</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine if greenery polygon intersects with another polygon of light or limitation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">factor</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">greenery_polygon</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">factor</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="get_updated_composition"><a class="viewcode-back" href="../../components/derevo.html#derevo.composition.get_updated_composition">[docs]</a><span class="k">def</span> <span class="nf">get_updated_composition</span><span class="p">(</span>
+    <span class="n">plants</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">plants_with_limitations_resistance</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">plants_suitable_for_light</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">cohabitation_attributes</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">limitations</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span>
+    <span class="n">light</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span>
+    <span class="n">species_in_parks</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">greenery_polygon</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return list of graphs with variants of updated plants composition.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># version with all edges</span>
+    <span class="n">plants</span> <span class="o">=</span> <span class="n">plants</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">plants_with_lim_resist</span> <span class="o">=</span> <span class="n">plants_with_limitations_resistance</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">plants_with_lig_resist</span> <span class="o">=</span> <span class="n">plants_suitable_for_light</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">limitations</span> <span class="o">=</span> <span class="n">limitations</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">light</span> <span class="o">=</span> <span class="n">light</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># finding species which can grow in existing light conditions</span>
+    <span class="n">light_types</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">light</span><span class="p">[</span><span class="s2">&quot;light_type_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">lig_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">lig_id</span>
+        <span class="k">for</span> <span class="n">lig_id</span> <span class="ow">in</span> <span class="n">light_types</span>
+        <span class="k">if</span> <span class="n">_intersection_check</span><span class="p">(</span><span class="n">greenery_polygon</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">light</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;light_type_id == </span><span class="si">{</span><span class="n">lig_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+    <span class="p">]</span>
+    <span class="n">filtered_plants</span> <span class="o">=</span> <span class="n">plants_with_lig_resist</span><span class="p">[</span><span class="n">plants_with_lig_resist</span><span class="p">[</span><span class="s2">&quot;light_type_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">lig_list</span><span class="p">)]</span>
+    <span class="n">light_comp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">filtered_plants</span><span class="p">[</span><span class="s2">&quot;name_ru&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;number of light conditions: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lig_list</span><span class="p">))</span>
+
+    <span class="c1"># finding species which can grow with existing limitations</span>
+    <span class="n">limitation_factors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">limitations</span><span class="p">[</span><span class="s2">&quot;limitation_factor_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">lim_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">lim_id</span>
+        <span class="k">for</span> <span class="n">lim_id</span> <span class="ow">in</span> <span class="n">limitation_factors</span>
+        <span class="k">if</span> <span class="n">_intersection_check</span><span class="p">(</span>
+            <span class="n">greenery_polygon</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span>
+            <span class="n">limitations</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;limitation_factor_id == </span><span class="si">{</span><span class="n">lim_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">filtered_plants</span> <span class="o">=</span> <span class="n">plants_with_lim_resist</span><span class="p">[</span><span class="n">plants_with_lim_resist</span><span class="p">[</span><span class="s2">&quot;limitation_factor_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">lim_list</span><span class="p">)]</span>
+    <span class="n">limitations_comp</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">filtered_plants</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;name_ru&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">limitations_comp</span> <span class="o">=</span> <span class="n">limitations_comp</span><span class="p">[</span>
+        <span class="n">limitations_comp</span><span class="p">[</span><span class="s2">&quot;limitation_factor_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">limitations_comp</span><span class="p">[</span><span class="s2">&quot;limitation_factor_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="p">]</span>
+    <span class="n">limitations_comp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">limitations_comp</span><span class="p">[</span><span class="s2">&quot;name_ru&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;number of limitation factors: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lim_list</span><span class="p">))</span>
+
+    <span class="c1"># filtering species by environmental factors</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lig_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">df_comp</span> <span class="o">=</span> <span class="n">plants</span><span class="p">[</span><span class="n">plants</span><span class="p">[</span><span class="s2">&quot;name_ru&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">light_comp</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;no light conditions provided&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lim_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">df_comp</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="n">df_comp</span><span class="p">[</span><span class="s2">&quot;name_ru&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">limitations_comp</span><span class="p">)]</span>
+
+    <span class="n">compatability_graph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span> <span class="o">=</span> <span class="n">get_compatability_graph</span><span class="p">(</span><span class="n">plants</span><span class="p">,</span> <span class="n">cohabitation_attributes</span><span class="p">)</span>
+    <span class="n">comp_graph</span> <span class="o">=</span> <span class="n">compatability_graph</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">comp_graph</span> <span class="o">=</span> <span class="n">comp_graph</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">df_comp</span><span class="p">[</span><span class="s2">&quot;name_ru&quot;</span><span class="p">])</span>
+    <span class="n">communities_list</span> <span class="o">=</span> <span class="n">greedy_modularity_communities</span><span class="p">(</span><span class="n">comp_graph</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Number of communities: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">communities_list</span><span class="p">))</span>
+
+    <span class="n">compositions</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">com</span><span class="p">)</span> <span class="k">for</span> <span class="n">com</span> <span class="ow">in</span> <span class="n">communities_list</span><span class="p">]</span>
+    <span class="n">current_graph</span> <span class="o">=</span> <span class="n">get_adjacency_graph</span><span class="p">(</span><span class="n">species_in_parks</span><span class="p">,</span> <span class="n">target_parks</span><span class="o">=</span><span class="p">[</span><span class="n">greenery_polygon</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]])</span>
+    <span class="n">current_composition</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">to_pandas_edgelist</span><span class="p">(</span><span class="n">current_graph</span><span class="p">)</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+
+    <span class="n">graph_variants</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">composition</span> <span class="ow">in</span> <span class="n">compositions</span><span class="p">:</span>
+        <span class="n">upd_comp</span> <span class="o">=</span> <span class="n">composition</span> <span class="o">+</span> <span class="n">current_composition</span>
+        <span class="n">updated_graph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span> <span class="o">=</span> <span class="n">compatability_graph</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">upd_comp</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="n">composition</span><span class="p">:</span>
+            <span class="n">updated_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node_id</span><span class="p">][</span><span class="s2">&quot;is_added&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="n">current_composition</span><span class="p">:</span>
+            <span class="n">updated_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node_id</span><span class="p">][</span><span class="s2">&quot;is_added&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">graph_variants</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">updated_graph</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">graph_variants</span></div>
+
+
+<div class="viewcode-block" id="write_updated_composition_gexf"><a class="viewcode-back" href="../../components/derevo.html#derevo.composition.write_updated_composition_gexf">[docs]</a><span class="k">def</span> <span class="nf">write_updated_composition_gexf</span><span class="p">(</span>
+    <span class="n">plants</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">plants_with_limitations_resistance</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">plants_suitable_for_light</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">cohabitation_attributes</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">limitations</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span>
+    <span class="n">light</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span>
+    <span class="n">species_in_parks</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">greenery_polygon</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span>
+    <span class="n">output_path_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Write variants of updated plants composition to files with given prefix</span>
+<span class="sd">    or names / file-like objects given in iterator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">graph_variants</span> <span class="o">=</span> <span class="n">get_updated_composition</span><span class="p">(</span>
+        <span class="n">plants</span><span class="p">,</span>
+        <span class="n">plants_with_limitations_resistance</span><span class="p">,</span>
+        <span class="n">plants_suitable_for_light</span><span class="p">,</span>
+        <span class="n">cohabitation_attributes</span><span class="p">,</span>
+        <span class="n">limitations</span><span class="p">,</span>
+        <span class="n">light</span><span class="p">,</span>
+        <span class="n">species_in_parks</span><span class="p">,</span>
+        <span class="n">greenery_polygon</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">graph_variants</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;updated composition graph is not exported&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_path_prefix</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">graph</span> <span class="ow">in</span> <span class="n">graph_variants</span><span class="p">:</span>
+            <span class="n">nx</span><span class="o">.</span><span class="n">write_gexf</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_path_prefix</span><span class="si">}</span><span class="s2">_v_</span><span class="si">{</span><span class="n">graph_variants</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span><span class="si">}</span><span class="s2">.gexf&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">graph</span><span class="p">,</span> <span class="n">output</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">graph_variants</span><span class="p">,</span> <span class="n">output_path_prefix</span><span class="p">):</span>
+            <span class="n">nx</span><span class="o">.</span><span class="n">write_gexf</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_recommended_composition"><a class="viewcode-back" href="../../components/derevo.html#derevo.composition.get_recommended_composition">[docs]</a><span class="k">def</span> <span class="nf">get_recommended_composition</span><span class="p">(</span>
+    <span class="n">plants</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">plants_with_limitations_resistance</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">plants_suitable_for_light</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">limitations</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">light</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">cohabitation_attributes</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">greenery_polygon</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return list of graphs with variants of recommended composition with account for outer factors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">plants</span> <span class="o">=</span> <span class="n">plants</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">plants_with_lim_resist</span> <span class="o">=</span> <span class="n">plants_with_limitations_resistance</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">plants_with_lig_resist</span> <span class="o">=</span> <span class="n">plants_suitable_for_light</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">limitations</span> <span class="o">=</span> <span class="n">limitations</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">light</span> <span class="o">=</span> <span class="n">light</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># finding species which can grow in existing light conditions</span>
+    <span class="n">light_types</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">light</span><span class="p">[</span><span class="s2">&quot;light_type_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">lig_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">lig_id</span>
+        <span class="k">for</span> <span class="n">lig_id</span> <span class="ow">in</span> <span class="n">light_types</span>
+        <span class="k">if</span> <span class="n">_intersection_check</span><span class="p">(</span><span class="n">greenery_polygon</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">light</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;light_type_id == </span><span class="si">{</span><span class="n">lig_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+    <span class="p">]</span>
+    <span class="n">filtered_plants</span> <span class="o">=</span> <span class="n">plants_with_lig_resist</span><span class="p">[</span><span class="n">plants_with_lig_resist</span><span class="p">[</span><span class="s2">&quot;light_type_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">lig_list</span><span class="p">)]</span>
+    <span class="n">light_comp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">filtered_plants</span><span class="p">[</span><span class="s2">&quot;name_ru&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;number of light conditions: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lig_list</span><span class="p">))</span>
+    <span class="c1"># finding species which can grow with existing limitations</span>
+    <span class="n">limitation_factors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">limitations</span><span class="p">[</span><span class="s2">&quot;limitation_factor_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">lim_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">lim_id</span>
+        <span class="k">for</span> <span class="n">lim_id</span> <span class="ow">in</span> <span class="n">limitation_factors</span>
+        <span class="k">if</span> <span class="n">_intersection_check</span><span class="p">(</span>
+            <span class="n">greenery_polygon</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span>
+            <span class="n">limitations</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;limitation_factor_id == </span><span class="si">{</span><span class="n">lim_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">filtered_plants</span> <span class="o">=</span> <span class="n">plants_with_lim_resist</span><span class="p">[</span><span class="n">plants_with_lim_resist</span><span class="p">[</span><span class="s2">&quot;limitation_factor_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">lim_list</span><span class="p">)]</span>
+    <span class="n">limitations_comp</span> <span class="o">=</span> <span class="n">filtered_plants</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;name_ru&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">limitations_comp</span> <span class="o">=</span> <span class="n">limitations_comp</span><span class="p">[</span>
+        <span class="n">limitations_comp</span><span class="p">[</span><span class="s2">&quot;limitation_factor_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">limitations_comp</span><span class="p">[</span><span class="s2">&quot;limitation_factor_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="p">]</span>
+    <span class="n">limitations_comp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">limitations_comp</span><span class="p">[</span><span class="s2">&quot;name_ru&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;number of limitation factors: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lim_list</span><span class="p">))</span>
+
+    <span class="c1"># filtering species by environmental factors</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lig_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">df_comp</span> <span class="o">=</span> <span class="n">plants</span><span class="p">[</span><span class="n">plants</span><span class="p">[</span><span class="s2">&quot;name_ru&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">light_comp</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;no light conditions provided&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lim_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">df_comp</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="n">df_comp</span><span class="p">[</span><span class="s2">&quot;name_ru&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">limitations_comp</span><span class="p">)]</span>
+
+    <span class="n">compatability_graph</span> <span class="o">=</span> <span class="n">get_compatability_graph</span><span class="p">(</span><span class="n">plants</span><span class="p">,</span> <span class="n">cohabitation_attributes</span><span class="p">)</span>
+    <span class="n">comp_graph</span> <span class="o">=</span> <span class="n">compatability_graph</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">comp_graph</span> <span class="o">=</span> <span class="n">comp_graph</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">df_comp</span><span class="p">[</span><span class="s2">&quot;name_ru&quot;</span><span class="p">])</span>
+    <span class="n">communities_list</span> <span class="o">=</span> <span class="n">greedy_modularity_communities</span><span class="p">(</span><span class="n">comp_graph</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Number of communities: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">communities_list</span><span class="p">))</span>
+
+    <span class="n">compositions</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">com</span><span class="p">)</span> <span class="k">for</span> <span class="n">com</span> <span class="ow">in</span> <span class="n">communities_list</span><span class="p">]</span>
+    <span class="n">graph_variants</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">composition</span> <span class="ow">in</span> <span class="n">compositions</span><span class="p">:</span>
+        <span class="n">recommended_graph</span> <span class="o">=</span> <span class="n">compatability_graph</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">composition</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="n">composition</span><span class="p">:</span>
+            <span class="n">recommended_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node_id</span><span class="p">][</span><span class="s2">&quot;is_added&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">graph_variants</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">recommended_graph</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">graph_variants</span></div>
+
+
+<div class="viewcode-block" id="write_recommended_composition_gexf"><a class="viewcode-back" href="../../components/derevo.html#derevo.composition.write_recommended_composition_gexf">[docs]</a><span class="k">def</span> <span class="nf">write_recommended_composition_gexf</span><span class="p">(</span>
+    <span class="n">plants</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">plants_with_limitations_resistance</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">plants_suitable_for_light</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">limitations</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">light</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">cohabitation_attributes</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">greenery_polygon</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span>
+    <span class="n">output_path_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;recommended&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Write list of graphs with variants of recommended composition with account for outer factors</span>
+<span class="sd">    to files with given prefix or names / file-like objects given in iterator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">graph_variants</span> <span class="o">=</span> <span class="n">get_recommended_composition</span><span class="p">(</span>
+        <span class="n">plants</span><span class="p">,</span>
+        <span class="n">plants_with_limitations_resistance</span><span class="p">,</span>
+        <span class="n">plants_suitable_for_light</span><span class="p">,</span>
+        <span class="n">limitations</span><span class="p">,</span>
+        <span class="n">light</span><span class="p">,</span>
+        <span class="n">cohabitation_attributes</span><span class="p">,</span>
+        <span class="n">greenery_polygon</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">graph_variants</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;recommended composition graph is not exported&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_path_prefix</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">graph</span> <span class="ow">in</span> <span class="n">graph_variants</span><span class="p">:</span>
+            <span class="n">nx</span><span class="o">.</span><span class="n">write_gexf</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_path_prefix</span><span class="si">}</span><span class="s2">_v_</span><span class="si">{</span><span class="n">graph_variants</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span><span class="si">}</span><span class="s2">.gexf&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">graph</span><span class="p">,</span> <span class="n">output</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">graph_variants</span><span class="p">,</span> <span class="n">output_path_prefix</span><span class="p">):</span>
+            <span class="n">nx</span><span class="o">.</span><span class="n">write_gexf</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_composition_unknown"><a class="viewcode-back" href="../../components/derevo.html#derevo.composition.get_composition_unknown">[docs]</a><span class="k">def</span> <span class="nf">get_composition_unknown</span><span class="p">(</span>
+    <span class="n">plants</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">cohabitation_attributes</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return list of graphs with variants of recommended composition for a place with unknown outer factors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">compatability_graph</span> <span class="o">=</span> <span class="n">get_compatability_graph</span><span class="p">(</span><span class="n">plants</span><span class="p">,</span> <span class="n">cohabitation_attributes</span><span class="p">)</span>
+    <span class="n">communities_list</span> <span class="o">=</span> <span class="n">greedy_modularity_communities</span><span class="p">(</span><span class="n">compatability_graph</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Number of communities: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">communities_list</span><span class="p">))</span>
+    <span class="n">compositions</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">com</span><span class="p">)</span> <span class="k">for</span> <span class="n">com</span> <span class="ow">in</span> <span class="n">communities_list</span><span class="p">]</span>
+    <span class="n">graph_variants</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">composition</span> <span class="ow">in</span> <span class="n">compositions</span><span class="p">:</span>
+        <span class="n">recommended_graph</span> <span class="o">=</span> <span class="n">compatability_graph</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">composition</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="n">composition</span><span class="p">:</span>
+            <span class="n">recommended_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node_id</span><span class="p">][</span><span class="s2">&quot;is_added&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">recommended_graph</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s2">&quot;is_added&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">graph_variants</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">recommended_graph</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">graph_variants</span></div>
+
+
+<div class="viewcode-block" id="write_composition_unknown_gfsx"><a class="viewcode-back" href="../../components/derevo.html#derevo.composition.write_composition_unknown_gfsx">[docs]</a><span class="k">def</span> <span class="nf">write_composition_unknown_gfsx</span><span class="p">(</span>
+    <span class="n">plants</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">cohabitation_attributes</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">output_path_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;new_graph&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Write graphs with variants of recommended composition for a place with unknown outer factors</span>
+<span class="sd">    to files with given prefix or names / file-like objects given in iterator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">graph_variants</span> <span class="o">=</span> <span class="n">get_composition_unknown</span><span class="p">(</span><span class="n">plants</span><span class="p">,</span> <span class="n">cohabitation_attributes</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_path_prefix</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">graph</span> <span class="ow">in</span> <span class="n">graph_variants</span><span class="p">:</span>
+            <span class="n">nx</span><span class="o">.</span><span class="n">write_gexf</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_path_prefix</span><span class="si">}</span><span class="s2">_v_</span><span class="si">{</span><span class="n">graph_variants</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span><span class="si">}</span><span class="s2">.gexf&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">graph</span><span class="p">,</span> <span class="n">output</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">graph_variants</span><span class="p">,</span> <span class="n">output_path_prefix</span><span class="p">):</span>
+            <span class="n">nx</span><span class="o">.</span><span class="n">write_gexf</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, IDU (Alexander Antonov, Aleksei Sokol and others).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+</body>
+</html>
