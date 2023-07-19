@@ -4,6 +4,7 @@ SQL naming convention for Alembic is defined here.
 from sqlalchemy import MetaData
 from sqlalchemy.orm import declarative_base
 
+
 convention = {
     "all_column_names": lambda constraint, _: "_".join([str(column.name) for column in constraint.columns.values()]),
     "ix": "ix_%(table_name)s_%(all_column_names)s",

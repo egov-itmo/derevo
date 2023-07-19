@@ -4,6 +4,7 @@ Top exceptions for a plants backend service are defined here.
 """
 
 from fastapi import status
+
 from plants_api.exceptions import PlantsApiError
 
 

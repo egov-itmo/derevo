@@ -7,6 +7,7 @@ from sqlalchemy import Column, Integer, Sequence, String, Table
 
 from plants_api.db import metadata
 
+
 soil_acidity_types_id_seq = Sequence("soil_acidity_types_id_seq")
 
 soil_acidity_types = Table(

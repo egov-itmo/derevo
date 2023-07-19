@@ -29,6 +29,7 @@ from plants_api.dto.plants import PlantDto
 
 from .derevo_enums import EnumAdapters
 
+
 _cohabitation_type_to_tolerance_types = {
     CohabitationType.negative: c_enum.ToleranceType.NEGATIVE,
     CohabitationType.neutral: c_enum.ToleranceType.NEUTRAL,

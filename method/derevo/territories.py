@@ -1,8 +1,10 @@
 """
 Territory-related methods are defined here.
 """
-from shapely.geometry.base import BaseGeometry
+from __future__ import annotations
+
 import geopandas as gpd
+from shapely.geometry.base import BaseGeometry
 
 from derevo.models import GlobalTerritory, Territory
 

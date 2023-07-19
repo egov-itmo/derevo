@@ -1,11 +1,10 @@
-# pylint: disable=no-name-in-module, too-few-public-methods
 """
 Plants responses are defined here.
 """
 
 from pydantic import BaseModel
-from plants_api.dto import PlantDto
 
+from plants_api.dto import PlantDto
 from plants_api.schemas.plants import PlantsResponse
 
 

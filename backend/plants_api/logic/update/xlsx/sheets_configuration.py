@@ -20,7 +20,6 @@ class SheetsConfiguration:
     - `additional_columns` is a set of columns which are used after parsing, but are not listing ones.
     """
 
-    park_sheets: list[str]
     plants_naming_exceptions: dict[str, str]
     names_shortings_mapping: dict[str, str]
     plants_columns_mapping: dict[
@@ -38,12 +37,6 @@ class SheetsConfiguration:
 
 
 sheets_configuration = SheetsConfiguration(
-    park_sheets=[
-        "Колпинский р.",
-        "Калининский р.",
-        "Выборгский р.",
-        "Центральный р.",
-    ],
     plants_naming_exceptions={
         "Клен сахаристый": "Клён сахарный",
         "Шиповник колючейший Шиповник": "Шиповник колючейший",
@@ -100,7 +93,7 @@ sheets_configuration = SheetsConfiguration(
         | {name: "light_types" for name in ("Полное освещение", "Полутень", "Тень")}
         | {name: "humidity_types" for name in ("Мало воды", "Средняя", "Много воды")}
     ),
-    additional_columns={"Тип растения", *(f"USDA{i}" for i in range(1, 12))},
+    additional_columns={f"USDA{i}" for i in range(1, 12)},
 )
 """
 Default sheets configuration.

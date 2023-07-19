@@ -4,11 +4,11 @@ FastApi dependencies are defined here.
 from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncConnection
+
 from plants_api.db.connection import get_connection
-from plants_api.logic.users import get_user_info, validate_user_token
 from plants_api.dto.users import User as UserDTO
 from plants_api.exceptions.logic.users import AccessTokenExpiredError
-
+from plants_api.logic.users import get_user_info, validate_user_token
 from plants_api.utils.tokens import Token
 
 

@@ -1,6 +1,8 @@
 """
 Plant model class is defined here.
 """
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 
 from .enumerations import (

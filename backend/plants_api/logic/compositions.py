@@ -28,6 +28,7 @@ from plants_api.dto import PlantDto
 from plants_api.logic.plants import get_plants_by_name_ru
 from plants_api.utils.adapters.derevo_enums import EnumAdapters
 
+
 _cached_global_territory: GlobalTerritory | None = None
 
 

@@ -16,6 +16,7 @@ from plants_api.schemas.geometry import GeometryPostRequest
 
 from .routers import limitations_router
 
+
 _geod = Geod(ellps="WGS84")
 _AREA_MAX = 6_000_000
 

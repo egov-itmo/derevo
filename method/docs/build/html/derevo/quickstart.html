@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quickstart &mdash; derevo 0.1.0 documentation</title>
+  <title>Quickstart &mdash; derevo 0.1.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -86,14 +86,13 @@
 <section id="how-to-use-the-derevo-library">
 <h2>How to use the <strong>derevo</strong> library<a class="headerlink" href="#how-to-use-the-derevo-library" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Step 1</strong>. Import needed modules.</p></li>
+<li><p><strong>Step 1</strong>. Import needed modules (example package can be found in the project repository).</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">derevo</span> <span class="kn">import</span> <span class="n">Plant</span><span class="p">,</span> <span class="n">Territory</span>
 <span class="kn">from</span> <span class="nn">derevo</span> <span class="kn">import</span> <span class="n">enumerations</span> <span class="k">as</span> <span class="n">c_enum</span>
 <span class="kn">from</span> <span class="nn">derevo</span> <span class="kn">import</span> <span class="n">get_compositions</span>
-<span class="kn">from</span> <span class="nn">derevo.optimal_resolution</span> <span class="kn">import</span> <span class="n">get_best_resolution</span>
 
-<span class="kn">from</span> <span class="nn">.data_collection</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">example.data_collection</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">collect_cohabitations</span><span class="p">,</span>
     <span class="n">collect_light_polygons</span><span class="p">,</span>
     <span class="n">collect_limitation_polygons</span><span class="p">,</span>
@@ -103,6 +102,7 @@
     <span class="n">collect_plants_with_limitation_resistance</span><span class="p">,</span>
     <span class="n">collect_species_in_parks</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">derevo.models.cohabitation</span> <span class="kn">import</span> <span class="n">CohabitationType</span><span class="p">,</span> <span class="n">GeneraCohabitation</span>
 </pre></div>
 </div>
 <ul class="simple">

@@ -1,10 +1,9 @@
-# pylint: disable=too-few-public-methods,no-name-in-module
 """
 Limitation factors insertion request is defined here.
 """
 from pydantic import BaseModel
 
-from plants_api.dto.update.limitation_factors import LimitationFactorGeometryDto
+from plants_api.dto.update import LimitationFactorGeometryDto
 from plants_api.schemas.geojson import Geometry
 
 

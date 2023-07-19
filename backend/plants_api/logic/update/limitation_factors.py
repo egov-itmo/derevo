@@ -5,7 +5,7 @@ from sqlalchemy import bindparam, delete, exists, func, insert, select, text
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from plants_api.db.entities import limitation_factor_parts, limitation_factors
-from plants_api.dto.update.limitation_factors import LimitationFactorGeometryDto
+from plants_api.dto.update import LimitationFactorGeometryDto
 from plants_api.exceptions.logic.db import UnsatisfiedIdDependencyError
 
 

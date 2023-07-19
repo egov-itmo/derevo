@@ -2,13 +2,15 @@
 """
 Get optimal resolution method is defined here.
 """
+from __future__ import annotations
+
 import itertools as it
 
-from matplotlib.axes import Axes
 import networkx as nx
 import numpy as np
 import pandas as pd
 from loguru import logger
+from matplotlib.axes import Axes
 from networkx.algorithms.community import greedy_modularity_communities
 
 from derevo.compatability import get_compatability_graph

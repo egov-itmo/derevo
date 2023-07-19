@@ -72,8 +72,10 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Territory-related methods are defined here.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">shapely.geometry.base</span> <span class="kn">import</span> <span class="n">BaseGeometry</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry.base</span> <span class="kn">import</span> <span class="n">BaseGeometry</span>
 
 <span class="kn">from</span> <span class="nn">derevo.models</span> <span class="kn">import</span> <span class="n">GlobalTerritory</span><span class="p">,</span> <span class="n">Territory</span>
 

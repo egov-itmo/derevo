@@ -2,8 +2,8 @@
 Plants endpoints logic of getting entities from the database is defined here.
 """
 
-from derevo import CohabitationType as CmCohabitationType, Plant
-from derevo import GeneraCohabitation
+from derevo import CohabitationType as CmCohabitationType
+from derevo import GeneraCohabitation, Plant
 from loguru import logger
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncConnection
@@ -14,6 +14,7 @@ from plants_api.dto import PlantDto
 from plants_api.utils import get_photo_url
 from plants_api.utils.adapters.plants import plant_dto_to_derevo_plant
 from plants_api.utils.photos import get_thumbnail_url
+
 
 _select_plants = (
     select(
