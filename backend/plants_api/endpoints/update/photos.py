@@ -24,7 +24,7 @@ from .router import update_router
     response_model=OkResponse,
     status_code=status.HTTP_200_OK,
 )
-async def get_plant_photo(
+async def set_plant_photo(
     plant_id: int,
     _user: User = Depends(user_dependency),
     photo_data: UploadFile = File(...),

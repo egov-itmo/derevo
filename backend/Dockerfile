@@ -5,10 +5,6 @@ RUN apt update && \
     pip install psycopg2 && \
     apt purge -y python3-dev build-essential --autoremove
 
-COPY --from=local/derevo:latest /derevo*.whl /
-
-RUN python3 -m pip install --no-cache-dir /derevo*.whl && rm /derevo*.whl
-
 COPY requirements.txt /
 
 RUN python3 -m pip install --no-cache-dir -r requirements.txt
