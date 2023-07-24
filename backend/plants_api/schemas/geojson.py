@@ -1,4 +1,3 @@
-# pylint: disable=missing-module-docstring, no-name-in-module, too-few-public-methods, duplicate-code
 """
 Geojson response model and its inner parts are defined here.
 """
@@ -9,8 +8,15 @@ import pandas as pd
 import shapely.geometry as geom
 from loguru import logger
 from pydantic import BaseModel, Field
-from pydantic.generics import GenericModel
+
+
+try:
+    from pydantic.generics import GenericModel  # pydantic 1.X
+except ImportError:
+    from pydantic import BaseModel as GenericModel  # pylint: disable=reimported
+
 from sqlalchemy.engine.row import Row
+
 
 FeaturePropertiesType = TypeVar("FeaturePropertiesType")  # pylint: disable=invalid-name
 
@@ -59,7 +65,7 @@ class Geometry(BaseModel):
             case "Point":
                 return geom.Point(self.coordinates)
             case "Polygon":
-                return geom.Polygon(self.coordinates[0])
+                return geom.Polygon(self.coordinates[0])  # pylint: disable=unsubscriptable-object
             case "MultiPolygon":
                 return geom.MultiPolygon(self.coordinates)
             case "LineString":

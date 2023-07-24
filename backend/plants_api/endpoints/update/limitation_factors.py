@@ -2,6 +2,7 @@
 update endpoint is defined here.
 """
 from typing import Any
+
 from fastapi import Depends
 from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncConnection
@@ -15,7 +16,7 @@ from plants_api.schemas.basic_requests import IdsRequest
 from plants_api.schemas.basic_responses import IdsResponse, OkResponse
 from plants_api.schemas.features.basic import IdOnly
 from plants_api.schemas.geojson import GeoJSONResponse
-from plants_api.schemas.update.limitation_factors import LimitationFactorsGeometryInsertionRequest
+from plants_api.schemas.update import LimitationFactorsGeometryInsertionRequest
 from plants_api.utils.dependencies import user_dependency
 
 from .router import update_router

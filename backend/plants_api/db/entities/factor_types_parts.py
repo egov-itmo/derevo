@@ -8,6 +8,7 @@ from sqlalchemy import Column, ForeignKey, Integer, Sequence, Table
 
 from plants_api.db import metadata
 
+
 humidity_type_parts_id_seq = Sequence("humidity_type_parts_id_seq")
 
 humidity_type_parts = Table(

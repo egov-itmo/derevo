@@ -6,6 +6,7 @@ from sqlalchemy import Column, Integer, Sequence, Table
 
 from plants_api.db import metadata
 
+
 climate_zones_id_seq = Sequence("climate_zones_id_seq")
 
 climate_zones = Table(

@@ -1,6 +1,8 @@
 """
 Get adjency graph method is defined here.
 """
+from __future__ import annotations
+
 from typing import BinaryIO
 
 import networkx as nx

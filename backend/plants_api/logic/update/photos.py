@@ -4,13 +4,13 @@ Plants photos update logic is defined here
 
 from pathlib import Path
 
-from PIL import Image
 from loguru import logger
+from PIL import Image
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from plants_api.db.entities import plants
 from plants_api.config.app_settings_global import app_settings
+from plants_api.db.entities import plants
 from plants_api.exceptions.logic.common import DependencyNotFoundById
 from plants_api.utils.photos import get_thumbnail
 

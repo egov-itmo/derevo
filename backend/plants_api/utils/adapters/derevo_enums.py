@@ -6,13 +6,7 @@ from derevo import enumerations as c_enum
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from plants_api.db.entities import (
-    humidity_types,
-    light_types,
-    soil_acidity_types,
-    soil_fertility_types,
-    soil_types,
-)
+from plants_api.db.entities import humidity_types, light_types, soil_acidity_types, soil_fertility_types, soil_types
 
 
 class EnumAdapters:  # pylint: disable=too-few-public-methods

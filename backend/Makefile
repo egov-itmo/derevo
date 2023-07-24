@@ -1,12 +1,15 @@
-VERSION = 0.6.0
+VERSION = 0.6.1
+CODE_DIR := plants_api
 
 DOCKER_USER_WITH_SLASH =
 
-lint:
-	python -m pylint plants_api
-
 format:
-	python -m black plants_api
+	isort $(CODE_DIR)
+	black $(CODE_DIR)
+
+lint:
+	pylint $(CODE_DIR)
+
 
 run:
 	python -m plants_api

@@ -1,7 +1,10 @@
 """
 Get combined graph method is defined here.
 """
+from __future__ import annotations
+
 from io import BytesIO
+
 import networkx as nx
 import pandas as pd
 

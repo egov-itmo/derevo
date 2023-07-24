@@ -9,6 +9,7 @@ from sqlalchemy import Boolean, Column, Enum, ForeignKey, Table
 from plants_api.db import metadata
 from plants_api.db.entities.enums import CohabitationType
 
+
 CohabitationTypeEnum = Enum(CohabitationType, name="cohabitation_type")
 
 plants_climate_zones = Table(

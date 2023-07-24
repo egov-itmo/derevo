@@ -5,8 +5,9 @@ It is needed to import files which use this routers to initialize endpoints.
 """
 from fastapi import APIRouter
 
-from .uesrs import user_data_router
 from .update import update_router
+from .users import user_data_router
+
 
 limitations_router = APIRouter(tags=["limitations"], prefix="/limitations")
 

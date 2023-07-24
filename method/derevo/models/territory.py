@@ -1,6 +1,8 @@
 """
 Territory model class is defined here.
 """
+from __future__ import annotations
+
 from dataclasses import dataclass, fields
 
 from derevo.models.enumerations import (

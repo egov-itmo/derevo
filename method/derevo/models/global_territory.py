@@ -1,6 +1,8 @@
 """
 Global territory model class is defined here.
 """
+from __future__ import annotations
+
 from dataclasses import dataclass, fields
 from enum import Enum
 from typing import Iterable, Type

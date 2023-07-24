@@ -1,6 +1,8 @@
 """
 Polygons preparation logic is defined here.
 """
+from __future__ import annotations
+
 import itertools as it
 
 import geopandas as gpd

@@ -6,6 +6,7 @@ from sqlalchemy import CHAR, TIMESTAMP, Boolean, Column, Integer, Sequence, Stri
 
 from plants_api.db import metadata
 
+
 users_id_seq = Sequence("users_id_seq", schema="users")
 
 users = Table(

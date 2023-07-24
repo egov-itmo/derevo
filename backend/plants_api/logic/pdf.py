@@ -15,6 +15,7 @@ from PIL import Image as PilImage
 from plants_api.config.app_settings_global import app_settings
 from plants_api.dto import PlantDto
 
+
 _FONT = "Helvetica"
 for possible_font_path in [
     "/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf",

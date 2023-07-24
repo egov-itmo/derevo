@@ -1,9 +1,11 @@
 """
 Registration request is defined here.
 """
-from re import compile as re_compile, match
+from re import compile as re_compile
+from re import match
 
 from pydantic import BaseModel, validator  # pylint: disable=no-name-in-module
+
 
 _email_re = re_compile(r"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")
 _password_re = re_compile(r"^[\w!@#\$%\^&\*\(\)]+$")

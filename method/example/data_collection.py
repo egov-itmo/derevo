@@ -1,6 +1,8 @@
 """
 Data from database and OpenStreetMap collection logic is defined here.
 """
+from __future__ import annotations
+
 from typing import TextIO
 
 import geopandas as gpd

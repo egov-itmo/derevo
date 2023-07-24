@@ -6,16 +6,15 @@ derevo Framework quick start guide
 How to use the **derevo** library
 ----------------------------------------------------
 
--  **Step 1**. Import needed modules.
+-  **Step 1**. Import needed modules (example package can be found in the project repository).
 
 .. code:: python
 
     from derevo import Plant, Territory
     from derevo import enumerations as c_enum
     from derevo import get_compositions
-    from derevo.optimal_resolution import get_best_resolution
 
-    from .data_collection import (
+    from example.data_collection import (
         collect_cohabitations,
         collect_light_polygons,
         collect_limitation_polygons,
@@ -25,6 +24,7 @@ How to use the **derevo** library
         collect_plants_with_limitation_resistance,
         collect_species_in_parks,
     )
+    from derevo.models.cohabitation import CohabitationType, GeneraCohabitation
 
 -  **Step 2**. Format collected plants information into the list of `Plant` classes.
 
