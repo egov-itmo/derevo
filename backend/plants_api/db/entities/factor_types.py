@@ -15,6 +15,7 @@ soil_acidity_types = Table(
     metadata,
     Column("id", Integer, primary_key=True, server_default=soil_acidity_types_id_seq.next_value()),
     Column("name", String, nullable=False, unique=True),
+    Column("description", String, nullable=False),
 )
 """
 Soil acidity types options.
@@ -22,6 +23,7 @@ Soil acidity types options.
 Columns:
 - `id` - soil acidity type identifier, int serial
 - `name` - name of the soil acidity type, varchar
+- `description` - details of the soil acidity type, varchar
 """
 
 
@@ -32,6 +34,7 @@ soil_fertility_types = Table(
     metadata,
     Column("id", Integer, primary_key=True, server_default=soil_fertility_types_id_seq.next_value()),
     Column("name", String, nullable=False, unique=True),
+    Column("description", String, nullable=False),
 )
 """
 Soil fertility types options.
@@ -39,6 +42,7 @@ Soil fertility types options.
 Columns:
 - `id` - soil fertility type identifier, int serial
 - `name` - name of the soil fertility type, varchar
+- `description` - details of the soil fertility type, varchar
 """
 
 
@@ -49,6 +53,7 @@ soil_types = Table(
     metadata,
     Column("id", Integer, primary_key=True, server_default=soil_types_id_seq.next_value()),
     Column("name", String, nullable=False, unique=True),
+    Column("description", String, nullable=False),
 )
 """
 Soil types options.
@@ -56,6 +61,7 @@ Soil types options.
 Columns:
 - `id` - soil type identifier, int serial
 - `name` - name of the soil type, varchar
+- `description` - details of the limitation soil type, varchar
 """
 
 
@@ -66,6 +72,7 @@ humidity_types = Table(
     metadata,
     Column("id", Integer, primary_key=True, server_default=humidity_types_id_seq.next_value()),
     Column("name", String, nullable=False, unique=True),
+    Column("description", String, nullable=False),
 )
 """
 Humidity types options.
@@ -73,6 +80,7 @@ Humidity types options.
 Columns:
 - `id` - humidity type identifier, int serial
 - `name` - name of the humidity type, varchar
+- `description` - details of the humidity type, varchar
 """
 
 
@@ -83,6 +91,7 @@ light_types = Table(
     metadata,
     Column("id", Integer, primary_key=True, server_default=light_types_id_seq.next_value()),
     Column("name", String, nullable=False, unique=True),
+    Column("description", String, nullable=False),
 )
 
 """
@@ -91,6 +100,7 @@ Light types options.
 Columns:
 - `id` - light type identifier, int serial
 - `name` - name of the light type, varchar
+- `description` - details of the light type, varchar
 """
 
 
@@ -101,7 +111,7 @@ limitation_factors = Table(
     metadata,
     Column("id", Integer, primary_key=True, server_default=limitation_factors_id_seq.next_value()),
     Column("name", String, nullable=False, unique=True),
-    Column("explanation", String, nullable=False),
+    Column("description", String, nullable=False),
 )
 """
 Limitation factors options.
@@ -109,5 +119,5 @@ Limitation factors options.
 Columns:
 - `id` - limitation factor identifier, int serial
 - `name` - name of the limitation factor, varchar
-- `explanation` - details of the limitation factor
+- `description` - details of the limitation factor, varchar
 """

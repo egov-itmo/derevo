@@ -16,9 +16,9 @@ class EnumAdapters:  # pylint: disable=too-few-public-methods
     """
 
     humidity = {
-        "Мало воды": c_enum.HumidityType.LOW,
-        "Средняя": c_enum.HumidityType.NORMAL,
-        "Много воды": c_enum.HumidityType.HIGH,
+        "Пересыхающая земля": c_enum.HumidityType.LOW,
+        "Нормальная влажность": c_enum.HumidityType.NORMAL,
+        "Влажная земля": c_enum.HumidityType.HIGH,
         "Влажность в воздухе": c_enum.HumidityType.HIGH,
     }
 
@@ -35,13 +35,13 @@ class EnumAdapters:  # pylint: disable=too-few-public-methods
     }
 
     acidity = {
-        "Сильнокислые (4)": c_enum.AcidityType.from_value(4),
-        "Кислые (5)": c_enum.AcidityType.from_value(5),
-        "Слабокислые (6)": c_enum.AcidityType.from_value(6),
-        "Нейтральные (7)": c_enum.AcidityType.from_value(7),
-        "Слабощелочные (8)": c_enum.AcidityType.from_value(8),
-        "Щелочные (9)": c_enum.AcidityType.from_value(9),
-        "Сильнощелочные (10)": c_enum.AcidityType.from_value(10),
+        "Сильнокислые": c_enum.AcidityType.from_value(4),
+        "Кислые": c_enum.AcidityType.from_value(5),
+        "Слабокислые": c_enum.AcidityType.from_value(6),
+        "Нейтральные": c_enum.AcidityType.from_value(7),
+        "Слабощелочные": c_enum.AcidityType.from_value(8),
+        "Щелочные": c_enum.AcidityType.from_value(9),
+        "Сильнощелочные": c_enum.AcidityType.from_value(10),
     }
 
     fertility = {

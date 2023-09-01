@@ -30,7 +30,27 @@ class _PlantsListPageState extends State<PlantsListPage> {
           future: futurePlants,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return PlantsTable(snapshot.data!.plants);
+              return Column(
+                children: [
+                  const SizedBox(
+                    width: 1200,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        "Таблица включает в себя список подобранных растений и"
+                        " содержит описание некоторых основных характеристик для"
+                        " каждого вида, которые являются вспомогательными для"
+                        " понимания расположения на местности и корректировки"
+                        "количества применения единиц растений.\n"
+                        'В столбце "Наличие" можно отметить виды растений, '
+                        " которые уже присутствуют в заданной области.",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  Expanded(child: PlantsTable(snapshot.data!.plants)),
+                ],
+              );
             } else if (snapshot.hasError) {
               return Text(
                 '${snapshot.error}',

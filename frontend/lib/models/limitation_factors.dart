@@ -22,8 +22,9 @@ Map<LimitationFactorType, String> limitationFactorEndpoints = {
 class LimitationFactor {
   final int id;
   final String name;
+  final String? description;
 
-  LimitationFactor({required this.id, required this.name});
+  LimitationFactor({required this.id, required this.name, this.description});
 
   factory LimitationFactor.fromJson(Map<String, dynamic> json) =>
       _$LimitationFactorFromJson(json);
