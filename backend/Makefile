@@ -1,4 +1,4 @@
-VERSION = 0.6.1
+VERSION = 0.7.0
 CODE_DIR := plants_api
 
 DOCKER_USER_WITH_SLASH =

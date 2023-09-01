@@ -10,12 +10,14 @@ LimitationFactor _$LimitationFactorFromJson(Map<String, dynamic> json) =>
     LimitationFactor(
       id: json['id'] as int,
       name: json['name'] as String,
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$LimitationFactorToJson(LimitationFactor instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'description': instance.description,
     };
 
 LimitationFactors _$LimitationFactorsFromJson(Map<String, dynamic> json) =>

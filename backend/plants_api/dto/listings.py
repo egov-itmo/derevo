@@ -13,3 +13,4 @@ class ListingDto:
 
     id: int  # pylint: disable=invalid-name
     name: str
+    description: str

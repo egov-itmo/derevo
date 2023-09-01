@@ -79,9 +79,27 @@ class _ResultsTableState extends State<ResultsTable> {
               color: Colors.green.shade200,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                child: PlantsTable(
-                  widget.compositions[currentCompositionIndex].plants,
-                  withSwitch: false,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      width: 1180,
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "Предлагаемый список видов растений является рекомендуемым для"
+                          " посадки на конкретной территории, являясь устойчивым к"
+                          " действующим условиям и ограничивающим факторам."
+                          " Стилистическое применения пользователь выбирает"
+                          " самостоятельно.",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ),
+                    PlantsTable(
+                      widget.compositions[currentCompositionIndex].plants,
+                      withSwitch: false,
+                    ),
+                  ],
                 ),
               ),
             ),

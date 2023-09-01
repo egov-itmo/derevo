@@ -6,7 +6,7 @@ from decimal import Decimal
 from math import ceil
 from pathlib import Path
 
-from borb.pdf import Document, FixedColumnWidthTable, Image, Page, Paragraph, SingleColumnLayout
+from borb.pdf import Document, FixedColumnWidthTable, Image, Page, Paragraph, MultiColumnLayout
 from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
 from derevo import Territory
 from loguru import logger
@@ -48,6 +48,17 @@ _PAGE_SIZE = (1600, 1900)
 _PLANTS_PER_PAGE = 10
 
 
+def _set_layout(page: Page) -> MultiColumnLayout:
+    return MultiColumnLayout(
+        page,
+        [Decimal(_PAGE_SIZE[0] - 24)],
+        margin_bottom=Decimal(12),
+        margin_left=Decimal(12),
+        margin_right=Decimal(12),
+        margin_top=Decimal(12),
+    )
+
+
 def compositions_to_pdf(  # pylint: disable=too-many-locals,too-many-branches
     compositions: list[list[PlantDto]], territory: Territory
 ) -> Document:
@@ -57,16 +68,28 @@ def compositions_to_pdf(  # pylint: disable=too-many-locals,too-many-branches
     pdf = Document()
     page = Page(*_PAGE_SIZE)
     pdf.add_page(page)
-    layout = SingleColumnLayout(page, Decimal(12.0), Decimal(12.0))
-    layout.add(Paragraph(f"Next plants composition variants are possible for the given territory ({territory}):"))
+    layout = _set_layout(page)
+    layout.add(
+        Paragraph(
+            f"Следующие композиции растений доступны к применению на заданной территории ({territory}):", font=_FONT
+        )
+    )
+    layout.add(
+        Paragraph(
+            "Таблица включает в себя список подобранных растений и содержит описание некоторых основных характеристик"
+            " для каждого вида, которые являются вспомогательными для понимания расположения на местности и"
+            " корректировки количества применения единиц растений.",
+            font=_FONT,
+        )
+    )
     finished_first_composition = False
     for i, composition in enumerate(compositions, 1):
         if finished_first_composition:
             page = Page(*_PAGE_SIZE)
             pdf.add_page(page)
-            layout = SingleColumnLayout(page, Decimal(12.0), Decimal(12.0))
+            layout = _set_layout(page)
         finished_first_composition = True
-        layout.add(Paragraph(f"Option #{i} ({len(composition)} plants)"))
+        layout.add(Paragraph(f"Вариант #{i} ({len(composition)} видов)", font=_FONT))
         table = FixedColumnWidthTable(
             1 + min(len(composition), _PLANTS_PER_PAGE),
             10,
@@ -83,7 +106,7 @@ def compositions_to_pdf(  # pylint: disable=too-many-locals,too-many-branches
                     else:
                         page = Page(*_PAGE_SIZE)
                         pdf.add_page(page)
-                    layout = SingleColumnLayout(page, Decimal(12.0), Decimal(12.0))
+                    layout = _set_layout(page)
                     table = FixedColumnWidthTable(
                         1 + min(len(composition) - j, _PLANTS_PER_PAGE),
                         10,
@@ -92,9 +115,9 @@ def compositions_to_pdf(  # pylint: disable=too-many-locals,too-many-branches
                 finished_first_plants_page = True
                 layout.add(
                     Paragraph(
-                        f"Option #{i} - page {j // _PLANTS_PER_PAGE + 1} of"
+                        f"Вариант #{i} - страница {j // _PLANTS_PER_PAGE + 1} из"
                         f" {ceil(len(composition) / _PLANTS_PER_PAGE)}:"
-                        f" plants {j + 1}..{min(len(composition), j + _PLANTS_PER_PAGE)}",
+                        f" виды {j + 1}..{min(len(composition), j + _PLANTS_PER_PAGE)}",
                         font=_FONT,
                     )
                 )
