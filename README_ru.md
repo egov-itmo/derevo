@@ -27,6 +27,11 @@
 Развернутый демо-фронтенд расположен по адресу https://derevo.idu.actcognitive.org, а REST API - на
     постфиксе [/api](https://derevo.idu.actcognitive.org/api/docs).
 
+Бэкенд также интегрирован в Платформу Цифровой Урбанистики от Лаборатории Анализа Городских Данных университета ИТМО.
+    Фронтенд располагается по адресу https://dc.idu.actcognitive.org/applied-services/greenery.
+
+Документация основного метода расположена на https://derevo.readthedocs.io/en/dev/.
+
 ## Общая схема работы
 
 ![Общая схема работы](https://news.egov.itmo.ru/photo/algoritm_nahozhdeniya_kompozicij_rastenij-1.png)
