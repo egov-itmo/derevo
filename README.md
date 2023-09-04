@@ -26,6 +26,9 @@ In this project we propose the plants composition algorithm which can generate n
 
 We also provide methods of knowledge database creation and spatial environmental data collection.
 
+The deployed demo frontend instance can be found at https://derevo.idu.actcognitive.org with REST
+    API at [/api](https://derevo.idu.actcognitive.org/api/docs) postfix.
+
 ## General scheme of work
 
 ![General scheme of work](https://news.egov.itmo.ru/photo/algoritm_nahozhdeniya_kompozicij_rastenij-1.png)
