@@ -29,6 +29,11 @@ We also provide methods of knowledge database creation and spatial environmental
 The deployed demo frontend instance can be found at https://derevo.idu.actcognitive.org with REST
     API at [/api](https://derevo.idu.actcognitive.org/api/docs) postfix.
 
+The backend is also integrated in Platform of Digital Urbanistic by Laboratory of City Data Analysis of ITMO University. Its frontend page located at
+    the https://dc.idu.actcognitive.org/applied-services/greenery.
+
+Method documentation is located at https://derevo.readthedocs.io/en/dev/
+
 ## General scheme of work
 
 ![General scheme of work](https://news.egov.itmo.ru/photo/algoritm_nahozhdeniya_kompozicij_rastenij-1.png)
