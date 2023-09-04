@@ -6,6 +6,7 @@ from sqlalchemy import Column, ForeignKey, Integer, Sequence, String, Table, Uni
 
 from plants_api.db import metadata
 
+
 districts_id_seq = Sequence("districts_id_seq")
 
 districts = Table(

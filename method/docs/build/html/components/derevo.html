@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>derevo package &mdash; derevo 0.1.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="derevo.models package" href="derevo.models.html" />
+    <link rel="prev" title="Components" href="index.html" />
+</head>
+
+<body class="wy-body-for-nav">
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+          <a href="../index.html" class="icon icon-home">
+            derevo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../derevo/index.html">derevo</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Components</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">derevo package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html">derevo.models package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-derevo.adjacency">derevo.adjacency module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.adjacency.get_adjacency_graph"><code class="docutils literal notranslate"><span class="pre">get_adjacency_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.adjacency.write_adjacency_graph_gexf"><code class="docutils literal notranslate"><span class="pre">write_adjacency_graph_gexf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-derevo.combined">derevo.combined module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.combined.get_combined_graph"><code class="docutils literal notranslate"><span class="pre">get_combined_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.combined.write_combined_graph_gexf"><code class="docutils literal notranslate"><span class="pre">write_combined_graph_gexf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-derevo.compatability">derevo.compatability module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.compatability.get_compatability_graph"><code class="docutils literal notranslate"><span class="pre">get_compatability_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.compatability.write_compatability_graph_gexf"><code class="docutils literal notranslate"><span class="pre">write_compatability_graph_gexf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.compatability.get_compatability_for_species"><code class="docutils literal notranslate"><span class="pre">get_compatability_for_species()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.compatability.write_compatability_for_species_gexf"><code class="docutils literal notranslate"><span class="pre">write_compatability_for_species_gexf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-derevo.composition">derevo.composition module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.composition.get_compositions"><code class="docutils literal notranslate"><span class="pre">get_compositions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.composition._intersection_check"><code class="docutils literal notranslate"><span class="pre">_intersection_check()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.composition.get_updated_composition"><code class="docutils literal notranslate"><span class="pre">get_updated_composition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.composition.write_updated_composition_gexf"><code class="docutils literal notranslate"><span class="pre">write_updated_composition_gexf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.composition.get_recommended_composition"><code class="docutils literal notranslate"><span class="pre">get_recommended_composition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.composition.write_recommended_composition_gexf"><code class="docutils literal notranslate"><span class="pre">write_recommended_composition_gexf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.composition.get_composition_unknown"><code class="docutils literal notranslate"><span class="pre">get_composition_unknown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.composition.write_composition_unknown_gfsx"><code class="docutils literal notranslate"><span class="pre">write_composition_unknown_gfsx()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-derevo.optimal_resolution">derevo.optimal_resolution module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.optimal_resolution.get_best_resolution"><code class="docutils literal notranslate"><span class="pre">get_best_resolution()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-derevo.prepare_polygons">derevo.prepare_polygons module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.prepare_polygons.make_grid"><code class="docutils literal notranslate"><span class="pre">make_grid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.prepare_polygons.get_ids"><code class="docutils literal notranslate"><span class="pre">get_ids()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.prepare_polygons.green_lims"><code class="docutils literal notranslate"><span class="pre">green_lims()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-derevo.territories">derevo.territories module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.territories._geom_func"><code class="docutils literal notranslate"><span class="pre">_geom_func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#derevo.territories.get_territory"><code class="docutils literal notranslate"><span class="pre">get_territory()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-derevo">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">derevo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Components</a></li>
+      <li class="breadcrumb-item active">derevo package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/components/derevo.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <section id="derevo-package">
+<h1>derevo package<a class="headerlink" href="#derevo-package" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="derevo.models.html">derevo.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="derevo.models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="derevo.models.html#module-derevo.models.cohabitation">derevo.models.cohabitation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.cohabitation.CohabitationType"><code class="docutils literal notranslate"><span class="pre">CohabitationType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.cohabitation.CohabitationType.NEGATIVE"><code class="docutils literal notranslate"><span class="pre">CohabitationType.NEGATIVE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.cohabitation.CohabitationType.NEUTRAL"><code class="docutils literal notranslate"><span class="pre">CohabitationType.NEUTRAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.cohabitation.CohabitationType.POSITIVE"><code class="docutils literal notranslate"><span class="pre">CohabitationType.POSITIVE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.cohabitation.CohabitationType.to_value"><code class="docutils literal notranslate"><span class="pre">CohabitationType.to_value()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.cohabitation.GeneraCohabitation"><code class="docutils literal notranslate"><span class="pre">GeneraCohabitation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.cohabitation.GeneraCohabitation.genus_1"><code class="docutils literal notranslate"><span class="pre">GeneraCohabitation.genus_1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.cohabitation.GeneraCohabitation.genus_2"><code class="docutils literal notranslate"><span class="pre">GeneraCohabitation.genus_2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.cohabitation.GeneraCohabitation.cohabitation"><code class="docutils literal notranslate"><span class="pre">GeneraCohabitation.cohabitation</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="derevo.models.html#module-derevo.models.enumerations">derevo.models.enumerations module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.ToleranceType"><code class="docutils literal notranslate"><span class="pre">ToleranceType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.ToleranceType.NEGATIVE"><code class="docutils literal notranslate"><span class="pre">ToleranceType.NEGATIVE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.ToleranceType.NEUTRAL"><code class="docutils literal notranslate"><span class="pre">ToleranceType.NEUTRAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.ToleranceType.POSITIVE"><code class="docutils literal notranslate"><span class="pre">ToleranceType.POSITIVE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.ToleranceType.from_value"><code class="docutils literal notranslate"><span class="pre">ToleranceType.from_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.ToleranceType.to_value"><code class="docutils literal notranslate"><span class="pre">ToleranceType.to_value()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LightType"><code class="docutils literal notranslate"><span class="pre">LightType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LightType.DARK"><code class="docutils literal notranslate"><span class="pre">LightType.DARK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LightType.DARKENED"><code class="docutils literal notranslate"><span class="pre">LightType.DARKENED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LightType.LIGHT"><code class="docutils literal notranslate"><span class="pre">LightType.LIGHT</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AcidityType"><code class="docutils literal notranslate"><span class="pre">AcidityType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AcidityType.STRONGLY_ACIDIC"><code class="docutils literal notranslate"><span class="pre">AcidityType.STRONGLY_ACIDIC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AcidityType.ACIDIC"><code class="docutils literal notranslate"><span class="pre">AcidityType.ACIDIC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AcidityType.SLIGHTLY_ACIDIC"><code class="docutils literal notranslate"><span class="pre">AcidityType.SLIGHTLY_ACIDIC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AcidityType.NEUTRAL"><code class="docutils literal notranslate"><span class="pre">AcidityType.NEUTRAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AcidityType.SLIGHTLY_ALCALINE"><code class="docutils literal notranslate"><span class="pre">AcidityType.SLIGHTLY_ALCALINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AcidityType.ALCALINE"><code class="docutils literal notranslate"><span class="pre">AcidityType.ALCALINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AcidityType.STRONGLY_ALCALINE"><code class="docutils literal notranslate"><span class="pre">AcidityType.STRONGLY_ALCALINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AcidityType.from_value"><code class="docutils literal notranslate"><span class="pre">AcidityType.from_value()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.FertilityType"><code class="docutils literal notranslate"><span class="pre">FertilityType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.FertilityType.BARREN"><code class="docutils literal notranslate"><span class="pre">FertilityType.BARREN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.FertilityType.SLIGHTLY_FERTIL"><code class="docutils literal notranslate"><span class="pre">FertilityType.SLIGHTLY_FERTIL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.FertilityType.FERTIL"><code class="docutils literal notranslate"><span class="pre">FertilityType.FERTIL</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SoilType"><code class="docutils literal notranslate"><span class="pre">SoilType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SoilType.SANDY"><code class="docutils literal notranslate"><span class="pre">SoilType.SANDY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SoilType.SUBSANDY"><code class="docutils literal notranslate"><span class="pre">SoilType.SUBSANDY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SoilType.LOAMY"><code class="docutils literal notranslate"><span class="pre">SoilType.LOAMY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SoilType.CLAYEY"><code class="docutils literal notranslate"><span class="pre">SoilType.CLAYEY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SoilType.ROCKY"><code class="docutils literal notranslate"><span class="pre">SoilType.ROCKY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SoilType.GRAVELLY"><code class="docutils literal notranslate"><span class="pre">SoilType.GRAVELLY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SoilType.HEAVY"><code class="docutils literal notranslate"><span class="pre">SoilType.HEAVY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SoilType.DRAINED"><code class="docutils literal notranslate"><span class="pre">SoilType.DRAINED</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.HumidityType"><code class="docutils literal notranslate"><span class="pre">HumidityType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.HumidityType.LOW"><code class="docutils literal notranslate"><span class="pre">HumidityType.LOW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.HumidityType.NORMAL"><code class="docutils literal notranslate"><span class="pre">HumidityType.NORMAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.HumidityType.HIGH"><code class="docutils literal notranslate"><span class="pre">HumidityType.HIGH</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LimitationFactor"><code class="docutils literal notranslate"><span class="pre">LimitationFactor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LimitationFactor.OVERCONSOLIDATION"><code class="docutils literal notranslate"><span class="pre">LimitationFactor.OVERCONSOLIDATION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LimitationFactor.SALINIZATION"><code class="docutils literal notranslate"><span class="pre">LimitationFactor.SALINIZATION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LimitationFactor.DROUGHT"><code class="docutils literal notranslate"><span class="pre">LimitationFactor.DROUGHT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LimitationFactor.FLOODING"><code class="docutils literal notranslate"><span class="pre">LimitationFactor.FLOODING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LimitationFactor.GAS_POLLUTION"><code class="docutils literal notranslate"><span class="pre">LimitationFactor.GAS_POLLUTION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LimitationFactor.WINDINESS"><code class="docutils literal notranslate"><span class="pre">LimitationFactor.WINDINESS</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.UsdaZone"><code class="docutils literal notranslate"><span class="pre">UsdaZone</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.UsdaZone.USDA1"><code class="docutils literal notranslate"><span class="pre">UsdaZone.USDA1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.UsdaZone.USDA2"><code class="docutils literal notranslate"><span class="pre">UsdaZone.USDA2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.UsdaZone.USDA3"><code class="docutils literal notranslate"><span class="pre">UsdaZone.USDA3</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.UsdaZone.USDA4"><code class="docutils literal notranslate"><span class="pre">UsdaZone.USDA4</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.UsdaZone.USDA5"><code class="docutils literal notranslate"><span class="pre">UsdaZone.USDA5</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.UsdaZone.USDA6"><code class="docutils literal notranslate"><span class="pre">UsdaZone.USDA6</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.UsdaZone.USDA7"><code class="docutils literal notranslate"><span class="pre">UsdaZone.USDA7</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.UsdaZone.USDA8"><code class="docutils literal notranslate"><span class="pre">UsdaZone.USDA8</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.UsdaZone.USDA9"><code class="docutils literal notranslate"><span class="pre">UsdaZone.USDA9</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.UsdaZone.USDA10"><code class="docutils literal notranslate"><span class="pre">UsdaZone.USDA10</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.UsdaZone.USDA11"><code class="docutils literal notranslate"><span class="pre">UsdaZone.USDA11</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.UsdaZone.from_value"><code class="docutils literal notranslate"><span class="pre">UsdaZone.from_value()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AggressivenessLevel"><code class="docutils literal notranslate"><span class="pre">AggressivenessLevel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AggressivenessLevel.AGGRESSIVE"><code class="docutils literal notranslate"><span class="pre">AggressivenessLevel.AGGRESSIVE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AggressivenessLevel.NEUTRAL"><code class="docutils literal notranslate"><span class="pre">AggressivenessLevel.NEUTRAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AggressivenessLevel.SUPPRESSED"><code class="docutils literal notranslate"><span class="pre">AggressivenessLevel.SUPPRESSED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.AggressivenessLevel.from_value"><code class="docutils literal notranslate"><span class="pre">AggressivenessLevel.from_value()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SurvivabilityLevel"><code class="docutils literal notranslate"><span class="pre">SurvivabilityLevel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SurvivabilityLevel.STRONG"><code class="docutils literal notranslate"><span class="pre">SurvivabilityLevel.STRONG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SurvivabilityLevel.NORMAL"><code class="docutils literal notranslate"><span class="pre">SurvivabilityLevel.NORMAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SurvivabilityLevel.WEAK"><code class="docutils literal notranslate"><span class="pre">SurvivabilityLevel.WEAK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.SurvivabilityLevel.from_value"><code class="docutils literal notranslate"><span class="pre">SurvivabilityLevel.from_value()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LifeForm"><code class="docutils literal notranslate"><span class="pre">LifeForm</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LifeForm.TREE"><code class="docutils literal notranslate"><span class="pre">LifeForm.TREE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LifeForm.BUSH"><code class="docutils literal notranslate"><span class="pre">LifeForm.BUSH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LifeForm.GROUND_COVER"><code class="docutils literal notranslate"><span class="pre">LifeForm.GROUND_COVER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LifeForm.LIANA"><code class="docutils literal notranslate"><span class="pre">LifeForm.LIANA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LifeForm.PERENNIAL"><code class="docutils literal notranslate"><span class="pre">LifeForm.PERENNIAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LifeForm.BULBOUS"><code class="docutils literal notranslate"><span class="pre">LifeForm.BULBOUS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LifeForm.ANNUAL"><code class="docutils literal notranslate"><span class="pre">LifeForm.ANNUAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.enumerations.LifeForm.SWAMP_PLANT"><code class="docutils literal notranslate"><span class="pre">LifeForm.SWAMP_PLANT</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="derevo.models.html#module-derevo.models.global_territory">derevo.models.global_territory module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory._check_names"><code class="docutils literal notranslate"><span class="pre">_check_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory._names_to_enum"><code class="docutils literal notranslate"><span class="pre">_names_to_enum()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory._names_to_unique_enum"><code class="docutils literal notranslate"><span class="pre">_names_to_unique_enum()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory.GlobalTerritory"><code class="docutils literal notranslate"><span class="pre">GlobalTerritory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory.GlobalTerritory.usda_zone"><code class="docutils literal notranslate"><span class="pre">GlobalTerritory.usda_zone</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory.GlobalTerritory.limitation_factors"><code class="docutils literal notranslate"><span class="pre">GlobalTerritory.limitation_factors</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory.GlobalTerritory.light_types"><code class="docutils literal notranslate"><span class="pre">GlobalTerritory.light_types</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory.GlobalTerritory.humidity_types"><code class="docutils literal notranslate"><span class="pre">GlobalTerritory.humidity_types</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory.GlobalTerritory.soil_types"><code class="docutils literal notranslate"><span class="pre">GlobalTerritory.soil_types</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory.GlobalTerritory.soil_acidity_types"><code class="docutils literal notranslate"><span class="pre">GlobalTerritory.soil_acidity_types</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory.GlobalTerritory.soil_fertility_types"><code class="docutils literal notranslate"><span class="pre">GlobalTerritory.soil_fertility_types</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory.GlobalTerritory.__post_init__"><code class="docutils literal notranslate"><span class="pre">GlobalTerritory.__post_init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory.GlobalTerritory.as_territory"><code class="docutils literal notranslate"><span class="pre">GlobalTerritory.as_territory()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="derevo.models.html#module-derevo.models.plants">derevo.models.plants module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant"><code class="docutils literal notranslate"><span class="pre">Plant</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.name_ru"><code class="docutils literal notranslate"><span class="pre">Plant.name_ru</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.name_latin"><code class="docutils literal notranslate"><span class="pre">Plant.name_latin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.genus"><code class="docutils literal notranslate"><span class="pre">Plant.genus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.life_form"><code class="docutils literal notranslate"><span class="pre">Plant.life_form</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.limitation_factors_resistances"><code class="docutils literal notranslate"><span class="pre">Plant.limitation_factors_resistances</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.usda_zone_preferences"><code class="docutils literal notranslate"><span class="pre">Plant.usda_zone_preferences</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.light_preferences"><code class="docutils literal notranslate"><span class="pre">Plant.light_preferences</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.humidity_preferences"><code class="docutils literal notranslate"><span class="pre">Plant.humidity_preferences</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.soil_acidity_preferences"><code class="docutils literal notranslate"><span class="pre">Plant.soil_acidity_preferences</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.soil_fertility_preferences"><code class="docutils literal notranslate"><span class="pre">Plant.soil_fertility_preferences</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.soil_type_preferences"><code class="docutils literal notranslate"><span class="pre">Plant.soil_type_preferences</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.aggresiveness"><code class="docutils literal notranslate"><span class="pre">Plant.aggresiveness</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.survivability"><code class="docutils literal notranslate"><span class="pre">Plant.survivability</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant.is_invasive"><code class="docutils literal notranslate"><span class="pre">Plant.is_invasive</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Compatability"><code class="docutils literal notranslate"><span class="pre">Compatability</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Compatability.genus_name_1"><code class="docutils literal notranslate"><span class="pre">Compatability.genus_name_1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Compatability.genus_name_2"><code class="docutils literal notranslate"><span class="pre">Compatability.genus_name_2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.plants.Compatability.cohabitation_type"><code class="docutils literal notranslate"><span class="pre">Compatability.cohabitation_type</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="derevo.models.html#module-derevo.models.territory">derevo.models.territory module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="derevo.models.html#derevo.models.territory.Territory"><code class="docutils literal notranslate"><span class="pre">Territory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.territory.Territory.usda_zone"><code class="docutils literal notranslate"><span class="pre">Territory.usda_zone</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.territory.Territory.limitation_factors"><code class="docutils literal notranslate"><span class="pre">Territory.limitation_factors</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.territory.Territory.light_types"><code class="docutils literal notranslate"><span class="pre">Territory.light_types</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.territory.Territory.humidity_types"><code class="docutils literal notranslate"><span class="pre">Territory.humidity_types</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.territory.Territory.soil_types"><code class="docutils literal notranslate"><span class="pre">Territory.soil_types</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.territory.Territory.soil_acidity_types"><code class="docutils literal notranslate"><span class="pre">Territory.soil_acidity_types</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.territory.Territory.soil_fertility_types"><code class="docutils literal notranslate"><span class="pre">Territory.soil_fertility_types</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="derevo.models.html#derevo.models.territory.Territory.update"><code class="docutils literal notranslate"><span class="pre">Territory.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="derevo.models.html#module-derevo.models">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-derevo.adjacency">
+<span id="derevo-adjacency-module"></span><h2>derevo.adjacency module<a class="headerlink" href="#module-derevo.adjacency" title="Permalink to this heading"></a></h2>
+<p>Get adjency graph method is defined here.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.adjacency.get_adjacency_graph">
+<span class="sig-prename descclassname"><span class="pre">derevo.adjacency.</span></span><span class="sig-name descname"><span class="pre">get_adjacency_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species_in_parks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_key_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_parks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Graph</span></span></span><a class="reference internal" href="../_modules/derevo/adjacency.html#get_adjacency_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.adjacency.get_adjacency_graph" title="Permalink to this definition"></a></dt>
+<dd><p>Return adjacency graph where weight of edges equals to number of co-occurence cases.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.adjacency.write_adjacency_graph_gexf">
+<span class="sig-prename descclassname"><span class="pre">derevo.adjacency.</span></span><span class="sig-name descname"><span class="pre">write_adjacency_graph_gexf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species_in_parks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">BinaryIO</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'adjacency_graph.gexf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_key_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_parks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/derevo/adjacency.html#write_adjacency_graph_gexf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.adjacency.write_adjacency_graph_gexf" title="Permalink to this definition"></a></dt>
+<dd><p>Write adjacency graph where weight of edges equals to number of co-occurence cases
+to a given file (by name or a binary file-like object) in gexf format.</p>
+</dd></dl>
+
+</section>
+<section id="module-derevo.combined">
+<span id="derevo-combined-module"></span><h2>derevo.combined module<a class="headerlink" href="#module-derevo.combined" title="Permalink to this heading"></a></h2>
+<p>Get combined graph method is defined here.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.combined.get_combined_graph">
+<span class="sig-prename descclassname"><span class="pre">derevo.combined.</span></span><span class="sig-name descname"><span class="pre">get_combined_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">species_in_parks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_parks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Graph</span></span></span><a class="reference internal" href="../_modules/derevo/combined.html#get_combined_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.combined.get_combined_graph" title="Permalink to this definition"></a></dt>
+<dd><p>Returns combined graph with weights equal to number of co-occurence cases and compatability outcome in attributes.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.combined.write_combined_graph_gexf">
+<span class="sig-prename descclassname"><span class="pre">derevo.combined.</span></span><span class="sig-name descname"><span class="pre">write_combined_graph_gexf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">species_in_parks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_parks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">BytesIO</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'combined_graph.gexf'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/derevo/combined.html#write_combined_graph_gexf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.combined.write_combined_graph_gexf" title="Permalink to this definition"></a></dt>
+<dd><p>Write combined graph with weights equal to number of co-occurence cases and compatability outcome in attributes
+to a given file (by name or a binary file-like object) in gexf format.</p>
+</dd></dl>
+
+</section>
+<section id="module-derevo.compatability">
+<span id="derevo-compatability-module"></span><h2>derevo.compatability module<a class="headerlink" href="#module-derevo.compatability" title="Permalink to this heading"></a></h2>
+<p>Get cohabitation graph method is defined here</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.compatability.get_compatability_graph">
+<span class="sig-prename descclassname"><span class="pre">derevo.compatability.</span></span><span class="sig-name descname"><span class="pre">get_compatability_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Graph</span></span></span><a class="reference internal" href="../_modules/derevo/compatability.html#get_compatability_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.compatability.get_compatability_graph" title="Permalink to this definition"></a></dt>
+<dd><p>Return compatability graph where weights of edges equals to outcome of species interaction
+(1 for negative, 2 for neutral, 3 for positive).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.compatability.write_compatability_graph_gexf">
+<span class="sig-prename descclassname"><span class="pre">derevo.compatability.</span></span><span class="sig-name descname"><span class="pre">write_compatability_graph_gexf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">BinaryIO</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'compatability_graph.gexf'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/derevo/compatability.html#write_compatability_graph_gexf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.compatability.write_compatability_graph_gexf" title="Permalink to this definition"></a></dt>
+<dd><p>Write compatability graph where weights of edges equals to outcome of species interaction
+(1 for negative, 2 for neutral, 3 for positive) to a given file (by name or a binary file-like object)
+in gexf format.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.compatability.get_compatability_for_species">
+<span class="sig-prename descclassname"><span class="pre">derevo.compatability.</span></span><span class="sig-name descname"><span class="pre">get_compatability_for_species</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compatability_graph</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Graph</span></span></span><a class="reference internal" href="../_modules/derevo/compatability.html#get_compatability_for_species"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.compatability.get_compatability_for_species" title="Permalink to this definition"></a></dt>
+<dd><p>Return compatability graph for a set of selected species.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.compatability.write_compatability_for_species_gexf">
+<span class="sig-prename descclassname"><span class="pre">derevo.compatability.</span></span><span class="sig-name descname"><span class="pre">write_compatability_for_species_gexf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compatability_graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">BinaryIO</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'compatability_graph.gexf'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/derevo/compatability.html#write_compatability_for_species_gexf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.compatability.write_compatability_for_species_gexf" title="Permalink to this definition"></a></dt>
+<dd><p>Return compatability graph for a set of selected species.</p>
+</dd></dl>
+
+</section>
+<section id="module-derevo.composition">
+<span id="derevo-composition-module"></span><h2>derevo.composition module<a class="headerlink" href="#module-derevo.composition" title="Permalink to this heading"></a></h2>
+<p>Composition-related methods are defined here.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.composition.get_compositions">
+<span class="sig-prename descclassname"><span class="pre">derevo.composition.</span></span><span class="sig-name descname"><span class="pre">get_compositions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plants_available</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant" title="derevo.models.plants.Plant"><span class="pre">derevo.models.plants.Plant</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">territory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="derevo.models.html#derevo.models.territory.Territory" title="derevo.models.territory.Territory"><span class="pre">Territory</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="derevo.models.html#derevo.models.cohabitation.GeneraCohabitation" title="derevo.models.cohabitation.GeneraCohabitation"><span class="pre">derevo.models.cohabitation.GeneraCohabitation</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plants_present</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant" title="derevo.models.plants.Plant"><span class="pre">derevo.models.plants.Plant</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="derevo.models.html#derevo.models.plants.Plant" title="derevo.models.plants.Plant"><span class="pre">derevo.models.plants.Plant</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/derevo/composition.html#get_compositions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.composition.get_compositions" title="Permalink to this definition"></a></dt>
+<dd><p>Return plants composition variants list for the given parameters.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.composition._intersection_check">
+<span class="sig-prename descclassname"><span class="pre">derevo.composition.</span></span><span class="sig-name descname"><span class="pre">_intersection_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">greenery_polygon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/composition.html#_intersection_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.composition._intersection_check" title="Permalink to this definition"></a></dt>
+<dd><p>Determine if greenery polygon intersects with another polygon of light or limitation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.composition.get_updated_composition">
+<span class="sig-prename descclassname"><span class="pre">derevo.composition.</span></span><span class="sig-name descname"><span class="pre">get_updated_composition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plants_with_limitations_resistance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plants_suitable_for_light</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limitations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">light</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">species_in_parks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">greenery_polygon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">networkx.classes.graph.Graph</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/derevo/composition.html#get_updated_composition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.composition.get_updated_composition" title="Permalink to this definition"></a></dt>
+<dd><p>Return list of graphs with variants of updated plants composition.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.composition.write_updated_composition_gexf">
+<span class="sig-prename descclassname"><span class="pre">derevo.composition.</span></span><span class="sig-name descname"><span class="pre">write_updated_composition_gexf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plants_with_limitations_resistance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plants_suitable_for_light</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limitations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">light</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">species_in_parks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">greenery_polygon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">BytesIO</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/derevo/composition.html#write_updated_composition_gexf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.composition.write_updated_composition_gexf" title="Permalink to this definition"></a></dt>
+<dd><p>Write variants of updated plants composition to files with given prefix
+or names / file-like objects given in iterator.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.composition.get_recommended_composition">
+<span class="sig-prename descclassname"><span class="pre">derevo.composition.</span></span><span class="sig-name descname"><span class="pre">get_recommended_composition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plants_with_limitations_resistance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plants_suitable_for_light</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limitations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">light</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">greenery_polygon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">networkx.classes.graph.Graph</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/derevo/composition.html#get_recommended_composition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.composition.get_recommended_composition" title="Permalink to this definition"></a></dt>
+<dd><p>Return list of graphs with variants of recommended composition with account for outer factors.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.composition.write_recommended_composition_gexf">
+<span class="sig-prename descclassname"><span class="pre">derevo.composition.</span></span><span class="sig-name descname"><span class="pre">write_recommended_composition_gexf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plants_with_limitations_resistance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plants_suitable_for_light</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limitations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">light</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">greenery_polygon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">BytesIO</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'recommended'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/derevo/composition.html#write_recommended_composition_gexf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.composition.write_recommended_composition_gexf" title="Permalink to this definition"></a></dt>
+<dd><p>Write list of graphs with variants of recommended composition with account for outer factors
+to files with given prefix or names / file-like objects given in iterator.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.composition.get_composition_unknown">
+<span class="sig-prename descclassname"><span class="pre">derevo.composition.</span></span><span class="sig-name descname"><span class="pre">get_composition_unknown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">networkx.classes.graph.Graph</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/derevo/composition.html#get_composition_unknown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.composition.get_composition_unknown" title="Permalink to this definition"></a></dt>
+<dd><p>Return list of graphs with variants of recommended composition for a place with unknown outer factors.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.composition.write_composition_unknown_gfsx">
+<span class="sig-prename descclassname"><span class="pre">derevo.composition.</span></span><span class="sig-name descname"><span class="pre">write_composition_unknown_gfsx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">BytesIO</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'new_graph'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">networkx.classes.graph.Graph</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/derevo/composition.html#write_composition_unknown_gfsx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.composition.write_composition_unknown_gfsx" title="Permalink to this definition"></a></dt>
+<dd><p>Write graphs with variants of recommended composition for a place with unknown outer factors
+to files with given prefix or names / file-like objects given in iterator.</p>
+</dd></dl>
+
+</section>
+<section id="module-derevo.optimal_resolution">
+<span id="derevo-optimal-resolution-module"></span><h2>derevo.optimal_resolution module<a class="headerlink" href="#module-derevo.optimal_resolution" title="Permalink to this heading"></a></h2>
+<p>Get optimal resolution method is defined here.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.optimal_resolution.get_best_resolution">
+<span class="sig-prename descclassname"><span class="pre">derevo.optimal_resolution.</span></span><span class="sig-name descname"><span class="pre">get_best_resolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plants_with_limitations_resistance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plants_suitable_for_light</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohabitation_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_axes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/derevo/optimal_resolution.html#get_best_resolution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.optimal_resolution.get_best_resolution" title="Permalink to this definition"></a></dt>
+<dd><p>Return dataframe with calculated best resolutions for current collection of species
+and limitation factors / light variants.</p>
+<p>If <cite>graph_axes</cite> is given, scatter plot will be drawn on it.</p>
+</dd></dl>
+
+</section>
+<section id="module-derevo.prepare_polygons">
+<span id="derevo-prepare-polygons-module"></span><h2>derevo.prepare_polygons module<a class="headerlink" href="#module-derevo.prepare_polygons" title="Permalink to this heading"></a></h2>
+<p>Polygons preparation logic is defined here.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.prepare_polygons.make_grid">
+<span class="sig-prename descclassname"><span class="pre">derevo.prepare_polygons.</span></span><span class="sig-name descname"><span class="pre">make_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">polygon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polygon_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">32636</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">GeoDataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/derevo/prepare_polygons.html#make_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.prepare_polygons.make_grid" title="Permalink to this definition"></a></dt>
+<dd><p>Return grid with given <cite>edge_size</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.prepare_polygons.get_ids">
+<span class="sig-prename descclassname"><span class="pre">derevo.prepare_polygons.</span></span><span class="sig-name descname"><span class="pre">get_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/derevo/prepare_polygons.html#get_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.prepare_polygons.get_ids" title="Permalink to this definition"></a></dt>
+<dd><p>Unify identifiers in the given DataFrame.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.prepare_polygons.green_lims">
+<span class="sig-prename descclassname"><span class="pre">derevo.prepare_polygons.</span></span><span class="sig-name descname"><span class="pre">green_lims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limitations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">greenery_polygons</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="../_modules/derevo/prepare_polygons.html#green_lims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.prepare_polygons.green_lims" title="Permalink to this definition"></a></dt>
+<dd><p>Overlay given limitations with greenery polygons.</p>
+</dd></dl>
+
+</section>
+<section id="module-derevo.territories">
+<span id="derevo-territories-module"></span><h2>derevo.territories module<a class="headerlink" href="#module-derevo.territories" title="Permalink to this heading"></a></h2>
+<p>Territory-related methods are defined here.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.territories._geom_func">
+<span class="sig-prename descclassname"><span class="pre">derevo.territories.</span></span><span class="sig-name descname"><span class="pre">_geom_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BaseGeometry</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="../_modules/derevo/territories.html#_geom_func"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.territories._geom_func" title="Permalink to this definition"></a></dt>
+<dd><p>Return rows of GeoDataFrame which geometry is covered by, covers or intersect the given geometry.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="derevo.territories.get_territory">
+<span class="sig-prename descclassname"><span class="pre">derevo.territories.</span></span><span class="sig-name descname"><span class="pre">get_territory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">greenery_polygon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BaseGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_territory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="derevo.models.html#derevo.models.global_territory.GlobalTerritory" title="derevo.models.global_territory.GlobalTerritory"><span class="pre">GlobalTerritory</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">territory_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="derevo.models.html#derevo.models.territory.Territory" title="derevo.models.territory.Territory"><span class="pre">Territory</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="derevo.models.html#derevo.models.territory.Territory" title="derevo.models.territory.Territory"><span class="pre">Territory</span></a></span></span><a class="reference internal" href="../_modules/derevo/territories.html#get_territory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#derevo.territories.get_territory" title="Permalink to this definition"></a></dt>
+<dd><p>Get territory information based on its geometry, used-defined known data and other factors polygons.</p>
+</dd></dl>
+
+</section>
+<section id="module-derevo">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-derevo" title="Permalink to this heading"></a></h2>
+<p>Derevo module helps to create optimal plants compositions taking into an account their
+cohabitations and possible limitation factors</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Components" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="derevo.models.html" class="btn btn-neutral float-right" title="derevo.models package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, IDU (Alexander Antonov, Aleksei Sokol and others).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+</body>
+</html>

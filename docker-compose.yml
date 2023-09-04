@@ -1,29 +1,45 @@
 version: '3.1'
 
 services:
-  photos_server:
-    container_name: greenery_photos
-    image: nginx:latest
+  photos:
+    container_name: landscaping-photos
+    image: landscaping-photos:latest
+    build: photos
     volumes:
-      - ./photos/nginx.conf:/etc/nginx/nginx.conf
       - ./photos/plants_photos:/plants_photos
+    restart: unless-stopped
     ports:
       - 6065:80
-    environment:
-      - PHOTOS_PREFIX=$PHOTOS_PREFIX
 
   backend:
-    container_name: greenery_backend
-    build:
-      context: ./backend
-    ports:
-      - 6066:80
-    environment:
-      - DB_ADDR=$DB_ADDR
-      - DB_PORT=$DB_PORT
-      - DB_NAME=$DB_NAME
-      - DB_USER=$DB_USER
-      - DB_PASS=$DB_PASS
-      - PORT=80
+    container_name: landscaping-backend
+    image: 'landscaping-backend:0.7.0'
+    build: backend
+    # ports:
+    #   - 6066:80
+    env_file: ./backend.env
+    volumes:
+      - ./photos/plants_photos:/plants_photos
+    restart: unless-stopped
+
+  frontend:
+    container_name: landscaping-frontend
+    image: 'landscaping-frontend:1.7.0'
+    build: frontend
+    volumes:
+      - ./frontend-config.json:/usr/share/nginx/html/assets/assets/cfg/config.json
     depends_on:
-      - photos_server
+      - backend
+    restart: unless-stopped
+
+  nginx:
+    container_name: landscaping-nginx
+    image: 'landscaping-nginx:latest'
+    build: .
+    ports:
+      - 80:80
+    restart: unless-stopped
+    depends_on:
+      - photos
+      - frontend
+      - backend

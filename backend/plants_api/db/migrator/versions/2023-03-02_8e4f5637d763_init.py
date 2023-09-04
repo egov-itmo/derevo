@@ -2,13 +2,13 @@
 """init
 
 Revision ID: 8e4f5637d763
-Revises: 
+Revises:
 Create Date: 2023-03-02 21:40:40.241613
 
 """
-from alembic import op
-import sqlalchemy as sa
 import geoalchemy2
+import sqlalchemy as sa
+from alembic import op
 
 
 # revision identifiers, used by Alembic.
@@ -19,7 +19,6 @@ depends_on = None
 
 
 def upgrade():
-
     # extensions
 
     op.execute(sa.text("CREATE EXTENSION postgis"))
@@ -469,7 +468,6 @@ def upgrade():
 
 
 def downgrade():
-
     # tables
 
     op.drop_table("plants_soil_types")

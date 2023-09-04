@@ -1,4 +1,3 @@
-# pylint: disable=no-name-in-module, too-few-public-methods
 """
 Listing response is defined here.
 """
@@ -15,13 +14,14 @@ class Listing(BaseModel):
 
     id: int
     name: str
+    description: str
 
     @classmethod
     def from_dto(cls, dto: ListingDto) -> "Listing":
         """
         Construct from DTO.
         """
-        return cls(id=dto.id, name=dto.name)
+        return cls(id=dto.id, name=dto.name, description=dto.description)
 
 
 class ListingResponse(BaseModel):

@@ -1,7 +1,7 @@
 FROM python:3.10-slim
 
 RUN apt update && \
-    apt install -y libpq-dev python3-dev build-essential && \
+    apt install -y fonts-liberation2 libpq-dev python3-dev build-essential && \
     pip install psycopg2 && \
     apt purge -y python3-dev build-essential --autoremove
 

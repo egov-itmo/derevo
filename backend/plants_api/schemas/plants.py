@@ -1,4 +1,3 @@
-# pylint: disable=no-name-in-module, too-few-public-methods
 """
 Plants responses are defined here.
 """
@@ -25,6 +24,7 @@ class Plant(BaseModel):
     is_invasive: Optional[bool]
     genus: Optional[str]
     photo_url: Optional[str]
+    thumbnail_url: Optional[str]
 
     @classmethod
     def from_dto(cls, dto: PlantDto) -> "Plant":
@@ -43,6 +43,7 @@ class Plant(BaseModel):
             is_invasive=dto.is_invasive,
             genus=dto.genus,
             photo_url=dto.photo_url,
+            thumbnail_url=dto.thumbnail_url,
         )
 
 

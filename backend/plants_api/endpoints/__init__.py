@@ -6,8 +6,9 @@ from pathlib import Path
 
 from .routers import routers_list
 
+
 for file in sorted(Path(__file__).resolve().parent.iterdir()):
-    if file.name.endswith(".py") and file.name not in ("__init__.py", "router.py"):
+    if file.name.endswith(".py") and file.name not in ("__init__.py", "routers.py"):
         importlib.import_module(f".{file.name[:-3]}", __package__)
 
 

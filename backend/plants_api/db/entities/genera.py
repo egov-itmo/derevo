@@ -5,6 +5,7 @@ from sqlalchemy import Column, Integer, Sequence, String, Table
 
 from plants_api.db import metadata
 
+
 genera_id_seq = Sequence("genera_id_seq")
 
 genera = Table(

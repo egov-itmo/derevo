@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>derevo.models.plants &mdash; derevo 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+          <a href="../../../index.html" class="icon icon-home">
+            derevo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../derevo/index.html">derevo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../components/index.html">Components</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">derevo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">derevo.models.plants</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <h1>Source code for derevo.models.plants</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Plant model class is defined here.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+
+<span class="kn">from</span> <span class="nn">.enumerations</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AcidityType</span><span class="p">,</span>
+    <span class="n">AggressivenessLevel</span><span class="p">,</span>
+    <span class="n">FertilityType</span><span class="p">,</span>
+    <span class="n">HumidityType</span><span class="p">,</span>
+    <span class="n">LifeForm</span><span class="p">,</span>
+    <span class="n">LightType</span><span class="p">,</span>
+    <span class="n">LimitationFactor</span><span class="p">,</span>
+    <span class="n">SoilType</span><span class="p">,</span>
+    <span class="n">SurvivabilityLevel</span><span class="p">,</span>
+    <span class="n">ToleranceType</span><span class="p">,</span>
+    <span class="n">UsdaZone</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="Plant"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.plants.Plant">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Plant</span><span class="p">:</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plant class for the derevo methods.</span>
+
+<span class="sd">    Fields:</span>
+<span class="sd">    - `name_ru` (str): russian name of the plant.</span>
+<span class="sd">    - `name_latin` (str): latin name of the plant.</span>
+<span class="sd">    - `genus` (str | None, *optional*): genera name of the plant, required for method but optional. Defaults to None.</span>
+<span class="sd">    - `limitation_factors_resistances` (dict[LimitationFactor, ToleranceType], *optional*): dictionary with keys</span>
+<span class="sd">    as limitation factors and values as a tolerance type for a plant to the given limitation factor. Defaults to {}.</span>
+<span class="sd">    - `usda_zone_preferences` (dict[UsdaZone, ToleranceType], *optional*): dictionary with keys as USDA zones and</span>
+<span class="sd">    values as a tolerance type for a plant to the given USDA zone. Default to {}.</span>
+<span class="sd">    - `light_preferences` (dict[LightType, ToleranceType], *optional*): dictionary with keys as light types and</span>
+<span class="sd">    values as a tolerance type for a plant to the given light type. Default to {}.</span>
+<span class="sd">    - `humidity_preferences` (dict[HumidityType, ToleranceType], *optional*): dictionary with keys as humidity types</span>
+<span class="sd">    and values as a tolerance type for a plant to the given humidity type. Default to {}.</span>
+<span class="sd">    - `soil_acidity_preferences` (dict[AcidityType, ToleranceType], *optional*): dictionary with keys as soil acidity</span>
+<span class="sd">    types and values as a tolerance type for a plant to the given soil acidity type. Default to {}.</span>
+<span class="sd">    - `soil_fertility_preferences` (dict[FertilityType, ToleranceType], *optional*): dictionary with keys as soil</span>
+<span class="sd">    fertility types and values as a tolerance type for a plant to the given soil fertility type. Default to {}.</span>
+<span class="sd">    - `soil_type_preferences` (dict[SoilType, ToleranceType], *optional*): dictionary with keys as soil types and</span>
+<span class="sd">    values as a tolerance type for a plant to the given soil type. Default to {}.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name_ru</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name_latin</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">genus</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">life_form</span><span class="p">:</span> <span class="n">LifeForm</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">limitation_factors_resistances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">LimitationFactor</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">usda_zone_preferences</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">UsdaZone</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">light_preferences</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">LightType</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">humidity_preferences</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">HumidityType</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">soil_acidity_preferences</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">AcidityType</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">soil_fertility_preferences</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">FertilityType</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">soil_type_preferences</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">SoilType</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">aggresiveness</span><span class="p">:</span> <span class="n">AggressivenessLevel</span> <span class="o">=</span> <span class="n">AggressivenessLevel</span><span class="o">.</span><span class="n">NEUTRAL</span>
+    <span class="n">survivability</span><span class="p">:</span> <span class="n">SurvivabilityLevel</span> <span class="o">=</span> <span class="n">SurvivabilityLevel</span><span class="o">.</span><span class="n">NORMAL</span>
+    <span class="n">is_invasive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">dict_fields</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="s2">&quot;limitation_factors_resistances: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">limitation_factors_resistances</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;usda_zones: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">usda_zone_preferences</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;lights: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">light_preferences</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;humidities: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">humidity_preferences</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;soil_acidities: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">soil_acidity_preferences</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;soil_fertilities: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">soil_fertility_preferences</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;soil_types: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">soil_type_preferences</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">dict_fields_text</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">d_f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">d_f</span> <span class="ow">in</span> <span class="n">dict_fields</span> <span class="k">if</span> <span class="n">d_f</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="s2">&quot;Plant(name_ru=&#39;</span><span class="si">{}</span><span class="s2">&#39;, name_latin=&#39;</span><span class="si">{}</span><span class="s2">&#39;, genus=&#39;</span><span class="si">{}</span><span class="s2">&#39;, aggressiveness=</span><span class="si">{}</span><span class="s2">, survivability=</span><span class="si">{}</span><span class="s2">&quot;</span>
+            <span class="o">+</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;, </span><span class="si">{</span><span class="n">dict_fields_text</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dict_fields_text</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_ru</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_latin</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">genus</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aggresiveness</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">survivability</span><span class="p">,</span>
+            <span class="o">*</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">d_f</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">d_f</span> <span class="ow">in</span> <span class="n">dict_fields</span> <span class="k">if</span> <span class="n">d_f</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Compatability"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.plants.Compatability">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Compatability</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compatibility class for cohabitation attributes</span>
+
+<span class="sd">    Fields:</span>
+<span class="sd">    - `genus_name_1` (str): genera name of the plant, required for method</span>
+<span class="sd">    - `genus_name_2` (str): genera name of the corresponding plant, required for method</span>
+<span class="sd">    - `cohabitation_type` (ToleranceType): type of cohabitation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">genus_name_1</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">genus_name_2</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">cohabitation_type</span><span class="p">:</span> <span class="n">ToleranceType</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, IDU (Alexander Antonov, Aleksei Sokol and others).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+</body>
+</html>

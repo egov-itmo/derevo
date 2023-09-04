@@ -5,6 +5,7 @@ from sqlalchemy import Boolean, Column, ForeignKey, Integer, Numeric, Sequence, 
 
 from plants_api.db import metadata
 
+
 plants_id_seq = Sequence("plants_id_seq")
 
 plants = Table(
@@ -32,7 +33,7 @@ Columns:
 - `type_id` - plant type identifier (plant_types.id), int
 - `height_avg` - average height in meters if available, numeric(3, 1)
 - `crown_diameter` - average crown diameter in meters if available, numeric(3, 1)
-- `spread_aggressiveness_level` - level of spread agressiveness, int
+- `spread_aggressiveness_level` - level of spread aggressiveness, int
 - `survivability_level` - level of survivability, int
 - `is_invasive` - indicates whether plant is invasive, boolean
 - `genus_id` - genus identifier (genera.id), int

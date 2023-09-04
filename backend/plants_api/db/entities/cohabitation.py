@@ -7,6 +7,7 @@ from plants_api.db import metadata
 
 from .enums import CohabitationType
 
+
 cohabitation = Table(
     "cohabitation",
     metadata,

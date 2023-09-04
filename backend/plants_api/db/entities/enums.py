@@ -7,7 +7,7 @@ from enum import Enum
 
 class CohabitationType(Enum):
     """
-    Cohavbitation type enumeration.
+    Plants cohabitation and tolerance to outer factors options enumeration.
     """
 
     negative = "negative"  # pylint: disable=invalid-name

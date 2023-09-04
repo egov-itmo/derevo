@@ -6,9 +6,11 @@ import os
 import pathlib
 import sys
 
+
 project_dir = pathlib.Path(__file__).resolve().parent.parent.parent.parent
 sys.path.append(str(project_dir))
 from plants_api.utils.dotenv import try_load_envfile
+
 
 try_load_envfile(os.environ.get("ENVFILE", str(project_dir / ".env")))
 from logging.config import fileConfig
@@ -16,9 +18,11 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from plants_api.config.app_settings_global import app_settings, AppSettings
+from plants_api.config.app_settings_global import AppSettings, app_settings
 from plants_api.db import DeclarativeBase
 from plants_api.db.entities import *  # pylint: disable=wildcard-import,unused-wildcard-import
+from plants_api.db.entities.users import *  # pylint: disable=wildcard-import,unused-wildcard-import
+
 
 config = context.config
 section = config.config_ini_section

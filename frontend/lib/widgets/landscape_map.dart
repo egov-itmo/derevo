@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:landscaping_frontend/models/limitations_response.dart';
+import 'package:landscaping_frontend/notifiers/limitations_response.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:positioned_tap_detector_2/positioned_tap_detector_2.dart';
 
-import 'package:landscaping_frontend/models/method_request.dart';
+import 'package:landscaping_frontend/notifiers/method_request.dart';
 import 'package:provider/provider.dart';
 
 class LandscapeMap extends StatefulWidget {
@@ -38,15 +38,6 @@ class _LandscapeMapState extends State<LandscapeMap> {
         builder: (ctx) => GestureDetector(
           onLongPress: () {
             debugPrint("test!");
-            // for (LatLng point in tappedPoints) {
-            //   if (point == latlng) {
-            //     setState(() {
-            //       tappedPoints.remove(point);
-            //     });
-            //     break;
-            //   }
-            // }
-            // debugPrint("I was here");
           },
           child: const Icon(Icons.circle, color: Colors.red),
         ),

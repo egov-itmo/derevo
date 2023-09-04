@@ -4,11 +4,15 @@ This is an api to access plants data and update in by uploading a formed xlsx fi
 
 ## preparation
 
+Currently `derevo` module is not on the PyPi, so it needs to be installed manually before running folowing
+commands.
+
 0. To install python dependencies (if you wish to run script without Docker)
   run `python -m pip install -r requirements.txt`. You may also want to use `venv` before that.
 1. Prepare a PostgreSQL Server to store the database.
 2. Go to ./plants_api/db and run `alembic upgrade head` to apply migrations. Do not forget to set environment variables
-  `DB_ADDR`, `DB_PORT`, `DB_NAME`, `DB_USER` and `DB_PASS` (or list them in .env file) if they are different from default values.
+  `DB_ADDR`, `DB_PORT`, `DB_NAME`, `DB_USER` and `DB_PASS` (or list them in .env file) if they are different from
+  default values.
 
 ## launching
 

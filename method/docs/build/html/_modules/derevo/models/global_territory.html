@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>derevo.models.global_territory &mdash; derevo 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+          <a href="../../../index.html" class="icon icon-home">
+            derevo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../derevo/index.html">derevo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../components/index.html">Components</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">derevo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">derevo.models.global_territory</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <h1>Source code for derevo.models.global_territory</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Global territory model class is defined here.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">fields</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Type</span>
+
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">loguru</span> <span class="kn">import</span> <span class="n">logger</span>
+
+<span class="kn">from</span> <span class="nn">derevo.models.enumerations</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AcidityType</span><span class="p">,</span>
+    <span class="n">FertilityType</span><span class="p">,</span>
+    <span class="n">HumidityType</span><span class="p">,</span>
+    <span class="n">LightType</span><span class="p">,</span>
+    <span class="n">LimitationFactor</span><span class="p">,</span>
+    <span class="n">SoilType</span><span class="p">,</span>
+    <span class="n">UsdaZone</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">derevo.models.territory</span> <span class="kn">import</span> <span class="n">Territory</span>
+
+
+<div class="viewcode-block" id="_check_names"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.global_territory._check_names">[docs]</a><span class="k">def</span> <span class="nf">_check_names</span><span class="p">(</span>
+    <span class="n">gdf</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span>
+    <span class="n">concrete_enum</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">LightType</span><span class="p">]</span>
+    <span class="o">|</span> <span class="n">Type</span><span class="p">[</span><span class="n">LimitationFactor</span><span class="p">]</span>
+    <span class="o">|</span> <span class="nb">type</span><span class="p">[</span><span class="n">HumidityType</span><span class="p">]</span>
+    <span class="o">|</span> <span class="n">Type</span><span class="p">[</span><span class="n">SoilType</span><span class="p">]</span>
+    <span class="o">|</span> <span class="n">Type</span><span class="p">[</span><span class="n">AcidityType</span><span class="p">]</span>
+    <span class="o">|</span> <span class="n">Type</span><span class="p">[</span><span class="n">FertilityType</span><span class="p">],</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove rows which name cannot be cast to the given enumeration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">enums</span> <span class="o">=</span> <span class="p">{</span><span class="n">entry</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">concrete_enum</span><span class="p">}</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">((</span><span class="n">lf</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lf</span><span class="p">,</span> <span class="n">Enum</span><span class="p">)</span> <span class="k">else</span> <span class="n">lf</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">enums</span> <span class="k">for</span> <span class="n">lf</span> <span class="ow">in</span> <span class="n">gdf</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="s2">&quot;Some </span><span class="si">{}</span><span class="s2"> geometries are dropped as their names are not in enum values&quot;</span><span class="p">,</span>
+            <span class="n">concrete_enum</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;Number of </span><span class="si">{}</span><span class="s2"> polygons before removal: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">concrete_enum</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="n">gdf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="n">gdf</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">gdf</span><span class="p">[</span><span class="o">~</span><span class="n">gdf</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">lf</span><span class="p">:</span> <span class="n">lf</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lf</span><span class="p">,</span> <span class="n">Enum</span><span class="p">)</span> <span class="k">else</span> <span class="n">lf</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">enums</span><span class="p">)]</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+            <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;Number of </span><span class="si">{}</span><span class="s2"> polygons after removal: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">concrete_enum</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="n">gdf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_names_to_enum"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.global_territory._names_to_enum">[docs]</a><span class="k">def</span> <span class="nf">_names_to_enum</span><span class="p">(</span><span class="n">values</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Enum</span><span class="p">],</span> <span class="n">concrete_enum</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Enum</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Enum</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct list of given enum types from their string names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">concrete_enum</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="_names_to_unique_enum"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.global_territory._names_to_unique_enum">[docs]</a><span class="k">def</span> <span class="nf">_names_to_unique_enum</span><span class="p">(</span><span class="n">values</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Enum</span><span class="p">],</span> <span class="n">concrete_enum</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Enum</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Enum</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct list of given enum types from their string names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">({</span><span class="n">concrete_enum</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="GlobalTerritory"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.global_territory.GlobalTerritory">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">GlobalTerritory</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Global territory model (for a whole city for example) that contains all of its factors data.</span>
+
+<span class="sd">    Missing or None value in init means that the parameter is unknown and will not be taken in the account.</span>
+
+<span class="sd">    Fields notes:</span>
+<span class="sd">    - `limitation_factors` GeoDataFrame must contain column &#39;name&#39; with values corresponding to `LimitationFactor`</span>
+<span class="sd">    emueration</span>
+<span class="sd">    - `light_types` GeoDataFrame must contain column &#39;name&#39; with values corresponding to `LightType` enumeration</span>
+<span class="sd">    - `humidity_types` GeoDataFrame must contain column &#39;name&#39; with values corresponding to `HumidityType` enumeration</span>
+<span class="sd">    - `soil_types` GeoDataFrame must contain column &#39;name&#39; with values corresponding to `SoilType` enumeration</span>
+<span class="sd">    - `soil_acidity_types` GeoDataFrame must contain column &#39;name&#39; with values corresponding</span>
+<span class="sd">    to `AcidityType` enumeration</span>
+<span class="sd">    - `soil_fertility_types` GeoDataFrame must contain column &#39;name&#39; with values corresponding</span>
+<span class="sd">    to `FertilityType` enumeration</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">usda_zone</span><span class="p">:</span> <span class="n">UsdaZone</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">limitation_factors</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="n">light_types</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="n">humidity_types</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="n">soil_types</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="n">soil_acidity_types</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="n">soil_fertility_types</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span> <span class="o">=</span> <span class="o">...</span>
+
+<div class="viewcode-block" id="GlobalTerritory.__post_init__"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.global_territory.GlobalTerritory.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check that each of the DataFrames contains &#39;name&#39; column. Throw ValueError otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">(</span><span class="n">GlobalTerritory</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;usda_zone&quot;</span><span class="p">):</span>
+            <span class="n">attr_value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attr_value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">attr_value</span> <span class="ow">is</span> <span class="o">...</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">concrete_enum</span><span class="p">,</span> <span class="n">gdf</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">LimitationFactor</span><span class="p">,</span>
+                <span class="n">LightType</span><span class="p">,</span>
+                <span class="n">HumidityType</span><span class="p">,</span>
+                <span class="n">SoilType</span><span class="p">,</span>
+                <span class="n">AcidityType</span><span class="p">,</span>
+                <span class="n">FertilityType</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">limitation_factors</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">light_types</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">humidity_types</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">soil_types</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">soil_acidity_types</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">soil_fertility_types</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="s2">&quot;name&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">concrete_enum</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> GeoDataFrame does not contain &#39;name&#39; column.&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot; All columns provided: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="n">_check_names</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="n">concrete_enum</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GlobalTerritory.as_territory"><a class="viewcode-back" href="../../../components/derevo.models.html#derevo.models.global_territory.GlobalTerritory.as_territory">[docs]</a>    <span class="k">def</span> <span class="nf">as_territory</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Territory</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get global territory information as Territory class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Territory</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">usda_zone</span><span class="p">,</span>
+            <span class="n">_names_to_unique_enum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limitation_factors</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">LimitationFactor</span><span class="p">),</span>
+            <span class="n">_names_to_unique_enum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">light_types</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">LightType</span><span class="p">),</span>
+            <span class="n">_names_to_unique_enum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">humidity_types</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">HumidityType</span><span class="p">),</span>
+            <span class="n">_names_to_unique_enum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">soil_types</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">SoilType</span><span class="p">),</span>
+            <span class="n">_names_to_unique_enum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">soil_acidity_types</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">AcidityType</span><span class="p">),</span>
+            <span class="n">_names_to_unique_enum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">soil_fertility_types</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">FertilityType</span><span class="p">),</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, IDU (Alexander Antonov, Aleksei Sokol and others).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+</body>
+</html>

@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:landscaping_frontend/config/config.dart';
-import 'package:landscaping_frontend/entities/limitation_factors.dart';
-import 'package:landscaping_frontend/models/method_request.dart';
+import 'package:landscaping_frontend/models/limitation_factors.dart';
+import 'package:landscaping_frontend/notifiers/method_request.dart';
 import 'package:provider/provider.dart';
 
 class LimitationFactorSelect extends StatefulWidget {
@@ -55,13 +55,29 @@ class _LimitationFactorSelectState extends State<LimitationFactorSelect> {
           return DropdownButton<String>(
             value: _current,
             items: [
-              _uncheckedText,
+              [_uncheckedText, ""],
               for (LimitationFactor limitationFactor in snapshot.data!.values)
-                limitationFactor.name
-            ].map((String value) {
+                [limitationFactor.name, limitationFactor.description]
+            ].map((List<String?> valueAndDescription) {
               return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
+                value: valueAndDescription[0],
+                child: Row(
+                  children: [
+                    Text(valueAndDescription[0]!),
+                    if (valueAndDescription[1] != null)
+                      const SizedBox(width: 3),
+                    if (valueAndDescription[1] != null)
+                      SizedBox(
+                        width: 60,
+                        child: Text(
+                          valueAndDescription[1]!,
+                          style: const TextStyle(fontSize: 8),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
+                  ],
+                ),
               );
             }).toList(),
             onChanged: (String? newValue) {

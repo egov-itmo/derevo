@@ -5,6 +5,7 @@ from sqlalchemy import Column, Integer, Sequence, String, Table
 
 from plants_api.db import metadata
 
+
 cohabitation_comments_id_seq = Sequence("cohabitation_comments_id_seq")
 
 cohabitation_comments = Table(
