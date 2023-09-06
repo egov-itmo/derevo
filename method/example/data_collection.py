@@ -14,7 +14,7 @@ from sqlalchemy import text
 from sqlalchemy.engine import Connection
 
 from derevo import Plant
-from derevo import enumerations as c_enum
+from derevo import enumerations as d_enum
 
 from .derevo_enums import EnumAdapters as c_adapt
 
@@ -66,7 +66,7 @@ def collect_plants(connection: Connection) -> list[Plant]:  # pylint: disable=to
         )
         limitation_factors_resistances = {
             c_adapt.limitation_factors[lf_name]: (
-                c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL
+                d_enum.ToleranceType.POSITIVE if is_stable else d_enum.ToleranceType.NEUTRAL
             )
             for lf_name, is_stable in res
         }
@@ -81,8 +81,8 @@ def collect_plants(connection: Connection) -> list[Plant]:  # pylint: disable=to
             {"plant_id": plant_id},
         )
         usda_zone_preferences = {
-            c_enum.UsdaZone.from_value(usda_number): (
-                c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL
+            d_enum.UsdaZone.from_value(usda_number): (
+                d_enum.ToleranceType.POSITIVE if is_stable else d_enum.ToleranceType.NEUTRAL
             )
             for usda_number, is_stable in res
         }
@@ -98,7 +98,7 @@ def collect_plants(connection: Connection) -> list[Plant]:  # pylint: disable=to
         )
         light_preferences = {
             c_adapt.light[light_type_name]: (
-                c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL
+                d_enum.ToleranceType.POSITIVE if is_stable else d_enum.ToleranceType.NEUTRAL
             )
             for light_type_name, is_stable in res
         }
@@ -114,7 +114,7 @@ def collect_plants(connection: Connection) -> list[Plant]:  # pylint: disable=to
         )
         humidity_preferences = {
             c_adapt.humidity[humidity_type_name]: (
-                c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL
+                d_enum.ToleranceType.POSITIVE if is_stable else d_enum.ToleranceType.NEUTRAL
             )
             for humidity_type_name, is_stable in res
         }
@@ -130,7 +130,7 @@ def collect_plants(connection: Connection) -> list[Plant]:  # pylint: disable=to
         )
         soil_acidity_preferences = {
             c_adapt.acidity[acidity_type_name]: (
-                c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL
+                d_enum.ToleranceType.POSITIVE if is_stable else d_enum.ToleranceType.NEUTRAL
             )
             for acidity_type_name, is_stable in res
         }
@@ -146,7 +146,7 @@ def collect_plants(connection: Connection) -> list[Plant]:  # pylint: disable=to
         )
         soil_fertility_preferences = {
             c_adapt.fertility[fertility_type_name]: (
-                c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL
+                d_enum.ToleranceType.POSITIVE if is_stable else d_enum.ToleranceType.NEUTRAL
             )
             for fertility_type_name, is_stable in res
         }
@@ -161,7 +161,7 @@ def collect_plants(connection: Connection) -> list[Plant]:  # pylint: disable=to
             {"plant_id": plant_id},
         )
         soil_type_preferences = {
-            c_adapt.soil[type_name]: (c_enum.ToleranceType.POSITIVE if is_stable else c_enum.ToleranceType.NEUTRAL)
+            c_adapt.soil[type_name]: (d_enum.ToleranceType.POSITIVE if is_stable else d_enum.ToleranceType.NEUTRAL)
             for type_name, is_stable in res
         }
 

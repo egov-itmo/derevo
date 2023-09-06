@@ -12,6 +12,7 @@ from sqlalchemy import create_engine, text
 
 from derevo.models.cohabitation import CohabitationType, GeneraCohabitation
 
+
 try:
     import derevo as cm  # pylint: disable=unused-import
 except ModuleNotFoundError:
@@ -22,7 +23,7 @@ except ModuleNotFoundError:
     import derevo as cm
 
 from derevo import Plant, Territory
-from derevo import enumerations as c_enum
+from derevo import enumerations as d_enum
 from derevo import get_compositions
 from derevo.optimal_resolution import get_best_resolution
 
@@ -37,6 +38,7 @@ from .data_collection import (
     collect_species_in_parks,
 )
 
+
 if __name__ == "__main__":
     logger.remove()
     logger.add(sys.stderr, level="DEBUG")
@@ -50,34 +52,34 @@ if __name__ == "__main__":
             genus="Род растения",
             life_form="Жизненная форма",
             limitation_factors_resistances={
-                c_enum.LimitationFactor.FLOODING: c_enum.ToleranceType.NEGATIVE,
-                c_enum.LimitationFactor.GAS_POLLUTION: c_enum.ToleranceType.NEUTRAL,
+                d_enum.LimitationFactor.FLOODING: d_enum.ToleranceType.NEGATIVE,
+                d_enum.LimitationFactor.GAS_POLLUTION: d_enum.ToleranceType.NEUTRAL,
             },
             humidity_preferences={
-                c_enum.HumidityType.HIGH: c_enum.ToleranceType.NEGATIVE,
-                c_enum.HumidityType.NORMAL: c_enum.ToleranceType.POSITIVE,
+                d_enum.HumidityType.HIGH: d_enum.ToleranceType.NEGATIVE,
+                d_enum.HumidityType.NORMAL: d_enum.ToleranceType.POSITIVE,
             },
             light_preferences={
-                c_enum.LightType.LIGHT: c_enum.ToleranceType.POSITIVE,
+                d_enum.LightType.LIGHT: d_enum.ToleranceType.POSITIVE,
             },
             usda_zone_preferences={
-                c_enum.UsdaZone.USDA2: c_enum.ToleranceType.NEGATIVE,
-                c_enum.UsdaZone.USDA3: c_enum.ToleranceType.NEUTRAL,
-                c_enum.UsdaZone.USDA4: c_enum.ToleranceType.POSITIVE,
-                c_enum.UsdaZone.USDA5: c_enum.ToleranceType.POSITIVE,
-                c_enum.UsdaZone.USDA6: c_enum.ToleranceType.NEUTRAL,
-                c_enum.UsdaZone.USDA7: c_enum.ToleranceType.NEGATIVE,
+                d_enum.UsdaZone.USDA2: d_enum.ToleranceType.NEGATIVE,
+                d_enum.UsdaZone.USDA3: d_enum.ToleranceType.NEUTRAL,
+                d_enum.UsdaZone.USDA4: d_enum.ToleranceType.POSITIVE,
+                d_enum.UsdaZone.USDA5: d_enum.ToleranceType.POSITIVE,
+                d_enum.UsdaZone.USDA6: d_enum.ToleranceType.NEUTRAL,
+                d_enum.UsdaZone.USDA7: d_enum.ToleranceType.NEGATIVE,
             },
             is_invasive=False,
         ),
     ]
     plants_present: list[Plant] = []
     territory_info = Territory(
-        usda_zone=c_enum.UsdaZone.USDA5,
-        limitation_factors=[c_enum.LimitationFactor.WINDINESS],
-        humidity_types=[c_enum.HumidityType.NORMAL, c_enum.HumidityType.LOW],
-        light_types=[c_enum.LightType.LIGHT, c_enum.LightType.DARKENED],
-        soil_fertility_types=[c_enum.FertilityType.FERTIL, c_enum.FertilityType.SLIGHTLY_FERTIL],
+        usda_zone=d_enum.UsdaZone.USDA5,
+        limitation_factors=[d_enum.LimitationFactor.WINDINESS],
+        humidity_types=[d_enum.HumidityType.NORMAL, d_enum.HumidityType.LOW],
+        light_types=[d_enum.LightType.LIGHT, d_enum.LightType.DARKENED],
+        soil_fertility_types=[d_enum.FertilityType.FERTIL, d_enum.FertilityType.SLIGHTLY_FERTIL],
     )
 
     cohabitation_attributes = [

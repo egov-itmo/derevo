@@ -7,3 +7,6 @@ __pycache__
 /dist
 /derevo.egg-info
 /.venv
+/.pytest_cache
+/.coverage
+/coverage_html

@@ -34,6 +34,8 @@ The backend is also integrated in Platform of Digital Urbanistic by Laboratory o
 
 Method documentation is located at https://derevo.readthedocs.io/en/dev/
 
+<br>https://news.egov.itmo.ru/map/dev/index.html
+
 ## General scheme of work
 
 ![General scheme of work](https://news.egov.itmo.ru/photo/algoritm_nahozhdeniya_kompozicij_rastenij-1.png)

@@ -62,22 +62,31 @@ def get_compositions(
     # TODO: add processing of other factors
 
     if local_plants.shape[0] == 0:
-        return [plants_present]
+        return [plants_present] if len(plants_present) != 0 else []
 
     cohabitation_df = pd.DataFrame(
         [(c.genus_1, c.genus_2, c.cohabitation.to_value()) for c in cohabitation_attributes],
         columns=["genus_name_1", "genus_name_2", "cohabitation_type"],
     )
-    compatability_graph: nx.Graph = get_compatability_graph(pd.DataFrame(plants_available), cohabitation_df)
-    comp_graph = compatability_graph.subgraph(local_plants["name_ru"]).copy()
-    communities_list = greedy_modularity_communities(comp_graph, weight="weight")
-    logger.debug(
-        "Number of communities: {} (sizes: {})",
-        len(communities_list),
-        ", ".join(map(str, (len(community) for community in communities_list))),
-    )
-    compositions = [list(com) for com in communities_list]
+    if local_plants.shape[0] > 1:
+        compatability_graph: nx.Graph = get_compatability_graph(pd.DataFrame(plants_available), cohabitation_df)
+        comp_graph = compatability_graph.subgraph(local_plants["name_ru"]).copy()
+        communities_list = greedy_modularity_communities(comp_graph, weight="weight")
+        logger.debug(
+            "Number of communities: {} (sizes: {})",
+            len(communities_list),
+            ", ".join(map(str, (len(community) for community in communities_list))),
+        )
+        compositions = [list(com) for com in communities_list]
+    else:
+        compositions = [local_plants.iloc[0]["name_ru"]]
+
     present_names = {plant.name_ru for plant in plants_present}
+    if (len(compositions) == 0 or all(len(composition) == 0 for composition in compositions)) and len(
+        plants_present
+    ) == 0:
+        return []
+
     compositions = [
         plants_present
         + [plant for plant in plants_available if plant.name_ru in composition and plant.name_ru not in present_names]
