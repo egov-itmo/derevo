@@ -2,7 +2,7 @@
 Derevo library enumerations names mapping is hardcoded here.
 """
 
-from derevo import enumerations as c_enum
+from derevo import enumerations as d_enum
 
 
 class EnumAdapters:  # pylint: disable=too-few-public-methods
@@ -12,66 +12,66 @@ class EnumAdapters:  # pylint: disable=too-few-public-methods
     """
 
     humidity = {
-        "Мало воды": c_enum.HumidityType.LOW,
-        "Средняя": c_enum.HumidityType.NORMAL,
-        "Много воды": c_enum.HumidityType.HIGH,
-        "Влажность в воздухе": c_enum.HumidityType.HIGH,
+        "Мало воды": d_enum.HumidityType.LOW,
+        "Средняя": d_enum.HumidityType.NORMAL,
+        "Много воды": d_enum.HumidityType.HIGH,
+        "Влажность в воздухе": d_enum.HumidityType.HIGH,
     }
 
     soil = {
-        "Песчаная": c_enum.SoilType.SANDY,
-        "Супесчаная": c_enum.SoilType.SUBSANDY,
-        "Суглинистая": c_enum.SoilType.LOAMY,
-        "Глинистая": c_enum.SoilType.CLAYEY,
-        "Каменистые": c_enum.SoilType.ROCKY,
-        "Каменистая": c_enum.SoilType.ROCKY,
-        "Щебнистые": c_enum.SoilType.GRAVELLY,
-        "Тяжёлая": c_enum.SoilType.HEAVY,
-        "Хорошо дренированная": c_enum.SoilType.DRAINED,
+        "Песчаная": d_enum.SoilType.SANDY,
+        "Супесчаная": d_enum.SoilType.SUBSANDY,
+        "Суглинистая": d_enum.SoilType.LOAMY,
+        "Глинистая": d_enum.SoilType.CLAYEY,
+        "Каменистые": d_enum.SoilType.ROCKY,
+        "Каменистая": d_enum.SoilType.ROCKY,
+        "Щебнистые": d_enum.SoilType.GRAVELLY,
+        "Тяжёлая": d_enum.SoilType.HEAVY,
+        "Хорошо дренированная": d_enum.SoilType.DRAINED,
     }
 
     acidity = {
-        "Сильнокислые (4)": c_enum.AcidityType.from_value(4),
-        "Кислые (5)": c_enum.AcidityType.from_value(5),
-        "Слабокислые (6)": c_enum.AcidityType.from_value(6),
-        "Нейтральные (7)": c_enum.AcidityType.from_value(7),
-        "Слабощелочные (8)": c_enum.AcidityType.from_value(8),
-        "Щелочные (9)": c_enum.AcidityType.from_value(9),
-        "Сильнощелочные (10)": c_enum.AcidityType.from_value(10),
+        "Сильнокислые (4)": d_enum.AcidityType.from_value(4),
+        "Кислые (5)": d_enum.AcidityType.from_value(5),
+        "Слабокислые (6)": d_enum.AcidityType.from_value(6),
+        "Нейтральные (7)": d_enum.AcidityType.from_value(7),
+        "Слабощелочные (8)": d_enum.AcidityType.from_value(8),
+        "Щелочные (9)": d_enum.AcidityType.from_value(9),
+        "Сильнощелочные (10)": d_enum.AcidityType.from_value(10),
     }
 
     fertility = {
-        "Плодородная": c_enum.FertilityType.FERTIL,
-        "Средне плодородная": c_enum.FertilityType.SLIGHTLY_FERTIL,
-        "Бедная почва": c_enum.FertilityType.BARREN,
+        "Плодородная": d_enum.FertilityType.FERTIL,
+        "Средне плодородная": d_enum.FertilityType.SLIGHTLY_FERTIL,
+        "Бедная почва": d_enum.FertilityType.BARREN,
     }
 
     light = {
-        "Полное освещение": c_enum.LightType.LIGHT,
-        "Полутень": c_enum.LightType.DARKENED,
-        "Тень": c_enum.LightType.DARK,
+        "Полное освещение": d_enum.LightType.LIGHT,
+        "Полутень": d_enum.LightType.DARKENED,
+        "Тень": d_enum.LightType.DARK,
     }
 
     limitation_factors = {
-        "Устойчивость к переуплотнению": c_enum.LimitationFactor.OVERCONSOLIDATION,
-        "Устойчивость к засолению": c_enum.LimitationFactor.SALINIZATION,
-        "Устойчивость к пересыханию": c_enum.LimitationFactor.DROUGHT,
-        "Устойчивость к подтоплению": c_enum.LimitationFactor.FLOODING,
-        "Газостойкость": c_enum.LimitationFactor.GAS_POLLUTION,
-        "Ветроустойчивость": c_enum.LimitationFactor.WINDINESS,
+        "Устойчивость к переуплотнению": d_enum.LimitationFactor.OVERCONSOLIDATION,
+        "Устойчивость к засолению": d_enum.LimitationFactor.SALINIZATION,
+        "Устойчивость к пересыханию": d_enum.LimitationFactor.DROUGHT,
+        "Устойчивость к подтоплению": d_enum.LimitationFactor.FLOODING,
+        "Газостойкость": d_enum.LimitationFactor.GAS_POLLUTION,
+        "Ветроустойчивость": d_enum.LimitationFactor.WINDINESS,
     }
 
     life_forms = {
-        "Дерево": c_enum.LifeForm.TREE,
-        "Кустарник": c_enum.LifeForm.BUSH,
-        "Почвопокровное ": c_enum.LifeForm.GROUND_COVER,
-        "Лиана": c_enum.LifeForm.LIANA,
-        "Многолетние травы": c_enum.LifeForm.PERENNIAL,
-        "Луковичные": c_enum.LifeForm.BULBOUS,
-        "Однолетники": c_enum.LifeForm.ANNUAL,
-        "Болотное растение": c_enum.LifeForm.SWAMP_PLANT,
+        "Дерево": d_enum.LifeForm.TREE,
+        "Кустарник": d_enum.LifeForm.BUSH,
+        "Почвопокровное ": d_enum.LifeForm.GROUND_COVER,
+        "Лиана": d_enum.LifeForm.LIANA,
+        "Многолетние травы": d_enum.LifeForm.PERENNIAL,
+        "Луковичные": d_enum.LifeForm.BULBOUS,
+        "Однолетники": d_enum.LifeForm.ANNUAL,
+        "Болотное растение": d_enum.LifeForm.SWAMP_PLANT,
     }
 
-    aggressiveness_levels = {value: c_enum.AggressivenessLevel.from_value(value) for value in range(-1, 2)}
+    aggressiveness_levels = {value: d_enum.AggressivenessLevel.from_value(value) for value in range(-1, 2)}
 
-    survivability_levels = {value: c_enum.SurvivabilityLevel.from_value(value) for value in range(-1, 2)}
+    survivability_levels = {value: d_enum.SurvivabilityLevel.from_value(value) for value in range(-1, 2)}

@@ -11,16 +11,16 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
 
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=a58bc63e"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Components" href="../components/index.html" />
-    <link rel="prev" title="Installation from GitHub" href="installation.html" />
+    <link rel="next" title="Module components" href="../components/index.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
 </head>
 
 <body class="wy-body-for-nav">
@@ -43,16 +43,16 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">derevo</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="derevo.html">Intro to <strong>derevo</strong></a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation from GitHub</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Usage example</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Intro to <strong>derevo</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Quickstart</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#how-to-use-the-derevo-library">How to use the <strong>derevo</strong> library</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Module components</a></li>
 </ul>
 
         </div>
@@ -69,7 +69,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">derevo</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Usage example</a></li>
       <li class="breadcrumb-item active">Quickstart</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/derevo/quickstart.rst.txt" rel="nofollow"> View page source</a>
@@ -81,15 +81,15 @@
            <div itemprop="articleBody">
 
   <section id="quickstart">
-<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading"></a></h1>
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading"></a></h1>
 <p>derevo Framework quick start guide</p>
 <section id="how-to-use-the-derevo-library">
-<h2>How to use the <strong>derevo</strong> library<a class="headerlink" href="#how-to-use-the-derevo-library" title="Permalink to this heading"></a></h2>
+<h2>How to use the <strong>derevo</strong> library<a class="headerlink" href="#how-to-use-the-derevo-library" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Step 1</strong>. Import needed modules (example package can be found in the project repository).</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">derevo</span> <span class="kn">import</span> <span class="n">Plant</span><span class="p">,</span> <span class="n">Territory</span>
-<span class="kn">from</span> <span class="nn">derevo</span> <span class="kn">import</span> <span class="n">enumerations</span> <span class="k">as</span> <span class="n">c_enum</span>
+<span class="kn">from</span> <span class="nn">derevo</span> <span class="kn">import</span> <span class="n">enumerations</span> <span class="k">as</span> <span class="n">d_enum</span>
 <span class="kn">from</span> <span class="nn">derevo</span> <span class="kn">import</span> <span class="n">get_compositions</span>
 
 <span class="kn">from</span> <span class="nn">example.data_collection</span> <span class="kn">import</span> <span class="p">(</span>
@@ -115,23 +115,23 @@
         <span class="n">genus</span><span class="o">=</span><span class="s2">&quot;Род растения&quot;</span><span class="p">,</span>
         <span class="n">life_form</span><span class="o">=</span><span class="s2">&quot;Жизненная форма&quot;</span><span class="p">,</span>
         <span class="n">limitation_factors_resistances</span><span class="o">=</span><span class="p">{</span>
-            <span class="n">c_enum</span><span class="o">.</span><span class="n">LimitationFactor</span><span class="o">.</span><span class="n">FLOODING</span><span class="p">:</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span><span class="p">,</span>
-            <span class="n">c_enum</span><span class="o">.</span><span class="n">LimitationFactor</span><span class="o">.</span><span class="n">GAS_POLLUTION</span><span class="p">:</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">,</span>
+            <span class="n">d_enum</span><span class="o">.</span><span class="n">LimitationFactor</span><span class="o">.</span><span class="n">FLOODING</span><span class="p">:</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span><span class="p">,</span>
+            <span class="n">d_enum</span><span class="o">.</span><span class="n">LimitationFactor</span><span class="o">.</span><span class="n">GAS_POLLUTION</span><span class="p">:</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="n">humidity_preferences</span><span class="o">=</span><span class="p">{</span>
-            <span class="n">c_enum</span><span class="o">.</span><span class="n">HumidityType</span><span class="o">.</span><span class="n">HIGH</span><span class="p">:</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span><span class="p">,</span>
-            <span class="n">c_enum</span><span class="o">.</span><span class="n">HumidityType</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">:</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">POSITIVE</span><span class="p">,</span>
+            <span class="n">d_enum</span><span class="o">.</span><span class="n">HumidityType</span><span class="o">.</span><span class="n">HIGH</span><span class="p">:</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span><span class="p">,</span>
+            <span class="n">d_enum</span><span class="o">.</span><span class="n">HumidityType</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">:</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">POSITIVE</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="n">light_preferences</span><span class="o">=</span><span class="p">{</span>
-            <span class="n">c_enum</span><span class="o">.</span><span class="n">LightType</span><span class="o">.</span><span class="n">LIGHT</span><span class="p">:</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">POSITIVE</span><span class="p">,</span>
+            <span class="n">d_enum</span><span class="o">.</span><span class="n">LightType</span><span class="o">.</span><span class="n">LIGHT</span><span class="p">:</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">POSITIVE</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="n">usda_zone_preferences</span><span class="o">=</span><span class="p">{</span>
-            <span class="n">c_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA2</span><span class="p">:</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span><span class="p">,</span>
-            <span class="n">c_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA3</span><span class="p">:</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">,</span>
-            <span class="n">c_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA4</span><span class="p">:</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">POSITIVE</span><span class="p">,</span>
-            <span class="n">c_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA5</span><span class="p">:</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">POSITIVE</span><span class="p">,</span>
-            <span class="n">c_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA6</span><span class="p">:</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">,</span>
-            <span class="n">c_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA7</span><span class="p">:</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span><span class="p">,</span>
+            <span class="n">d_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA2</span><span class="p">:</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span><span class="p">,</span>
+            <span class="n">d_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA3</span><span class="p">:</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">,</span>
+            <span class="n">d_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA4</span><span class="p">:</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">POSITIVE</span><span class="p">,</span>
+            <span class="n">d_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA5</span><span class="p">:</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">POSITIVE</span><span class="p">,</span>
+            <span class="n">d_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA6</span><span class="p">:</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">,</span>
+            <span class="n">d_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA7</span><span class="p">:</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="n">is_invasive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">),</span>
@@ -143,11 +143,11 @@
 <li><p><strong>Step 3</strong>. Create Territory information class.</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">territory_info</span> <span class="o">=</span> <span class="n">Territory</span><span class="p">(</span>
-    <span class="n">usda_zone</span><span class="o">=</span><span class="n">c_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA5</span><span class="p">,</span>
-    <span class="n">limitation_factors</span><span class="o">=</span><span class="p">[</span><span class="n">c_enum</span><span class="o">.</span><span class="n">LimitationFactor</span><span class="o">.</span><span class="n">WINDINESS</span><span class="p">],</span>
-    <span class="n">humidity_types</span><span class="o">=</span><span class="p">[</span><span class="n">c_enum</span><span class="o">.</span><span class="n">HumidityType</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">,</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">HumidityType</span><span class="o">.</span><span class="n">LOW</span><span class="p">],</span>
-    <span class="n">light_types</span><span class="o">=</span><span class="p">[</span><span class="n">c_enum</span><span class="o">.</span><span class="n">LightType</span><span class="o">.</span><span class="n">LIGHT</span><span class="p">,</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">LightType</span><span class="o">.</span><span class="n">DARKENED</span><span class="p">],</span>
-    <span class="n">soil_fertility_types</span><span class="o">=</span><span class="p">[</span><span class="n">c_enum</span><span class="o">.</span><span class="n">FertilityType</span><span class="o">.</span><span class="n">FERTIL</span><span class="p">,</span> <span class="n">c_enum</span><span class="o">.</span><span class="n">FertilityType</span><span class="o">.</span><span class="n">SLIGHTLY_FERTIL</span><span class="p">],</span>
+    <span class="n">usda_zone</span><span class="o">=</span><span class="n">d_enum</span><span class="o">.</span><span class="n">UsdaZone</span><span class="o">.</span><span class="n">USDA5</span><span class="p">,</span>
+    <span class="n">limitation_factors</span><span class="o">=</span><span class="p">[</span><span class="n">d_enum</span><span class="o">.</span><span class="n">LimitationFactor</span><span class="o">.</span><span class="n">WINDINESS</span><span class="p">],</span>
+    <span class="n">humidity_types</span><span class="o">=</span><span class="p">[</span><span class="n">d_enum</span><span class="o">.</span><span class="n">HumidityType</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">,</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">HumidityType</span><span class="o">.</span><span class="n">LOW</span><span class="p">],</span>
+    <span class="n">light_types</span><span class="o">=</span><span class="p">[</span><span class="n">d_enum</span><span class="o">.</span><span class="n">LightType</span><span class="o">.</span><span class="n">LIGHT</span><span class="p">,</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">LightType</span><span class="o">.</span><span class="n">DARKENED</span><span class="p">],</span>
+    <span class="n">soil_fertility_types</span><span class="o">=</span><span class="p">[</span><span class="n">d_enum</span><span class="o">.</span><span class="n">FertilityType</span><span class="o">.</span><span class="n">FERTIL</span><span class="p">,</span> <span class="n">d_enum</span><span class="o">.</span><span class="n">FertilityType</span><span class="o">.</span><span class="n">SLIGHTLY_FERTIL</span><span class="p">],</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -178,8 +178,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="installation.html" class="btn btn-neutral float-left" title="Installation from GitHub" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../components/index.html" class="btn btn-neutral float-right" title="Components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../components/index.html" class="btn btn-neutral float-right" title="Module components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

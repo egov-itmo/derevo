@@ -1,10 +1,11 @@
-derevo
-======
+#############
+Usage example
+#############
 
 .. toctree::
     :glob:
     :maxdepth: 2
 
-    derevo
+    intro
     installation
     quickstart
