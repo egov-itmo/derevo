@@ -32,13 +32,24 @@ The deployed demo frontend instance can be found at https://derevo.idu.actcognit
 The backend is also integrated in Platform of Digital Urbanistic by Laboratory of City Data Analysis of ITMO University. Its frontend page located at
     the https://dc.idu.actcognitive.org/applied-services/greenery.
 
+Service description page available at https://news.egov.itmo.ru/map/dev/index.html.
+
+
 Method documentation is located at https://derevo.readthedocs.io/en/dev/
 
-<br>https://news.egov.itmo.ru/map/dev/index.html
-
-## General scheme of work
+## General scheme of work (russian)
 
 ![General scheme of work](https://news.egov.itmo.ru/photo/algoritm_nahozhdeniya_kompozicij_rastenij-1.png)
+
+## Publications
+
+The main results of the work are described in following publications list:
+
+1. Value-Oriented Management of City Development Programs Based on Data from Social Networks. Nizomutdinov, B.A., Uglova, A.B., Antonov, A.S. Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics) this link is disabled, 2023, 13957 LNCS, PP 369–382 (Scopus - published)
+2. Sergey Mityagin, Nikita Kopyt, Irina А. Shmeleva, Sofia Malysheva, Ekaterina Malysheva, Aleksandr Antonov, Aleksey Sokol, Nikita Zakharenko, Tatiana Churiakova, Semen A. Budennyy, Alexander V. Boukhanovsky. Green Spaces in Urban Environments: Network Planning of Plant Species Composition // Sustainability. 2023 (Scopus - accepted in May 2023)
+3. Boris Nizomutdinov and Nikita Kopyt  Planning of the species composition of urban green spaces using network modeling and comments from users of social networks. Internet and Modern Society (IMS-2023) - (text accepted in April 2023, speach in June 2023), included in Injoit cllection - HAC)
+4. Boris Nizomutdinov, Nikita Kopyt Development of a network model for urban greening based on the characteristics of plant growth. Young DTGS – 2023 (RSCI)
+5. Низомутдинов, Б. А. Планирование видового состава зеленых насаждений на основе текстовых комментариев горожан / Б. А. Низомутдинов, Н. М. Копыть // Управление информационными ресурсами: Материалы XIX Международной научно-практической конференции, Минск, 22 марта 2023 года. – Минск: Академия управления при Президенте Республики Беларусь, 2023. – С. 366-368. (RSCI)
 
 ## Example
 
@@ -49,30 +60,30 @@ Scripts for step 0 are in the "database" folder, steps 1-8 can be done with `upd
 
 1. Generate compatability graph based on knowledge database
 
-    <img src="docs/compatability_graph.png" alt="compatability graph" width="50%" height="50%"/>
+    <img src="images/compatability_graph.png" alt="compatability graph" width="50%" height="50%"/>
 
 2. Select an area for composition generation
 
-    <img src="docs/green_area.png" alt="area" width="50%" height="50%"/>
+    <img src="images/green_area.png" alt="area" width="50%" height="50%"/>
 
 3. Download light conditions
 
 4. Download external limitation factor
 
-    <img src="docs/limitation_factors.png" alt="limitation factors" width="50%" height="50%"/>
+    <img src="images/limitation_factors.png" alt="limitation factors" width="50%" height="50%"/>
 
 5. Select a list of species which have suitable light conditions in this area and resistant for limitation factors
 
 6. Generate a subgraph of compatability graph with selected species as nodes
-    <img src="docs/original_graph.png" alt="original subgraph" width="50%" height="50%"/>
+    <img src="images/original_graph.png" alt="original subgraph" width="50%" height="50%"/>
 
 
 7. Use community partition method to create compositions
 
     - Variant 1:
 
-    <img src="docs/updated_graph_1.png" alt="Variant 1" width="50%" height="50%"/>
+    <img src="images/updated_graph_1.png" alt="Variant 1" width="50%" height="50%"/>
 
     - Variant 2:
 
-    <img src="docs/updated_graph_2.png" alt="Variant 2" width="50%" height="50%"/>
+    <img src="images/updated_graph_2.png" alt="Variant 2" width="50%" height="50%"/>
