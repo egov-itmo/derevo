@@ -37,16 +37,70 @@ def get_compositions(
         "Number of limitation factors: {}",
         len(territory.limitation_factors) if territory.limitation_factors is not None else "unknown",
     )
+    logger.debug(
+        "Number of humidity types: {}",
+        len(territory.humidity_types) if territory.humidity_types is not None else "unknown",
+    )
+    logger.debug(
+        "Number of soil types: {}",
+        len(territory.soil_types) if territory.soil_types is not None else "unknown",
+    )
+    logger.debug(
+        "Number of soil acidity types: {}",
+        len(territory.soil_acidity_types) if territory.soil_acidity_types is not None else "unknown",
+    )
+    logger.debug(
+        "Number of soil fertility types: {}",
+        len(territory.soil_fertility_types) if territory.soil_fertility_types is not None else "unknown",
+    )
     if plants_present is None:
         logger.trace("None plants present")
         plants_present = []
 
     local_plants = pd.DataFrame(plants_available)
+
     if territory.light_types and local_plants.shape[0] != 0:
         local_plants = local_plants[
             local_plants["light_preferences"].map(
                 lambda x: any(
-                    x.get(lt, ToleranceType.NEGATIVE) != ToleranceType.NEGATIVE for lt in territory.light_types
+                    x.get(lt, ToleranceType.NEUTRAL) != ToleranceType.NEGATIVE 
+                    for lt in territory.light_types
+                )
+            )
+        ]
+    if territory.humidity_types and local_plants.shape[0] != 0:
+        local_plants = local_plants[
+            local_plants["humidity_preferences"].map(
+                lambda x: any(
+                    x.get(hd, ToleranceType.NEUTRAL) != ToleranceType.NEGATIVE
+                    for hd in territory.humidity_types
+                )
+            )
+        ]
+    if territory.soil_types and local_plants.shape[0] != 0:
+        local_plants = local_plants[
+            local_plants["soil_type_preferences"].map(
+                lambda x: any(
+                    x.get(st, ToleranceType.NEUTRAL) != ToleranceType.NEGATIVE
+                    for st in territory.soil_types
+                )
+            )
+        ]
+    if territory.soil_acidity_types and local_plants.shape[0] != 0:
+        local_plants = local_plants[
+            local_plants["soil_acidity_preferences"].map(
+                lambda x: any(
+                    x.get(sa, ToleranceType.NEUTRAL) != ToleranceType.NEGATIVE
+                    for sa in territory.soil_acidity_types
+                )
+            )
+        ]
+    if territory.soil_fertility_types and local_plants.shape[0] != 0:
+        local_plants = local_plants[
+            local_plants["soil_fertility_preferences"].map(
+                lambda x: any(
+                    x.get(sf, ToleranceType.NEUTRAL) != ToleranceType.NEGATIVE
+                    for sf in territory.soil_fertility_types
                 )
             )
         ]
@@ -58,9 +112,7 @@ def get_compositions(
                     for factor in territory.limitation_factors
                 )
             )
-        ]
-    # TODO: add processing of other factors
-
+        ]            
     if local_plants.shape[0] == 0:
         return [plants_present] if len(plants_present) != 0 else []
 

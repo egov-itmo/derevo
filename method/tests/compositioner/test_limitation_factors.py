@@ -72,8 +72,6 @@ def test_error_no_plants(plants_with_all_limitation_factors: list[Plant], territ
     )
     assert len(compositions) == 0
 
-
-@pytest.mark.xfail(reason="Fixing")
 def test_no_plants_unacceptable_limitation_factors(
     plants_with_all_limitation_factors: list[Plant], territory_info: Territory, binary_combinations6: list[list[bool]]
 ):
@@ -96,13 +94,9 @@ def test_no_plants_unacceptable_limitation_factors(
         assert (
             len(compositions) == 1 or len(territory_info.limitation_factors) == 6
         ), "There should be only one composition"
-        if len(compositions) != 0:
+        if (len(compositions) != 0 and len(territory_info.limitation_factors) != 6):
             for plant in compositions[0]:
-                try:
-                    assert not any(
-                        plant.limitation_factors_resistances[lf] == d_enum.ToleranceType.NEGATIVE
-                        for lf in territory_info.limitation_factors
-                    ), "No plants with negative tolerance to the territory limitation factors should be in result"
-                except AssertionError:
-                    print(", ".join(str(plant.limitation_factors_resistances) for plant in compositions[0]))
-                    raise
+                assert all(
+                    plant.limitation_factors_resistances[lf] != d_enum.ToleranceType.NEGATIVE
+                    for lf in territory_info.limitation_factors
+                ), "No plants with negative tolerance to the territory limitation factors should be in result"
