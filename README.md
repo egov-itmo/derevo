@@ -7,7 +7,7 @@
 
 Repository of science research at ITMO University #622263 "Planning city greenery species composition with using network modeling methods".
 
-## Porject structure
+## Project structure
 
 - [**backend**](backend/README.md) - backend service, which provides the access to database plants data (including insertion and updating)
     and keeps database schema syncronized.
