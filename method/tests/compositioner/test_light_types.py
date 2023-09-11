@@ -58,7 +58,7 @@ def test_no_plants_unacceptable_light_type(territory_info: Territory):
             territory=territory_info,
         )
         assert len(compositions) == 1, "There should be only one composition"
-        assert compositions[0][0] == plants[light_type]
+        assert all(p.light_preferences[light_type] == d_enum.ToleranceType.POSITIVE for p in compositions[0])
 
 
 def test_no_plants_unacceptable_light_type_neutral(territory_info: Territory):
@@ -77,7 +77,7 @@ def test_no_plants_unacceptable_light_type_neutral(territory_info: Territory):
             territory=territory_info,
         )
         assert len(compositions) == 1, "There should be only one composition"
-        assert compositions[0][0] == plants[light_type]
+        assert all(p.light_preferences[light_type] != d_enum.ToleranceType.NEGATIVE for p in compositions[0])
 
 
 def test_no_plants_denying_light_type(territory_info: Territory):
