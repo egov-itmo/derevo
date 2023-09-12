@@ -30,11 +30,23 @@
 Бэкенд также интегрирован в Платформу Цифровой Урбанистики от Лаборатории Анализа Городских Данных университета ИТМО.
     Фронтенд располагается по адресу https://dc.idu.actcognitive.org/applied-services/greenery.
 
+Страниац описания работы сервиса расположена по адресу https://news.egov.itmo.ru/map/dev/index.html.
+
 Документация основного метода расположена на https://derevo.readthedocs.io/en/dev/.
 
 ## Общая схема работы
 
 ![Общая схема работы](https://news.egov.itmo.ru/photo/algoritm_nahozhdeniya_kompozicij_rastenij-1.png)
+
+## Публикации
+
+Главные результаты работы описаны в следующих публикациях:
+
+1. Value-Oriented Management of City Development Programs Based on Data from Social Networks. Nizomutdinov, B.A., Uglova, A.B., Antonov, A.S. Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics) this link is disabled, 2023, 13957 LNCS, PP 369–382 (Scopus - опубликована)
+2. Sergey Mityagin, Nikita Kopyt, Irina А. Shmeleva, Sofia Malysheva, Ekaterina Malysheva, Aleksandr Antonov, Aleksey Sokol, Nikita Zakharenko, Tatiana Churiakova, Semen A. Budennyy, Alexander V. Boukhanovsky. Green Spaces in Urban Environments: Network Planning of Plant Species Composition // Sustainability. 2023 (Scopus - принята в мае 2023)
+3. Boris Nizomutdinov and Nikita Kopyt  Planning of the species composition of urban green spaces using network modeling and comments from users of social networks. Internet and Modern Society (IMS-2023) - (текст принят в апреле 2023, доклад в июне 2023), по итогам выходит сборник в Injoit - ВАК)
+4. Boris Nizomutdinov, Nikita Kopyt Development of a network model for urban greening based on the characteristics of plant growth. Young DTGS – 2023 (РИНЦ)
+5. Низомутдинов, Б. А. Планирование видового состава зеленых насаждений на основе текстовых комментариев горожан / Б. А. Низомутдинов, Н. М. Копыть // Управление информационными ресурсами: Материалы XIX Международной научно-практической конференции, Минск, 22 марта 2023 года. – Минск: Академия управления при Президенте Республики Беларусь, 2023. – С. 366-368. (РИНЦ)
 
 ## Пример работы
 
@@ -47,29 +59,29 @@
 
 1. Создание графа сочетаемости, основанном на информации о сочетаемости из базы данных.
 
-    <img src="docs/compatability_graph.png" alt="Граф сочетаемостей" width="50%" height="50%"/>
+    <img src="images/compatability_graph.png" alt="Граф сочетаемостей" width="50%" height="50%"/>
 
 2. Выбор области для генерации породного состава.
 
-    <img src="docs/green_area.png" alt="area" width="50%" height="50%"/>
+    <img src="images/green_area.png" alt="area" width="50%" height="50%"/>
 
 3. Подготовка слоя освещенности.
 
 4. Подготовка слоя внешних лимитирующих факторов.
 
-    <img src="docs/limitation_factors.png" alt="Лимитирующие факторы" width="50%" height="50%"/>
+    <img src="images/limitation_factors.png" alt="Лимитирующие факторы" width="50%" height="50%"/>
 
 5. Выбор набора растений, которым подходит освещенноть, и которые способны выдерживать лимитирующие факторы для заданной обалсти.
 
 6. Создание подграфа графа сочетаемости с отобранными ранее растениями.
-    <img src="docs/original_graph.png" alt="Подграф с отобранными растениями" width="50%" height="50%"/>
+    <img src="images/original_graph.png" alt="Подграф с отобранными растениями" width="50%" height="50%"/>
 
 7. Использование метода разделение групп для создания вариантов видового сотава.
 
     - Вариант 1:
 
-    <img src="docs/updated_graph_1.png" alt="Вариант видового состава 1" width="50%" height="50%"/>
+    <img src="images/updated_graph_1.png" alt="Вариант видового состава 1" width="50%" height="50%"/>
 
     - Вариант 2:
 
-    <img src="docs/updated_graph_2.png" alt="Вариант видового состава 2" width="50%" height="50%"/>
+    <img src="images/updated_graph_2.png" alt="Вариант видового состава 2" width="50%" height="50%"/>

@@ -30,54 +30,102 @@ def get_compositions(
     Return plants composition variants list for the given parameters.
     """
     logger.debug(
-        "Number of light conditions: {}",
+        "Number of light conditions: {}, limitation factors: {}, humidity types: {}, soil types: {}, soil acidity types: {}, soil fertility types: {}, usda_zone: {}",
         len(territory.light_types) if territory.light_types is not None else "unknown",
-    )
-    logger.debug(
-        "Number of limitation factors: {}",
         len(territory.limitation_factors) if territory.limitation_factors is not None else "unknown",
+        len(territory.humidity_types) if territory.humidity_types is not None else "unknown",
+        len(territory.soil_types) if territory.soil_types is not None else "unknown",
+        len(territory.soil_acidity_types) if territory.soil_acidity_types is not None else "unknown",
+        len(territory.soil_fertility_types) if territory.soil_fertility_types is not None else "unknown",
+        territory.usda_zone.value if territory.usda_zone else "unknown",
     )
     if plants_present is None:
         logger.trace("None plants present")
         plants_present = []
 
     local_plants = pd.DataFrame(plants_available)
+
     if territory.light_types and local_plants.shape[0] != 0:
         local_plants = local_plants[
             local_plants["light_preferences"].map(
-                lambda x: any(
-                    x.get(lt, ToleranceType.NEGATIVE) != ToleranceType.NEGATIVE for lt in territory.light_types
+                lambda x: len(x) == 0
+                or any(x.get(lt, ToleranceType.NEUTRAL) != ToleranceType.NEGATIVE for lt in territory.light_types)
+            )
+        ]
+    if territory.humidity_types and local_plants.shape[0] != 0:
+        local_plants = local_plants[
+            local_plants["humidity_preferences"].map(
+                lambda x: len(x) == 0
+                or any(x.get(hd, ToleranceType.NEUTRAL) != ToleranceType.NEGATIVE for hd in territory.humidity_types)
+            )
+        ]
+    if territory.soil_types and local_plants.shape[0] != 0:
+        local_plants = local_plants[
+            local_plants["soil_type_preferences"].map(
+                lambda x: len(x) == 0
+                or any(x.get(st, ToleranceType.NEUTRAL) != ToleranceType.NEGATIVE for st in territory.soil_types)
+            )
+        ]
+    if territory.soil_acidity_types and local_plants.shape[0] != 0:
+        local_plants = local_plants[
+            local_plants["soil_acidity_preferences"].map(
+                lambda x: len(x) == 0
+                or any(
+                    x.get(sa, ToleranceType.NEUTRAL) != ToleranceType.NEGATIVE for sa in territory.soil_acidity_types
+                )
+            )
+        ]
+    if territory.soil_fertility_types and local_plants.shape[0] != 0:
+        local_plants = local_plants[
+            local_plants["soil_fertility_preferences"].map(
+                lambda x: len(x) == 0
+                or any(
+                    x.get(sf, ToleranceType.NEUTRAL) != ToleranceType.NEGATIVE for sf in territory.soil_fertility_types
                 )
             )
         ]
     if territory.limitation_factors and local_plants.shape[0] != 0:
         local_plants = local_plants[
             local_plants["limitation_factors_resistances"].map(
-                lambda x: all(
+                lambda x: len(x) == 0
+                or all(
                     x.get(factor, ToleranceType.NEUTRAL) != ToleranceType.NEGATIVE
                     for factor in territory.limitation_factors
                 )
             )
         ]
-    # TODO: add processing of other factors
-
+    if territory.usda_zone and local_plants.shape[0] != 0:
+        local_plants = local_plants[
+            local_plants["usda_zone_preferences"].map(
+                lambda x: len(x) == 0 or x.get(territory.usda_zone, ToleranceType.NEUTRAL) != ToleranceType.NEGATIVE
+            )
+        ]
     if local_plants.shape[0] == 0:
-        return [plants_present]
+        return [plants_present] if len(plants_present) != 0 else []
 
     cohabitation_df = pd.DataFrame(
         [(c.genus_1, c.genus_2, c.cohabitation.to_value()) for c in cohabitation_attributes],
         columns=["genus_name_1", "genus_name_2", "cohabitation_type"],
     )
-    compatability_graph: nx.Graph = get_compatability_graph(pd.DataFrame(plants_available), cohabitation_df)
-    comp_graph = compatability_graph.subgraph(local_plants["name_ru"]).copy()
-    communities_list = greedy_modularity_communities(comp_graph, weight="weight")
-    logger.debug(
-        "Number of communities: {} (sizes: {})",
-        len(communities_list),
-        ", ".join(map(str, (len(community) for community in communities_list))),
-    )
-    compositions = [list(com) for com in communities_list]
+    if local_plants.shape[0] > 1:
+        compatability_graph: nx.Graph = get_compatability_graph(pd.DataFrame(plants_available), cohabitation_df)
+        comp_graph = compatability_graph.subgraph(local_plants["name_ru"]).copy()
+        communities_list = greedy_modularity_communities(comp_graph, weight="weight")
+        logger.debug(
+            "Number of communities: {} (sizes: {})",
+            len(communities_list),
+            ", ".join(map(str, (len(community) for community in communities_list))),
+        )
+        compositions = [list(com) for com in communities_list]
+    else:
+        compositions = [local_plants.iloc[0]["name_ru"]]
+
     present_names = {plant.name_ru for plant in plants_present}
+    if (len(compositions) == 0 or all(len(composition) == 0 for composition in compositions)) and len(
+        plants_present
+    ) == 0:
+        return []
+
     compositions = [
         plants_present
         + [plant for plant in plants_available if plant.name_ru in composition and plant.name_ru not in present_names]

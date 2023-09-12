@@ -1,5 +1,6 @@
-Components
-==========
+#################
+Module components
+#################
 
 .. toctree::
    :maxdepth: 4

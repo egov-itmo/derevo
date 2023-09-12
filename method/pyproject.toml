@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "derevo"
-version = "0.1.1"
+version = "0.1.2"
 authors = [
     { name = "Aleksander Antonov", email = "asantonov@itmo.ru" },
     { name = "Aleksei Sokol", email = "aasokol@itmo.ru" },
@@ -34,7 +34,14 @@ include = ["derevo*"]
 
 
 [project.optional-dependencies]
-dev = ["black>=22", "isort", "pylint", "pre-commit>=3.1"]
+dev = [
+    "black>=22",
+    "isort",
+    "pylint",
+    "pre-commit>=3.1",
+    "pytest",
+    "pytest-cov",
+]
 
 
 [project.urls]
@@ -53,9 +60,7 @@ expected-line-ending-format = "LF"
 
 
 [tool.pylint."messages control"]
-disable = [
-    "duplicate-code"
-]
+disable = ["duplicate-code"]
 
 [tool.isort]
 known_local_folder = "app"

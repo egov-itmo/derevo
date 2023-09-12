@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>derevo.compatability &mdash; derevo 0.1.0 documentation</title>
+  <title>derevo.compatability &mdash; derevo 0.1.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
 
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=92734c54"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -40,8 +40,8 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../derevo/index.html">derevo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../derevo/index.html">Usage example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../components/index.html">Module components</a></li>
 </ul>
 
         </div>
@@ -81,7 +81,9 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 
-<div class="viewcode-block" id="get_compatability_graph"><a class="viewcode-back" href="../../components/derevo.html#derevo.compatability.get_compatability_graph">[docs]</a><span class="k">def</span> <span class="nf">get_compatability_graph</span><span class="p">(</span>
+<div class="viewcode-block" id="get_compatability_graph">
+<a class="viewcode-back" href="../../components/derevo.html#derevo.compatability.get_compatability_graph">[docs]</a>
+<span class="k">def</span> <span class="nf">get_compatability_graph</span><span class="p">(</span>
     <span class="n">plants</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
     <span class="n">cohabitation_attributes</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
@@ -132,7 +134,10 @@
     <span class="k">return</span> <span class="n">compatability_graph</span></div>
 
 
-<div class="viewcode-block" id="write_compatability_graph_gexf"><a class="viewcode-back" href="../../components/derevo.html#derevo.compatability.write_compatability_graph_gexf">[docs]</a><span class="k">def</span> <span class="nf">write_compatability_graph_gexf</span><span class="p">(</span>
+
+<div class="viewcode-block" id="write_compatability_graph_gexf">
+<a class="viewcode-back" href="../../components/derevo.html#derevo.compatability.write_compatability_graph_gexf">[docs]</a>
+<span class="k">def</span> <span class="nf">write_compatability_graph_gexf</span><span class="p">(</span>
     <span class="n">plants</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
     <span class="n">cohabitation_attributes</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
     <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">BinaryIO</span> <span class="o">=</span> <span class="s2">&quot;compatability_graph.gexf&quot;</span><span class="p">,</span>
@@ -146,7 +151,10 @@
     <span class="n">nx</span><span class="o">.</span><span class="n">write_gexf</span><span class="p">(</span><span class="n">compatability_graph</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">.gexf&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="get_compatability_for_species"><a class="viewcode-back" href="../../components/derevo.html#derevo.compatability.get_compatability_for_species">[docs]</a><span class="k">def</span> <span class="nf">get_compatability_for_species</span><span class="p">(</span>
+
+<div class="viewcode-block" id="get_compatability_for_species">
+<a class="viewcode-back" href="../../components/derevo.html#derevo.compatability.get_compatability_for_species">[docs]</a>
+<span class="k">def</span> <span class="nf">get_compatability_for_species</span><span class="p">(</span>
     <span class="n">species_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">compatability_graph</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
@@ -157,7 +165,10 @@
     <span class="k">return</span> <span class="n">current_graph</span></div>
 
 
-<div class="viewcode-block" id="write_compatability_for_species_gexf"><a class="viewcode-back" href="../../components/derevo.html#derevo.compatability.write_compatability_for_species_gexf">[docs]</a><span class="k">def</span> <span class="nf">write_compatability_for_species_gexf</span><span class="p">(</span>
+
+<div class="viewcode-block" id="write_compatability_for_species_gexf">
+<a class="viewcode-back" href="../../components/derevo.html#derevo.compatability.write_compatability_for_species_gexf">[docs]</a>
+<span class="k">def</span> <span class="nf">write_compatability_for_species_gexf</span><span class="p">(</span>
     <span class="n">species_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">compatability_graph</span><span class="p">,</span>
     <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">BinaryIO</span> <span class="o">=</span> <span class="s2">&quot;compatability_graph.gexf&quot;</span><span class="p">,</span>
@@ -167,6 +178,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">current_graph</span> <span class="o">=</span> <span class="n">get_compatability_graph</span><span class="p">(</span><span class="n">species_list</span><span class="p">,</span> <span class="n">compatability_graph</span><span class="p">)</span>
     <span class="n">nx</span><span class="o">.</span><span class="n">write_gexf</span><span class="p">(</span><span class="n">current_graph</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span></div>
+
 </pre></div>
 
            </div>
