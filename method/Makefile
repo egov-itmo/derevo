@@ -1,5 +1,5 @@
 SOURCE_DIR := derevo example tests
-VERSION := 0.1.1
+VERSION := 0.1.2
 
 lint:
 	pylint ${SOURCE_DIR}
