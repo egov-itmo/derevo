@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>derevo.composition &mdash; derevo 0.1.1 documentation</title>
+  <title>derevo.composition &mdash; derevo 0.1.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -12,7 +12,7 @@
 
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
+        <script src="../../_static/documentation_options.js?v=92734c54"></script>
         <script src="../../_static/doctools.js?v=888ff710"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -103,37 +103,76 @@
 <span class="sd">    Return plants composition variants list for the given parameters.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-        <span class="s2">&quot;Number of light conditions: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Number of light conditions: </span><span class="si">{}</span><span class="s2">, limitation factors: </span><span class="si">{}</span><span class="s2">, humidity types: </span><span class="si">{}</span><span class="s2">, soil types: </span><span class="si">{}</span><span class="s2">, soil acidity types: </span><span class="si">{}</span><span class="s2">, soil fertility types: </span><span class="si">{}</span><span class="s2">, usda_zone: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="nb">len</span><span class="p">(</span><span class="n">territory</span><span class="o">.</span><span class="n">light_types</span><span class="p">)</span> <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">light_types</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-        <span class="s2">&quot;Number of limitation factors: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="nb">len</span><span class="p">(</span><span class="n">territory</span><span class="o">.</span><span class="n">limitation_factors</span><span class="p">)</span> <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">limitation_factors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">territory</span><span class="o">.</span><span class="n">humidity_types</span><span class="p">)</span> <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">humidity_types</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">territory</span><span class="o">.</span><span class="n">soil_types</span><span class="p">)</span> <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">soil_types</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">territory</span><span class="o">.</span><span class="n">soil_acidity_types</span><span class="p">)</span> <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">soil_acidity_types</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">territory</span><span class="o">.</span><span class="n">soil_fertility_types</span><span class="p">)</span> <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">soil_fertility_types</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+        <span class="n">territory</span><span class="o">.</span><span class="n">usda_zone</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">usda_zone</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="n">plants_present</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;None plants present&quot;</span><span class="p">)</span>
         <span class="n">plants_present</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="n">local_plants</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">plants_available</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">light_types</span> <span class="ow">and</span> <span class="n">local_plants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">local_plants</span> <span class="o">=</span> <span class="n">local_plants</span><span class="p">[</span>
             <span class="n">local_plants</span><span class="p">[</span><span class="s2">&quot;light_preferences&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
-                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span>
-                    <span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">lt</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span> <span class="k">for</span> <span class="n">lt</span> <span class="ow">in</span> <span class="n">territory</span><span class="o">.</span><span class="n">light_types</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">lt</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span> <span class="k">for</span> <span class="n">lt</span> <span class="ow">in</span> <span class="n">territory</span><span class="o">.</span><span class="n">light_types</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">]</span>
+    <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">humidity_types</span> <span class="ow">and</span> <span class="n">local_plants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">local_plants</span> <span class="o">=</span> <span class="n">local_plants</span><span class="p">[</span>
+            <span class="n">local_plants</span><span class="p">[</span><span class="s2">&quot;humidity_preferences&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">hd</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span> <span class="k">for</span> <span class="n">hd</span> <span class="ow">in</span> <span class="n">territory</span><span class="o">.</span><span class="n">humidity_types</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">]</span>
+    <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">soil_types</span> <span class="ow">and</span> <span class="n">local_plants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">local_plants</span> <span class="o">=</span> <span class="n">local_plants</span><span class="p">[</span>
+            <span class="n">local_plants</span><span class="p">[</span><span class="s2">&quot;soil_type_preferences&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span> <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">territory</span><span class="o">.</span><span class="n">soil_types</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">]</span>
+    <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">soil_acidity_types</span> <span class="ow">and</span> <span class="n">local_plants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">local_plants</span> <span class="o">=</span> <span class="n">local_plants</span><span class="p">[</span>
+            <span class="n">local_plants</span><span class="p">[</span><span class="s2">&quot;soil_acidity_preferences&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span>
+                    <span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sa</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span> <span class="k">for</span> <span class="n">sa</span> <span class="ow">in</span> <span class="n">territory</span><span class="o">.</span><span class="n">soil_acidity_types</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">]</span>
+    <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">soil_fertility_types</span> <span class="ow">and</span> <span class="n">local_plants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">local_plants</span> <span class="o">=</span> <span class="n">local_plants</span><span class="p">[</span>
+            <span class="n">local_plants</span><span class="p">[</span><span class="s2">&quot;soil_fertility_preferences&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span>
+                    <span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sf</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span> <span class="k">for</span> <span class="n">sf</span> <span class="ow">in</span> <span class="n">territory</span><span class="o">.</span><span class="n">soil_fertility_types</span>
                 <span class="p">)</span>
             <span class="p">)</span>
         <span class="p">]</span>
     <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">limitation_factors</span> <span class="ow">and</span> <span class="n">local_plants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">local_plants</span> <span class="o">=</span> <span class="n">local_plants</span><span class="p">[</span>
             <span class="n">local_plants</span><span class="p">[</span><span class="s2">&quot;limitation_factors_resistances&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
-                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">all</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="ow">or</span> <span class="nb">all</span><span class="p">(</span>
                     <span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span>
                     <span class="k">for</span> <span class="n">factor</span> <span class="ow">in</span> <span class="n">territory</span><span class="o">.</span><span class="n">limitation_factors</span>
                 <span class="p">)</span>
             <span class="p">)</span>
         <span class="p">]</span>
-    <span class="c1"># TODO: add processing of other factors</span>
-
+    <span class="k">if</span> <span class="n">territory</span><span class="o">.</span><span class="n">usda_zone</span> <span class="ow">and</span> <span class="n">local_plants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">local_plants</span> <span class="o">=</span> <span class="n">local_plants</span><span class="p">[</span>
+            <span class="n">local_plants</span><span class="p">[</span><span class="s2">&quot;usda_zone_preferences&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">territory</span><span class="o">.</span><span class="n">usda_zone</span><span class="p">,</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEUTRAL</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ToleranceType</span><span class="o">.</span><span class="n">NEGATIVE</span>
+            <span class="p">)</span>
+        <span class="p">]</span>
     <span class="k">if</span> <span class="n">local_plants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">plants_present</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">plants_present</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">[]</span>
 

@@ -72,6 +72,7 @@ def test_error_no_plants(plants_with_all_limitation_factors: list[Plant], territ
     )
     assert len(compositions) == 0
 
+
 def test_no_plants_unacceptable_limitation_factors(
     plants_with_all_limitation_factors: list[Plant], territory_info: Territory, binary_combinations6: list[list[bool]]
 ):
@@ -94,7 +95,7 @@ def test_no_plants_unacceptable_limitation_factors(
         assert (
             len(compositions) == 1 or len(territory_info.limitation_factors) == 6
         ), "There should be only one composition"
-        if (len(compositions) != 0 and len(territory_info.limitation_factors) != 6):
+        if len(compositions) != 0 and len(territory_info.limitation_factors) != 6:
             for plant in compositions[0]:
                 assert all(
                     plant.limitation_factors_resistances[lf] != d_enum.ToleranceType.NEGATIVE

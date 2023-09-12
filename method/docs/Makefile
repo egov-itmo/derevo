@@ -5,5 +5,5 @@ autodoc:
 	sphinx-apidoc -f -o source/components ../derevo/
 	rm source/components/modules.rst
 
-build: autodoc
+build: clean autodoc
 	sphinx-build -M html source build
